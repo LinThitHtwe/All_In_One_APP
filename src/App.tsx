@@ -1,16 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import RootStackNavigator from './navigations/RootStackNavigator';
+import {NavigationContainer} from '@react-navigation/native';
 
 type Props = {};
 
 const App = (props: Props) => {
   return (
-    <View>
-      <Text>App</Text>
-    </View>
+    <>
+      <NavigationContainer>
+        <RootStackNavigator />
+      </NavigationContainer>
+    </>
   );
 };
 
 export default App;
-
-const styles = StyleSheet.create({});
