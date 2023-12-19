@@ -1,5 +1,6 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
+import CurrentDate from '../components/CurrentDate';
 //import  from 'react-native-vector-icons';
 type Props = {};
 
@@ -85,73 +86,7 @@ const HomeScreen = (props: Props) => {
             justifyContent: 'space-around',
             marginTop: 13,
           }}>
-          <View
-            style={{
-              backgroundColor: '#212D3B',
-              height: 150,
-              width: 150,
-              borderRadius: 20,
-              shadowColor: '#000000',
-              elevation: 2,
-              padding: 10,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 15,
-              }}>
-              <Text
-                style={{
-                  fontSize: 40,
-                  color: '#d1d1d1',
-                  fontFamily: 'monospace',
-                  fontWeight: '900',
-                }}>
-                19
-              </Text>
-
-              <Text
-                style={{
-                  fontSize: 25,
-                  color: '#d1d1d1',
-                  fontFamily: 'monospace',
-                }}>
-                Tue
-              </Text>
-            </View>
-
-            <Text
-              style={{
-                fontSize: 18,
-                color: '#d1d1d1',
-                fontFamily: 'monospace',
-                marginVertical: 10,
-              }}>
-              December
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: '#d1d1d1',
-                fontFamily: 'monospace',
-                marginVertical: 3,
-              }}>
-              2023
-            </Text>
-
-            {/* <Image
-              source={{
-                uri: 'https://clipart-library.com/img1/1352216.png',
-              }}
-              style={{
-                height: 140,
-                width: 100,
-                resizeMode: 'cover',
-                borderRadius: 10,
-              }}
-            /> */}
-          </View>
+          <CurrentDate />
           <View style={{justifyContent: 'space-around'}}>
             <View
               style={{
@@ -165,7 +100,7 @@ const HomeScreen = (props: Props) => {
                 backgroundColor: '#212D3B',
                 height: 65,
                 width: 180,
-                borderRadius: 15,
+                borderRadius: 10,
               }}></View>
           </View>
         </View>
