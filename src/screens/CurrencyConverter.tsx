@@ -166,7 +166,11 @@ const CurrencyConverter = ({navigation}: Props) => {
             </TouchableOpacity>
           </View>
           <Text style={{textAlign: 'center', color: '#15212F'}}>
-            Selected Value: {fromValue}
+            Selected From Value: {selectedFromValue}
+          </Text>
+
+          <Text style={{textAlign: 'center', color: '#15212F'}}>
+            Selected To Value: {selectedToValue}
           </Text>
         </View>
       </View>
