@@ -1,4 +1,5 @@
 import {
+  Alert,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -24,7 +25,7 @@ type RenderPickersParams = {
     setMethod: (value: string | ((prevValue: string) => string)) => void,
     text: string,
     values: string[],
-    // selectedValue: string,
+    selectedValue: string,
   ) => React.JSX.Element;
 };
 
@@ -50,7 +51,7 @@ const CurrencyConverter = ({navigation}: Props) => {
     isLoading: isCurrencyLoading,
     isError: isCurrencyFetchError,
   } = useQuery({
-    queryKey: ['test'],
+    queryKey: ['currencies'],
     queryFn: getCurrencies,
   });
 
@@ -59,6 +60,8 @@ const CurrencyConverter = ({navigation}: Props) => {
       const currencyNames = Object.keys(responseData.data.data);
       setFromValue(currencyNames);
       setToValue(currencyNames);
+      setSelectedFromValue(currencyNames[0]);
+      setSelectedToValue(currencyNames[0]);
     }
   }, [responseData]);
 
@@ -67,20 +70,39 @@ const CurrencyConverter = ({navigation}: Props) => {
   const {errors} = formState;
 
   const onSubmit: SubmitHandler<FormField> = data => {
-    console.log('submit');
-    console.log('Form values:', data);
+    const fromValueRate = responseData?.data.data[selectedFromValue];
+    const toValueRate = responseData?.data.data[selectedToValue];
+    const conversionRate = toValueRate / fromValueRate;
+    const convertedAmount = (Number(data.amount) * conversionRate).toFixed(5);
+    Alert.alert(
+      'Conversion Value',
+      `The Result of ${
+        data.amount
+      } ${selectedFromValue} to ${selectedToValue} is ${convertedAmount} ${selectedToValue}.\n
+The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
+        5,
+      )} ${selectedToValue}.`,
+
+      [
+        {text: 'Back to Home', onPress: () => navigation.goBack()},
+        {text: 'Try more', onPress: () => {}},
+      ],
+      {cancelable: false},
+    );
   };
 
   const renderPickers: RenderPickersParams['renderPickers'] = (
     setMethod,
     text,
     values,
+    selectedValue,
   ) => {
     return (
       <>
         <Text style={styles.optionBoxText}>{text}</Text>
         {responseData && values && Array.isArray(values) && (
           <Picker
+            selectedValue={selectedValue}
             onValueChange={(itemValue, itemIndex) => setMethod(itemValue)}
             style={styles.optionBox}>
             {values.map((value: string, index: number) => (
@@ -125,8 +147,13 @@ const CurrencyConverter = ({navigation}: Props) => {
           Back
         </Text>
         <Text style={styles.titleText}>Currency Converter</Text>
-        {renderPickers(setSelectedFromValue, 'From', fromValue)}
-        {renderPickers(setSelectedToValue, 'To', toValue)}
+        {renderPickers(
+          setSelectedFromValue,
+          'From',
+          fromValue,
+          selectedFromValue,
+        )}
+        {renderPickers(setSelectedToValue, 'To', toValue, selectedToValue)}
         <View style={{marginTop: 20}}>
           <Controller
             control={control}
