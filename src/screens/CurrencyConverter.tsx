@@ -9,16 +9,49 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
+import {RootStackScreenProps} from '../navigations/types';
+import {z} from 'zod';
+import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useQuery} from '@tanstack/react-query';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'CurrencyConverter'> {}
 
-const CurrencyConverter = (props: Props) => {
-  const [selectedValue, setSelectedValue] = useState('option1');
+type FormField = z.infer<typeof schema>;
+
+const schema = z.object({
+  amount: z.string({required_error: 'Amount Cannot be Blank'}).refine(
+    data => {
+      const numericValue = parseFloat(data.replace(/,/g, ''));
+      return !isNaN(numericValue) && numericValue > 0;
+    },
+    {
+      message: 'Amount must be greater than 0',
+    },
+  ),
+});
+
+const {data} = useQuery({
+  queryKey: ['test'],
+});
+
+const CurrencyConverter = ({navigation}: Props) => {
+  const [fromValue, setFromValue] = useState('option1');
+  const form = useForm<FormField>({resolver: zodResolver(schema)});
+  const {control, handleSubmit, formState} = form;
+  const {errors} = formState;
+
+  const onSubmit: SubmitHandler<FormField> = data => {
+    console.log('submit');
+    console.log('Form values:', data);
+    // Handle the form data as needed
+  };
 
   return (
     <Pressable onPress={() => Keyboard.dismiss()} style={styles.mainContainer}>
       <View style={styles.bodyCard}>
         <Text
+          onPress={() => navigation.goBack()}
           style={{
             color: '#15212F',
             fontSize: 13,
@@ -32,10 +65,8 @@ const CurrencyConverter = (props: Props) => {
         <View style={{marginTop: 20}}>
           <Text style={styles.optionBoxText}>From:</Text>
           <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }
+            fromValue={fromValue}
+            onValueChange={(itemValue, itemIndex) => setFromValue(itemValue)}
             style={styles.optionBox}>
             <Picker.Item label="Option 1" value="option1" />
             <Picker.Item label="Option 2" value="option2" />
@@ -44,31 +75,52 @@ const CurrencyConverter = (props: Props) => {
 
           <Text style={styles.optionBoxText}>To:</Text>
           <Picker
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }
+            fromValue={fromValue}
+            onValueChange={(itemValue, itemIndex) => setFromValue(itemValue)}
             style={styles.optionBox}>
             <Picker.Item label="Option 1" value="option1" />
             <Picker.Item label="Option 2" value="option2" />
             <Picker.Item label="Option 3" value="option3" />
           </Picker>
-          <View>
-            <Text style={styles.amountInputLabel}>Amount:</Text>
-            <TextInput
-              style={styles.amountInput}
-              inputMode="numeric"
-              placeholder="Amount to Convert"
-              placeholderTextColor={'rgba(21, 33, 47, 0.3)'}
-            />
-          </View>
+          <Controller
+            control={control}
+            name="amount"
+            render={({
+              field: {value, onChange, onBlur},
+              fieldState: {error},
+            }) => (
+              <>
+                <Text style={styles.amountInputLabel}>Amount:</Text>
+                <TextInput
+                  value={value}
+                  onBlur={onBlur}
+                  style={styles.amountInput}
+                  inputMode="decimal"
+                  placeholder="Amount to Convert"
+                  placeholderTextColor={'rgba(21, 33, 47, 0.3)'}
+                  onChangeText={text => {
+                    const cleanedText = text.replace(/[^0-9.]/g, '');
+                    onChange(cleanedText);
+                  }}
+                />
+                {Object.keys(errors).length !== 0 && (
+                  <Text style={{color: '#FF0000', padding: 10, fontSize: 16}}>
+                    {errors.amount?.message}
+                  </Text>
+                )}
+              </>
+            )}
+          />
+
           <View style={styles.converBtnContainer}>
-            <TouchableOpacity style={styles.amountConvertBtn}>
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
+              style={styles.amountConvertBtn}>
               <Text style={styles.amountConvertText}>Convert</Text>
             </TouchableOpacity>
           </View>
-          <Text style={{textAlign: 'center'}}>
-            Selected Value: {selectedValue}
+          <Text style={{textAlign: 'center', color: '#15212F'}}>
+            Selected Value: {fromValue}
           </Text>
         </View>
       </View>
