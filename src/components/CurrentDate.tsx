@@ -35,7 +35,7 @@ const CurrentDate = (props: Props) => {
         <Text
           style={{
             fontSize: 40,
-            color: '#d1d1d1',
+            color: '#e9e9e9',
             fontFamily: 'monospace',
             fontWeight: '900',
           }}>
@@ -45,7 +45,7 @@ const CurrentDate = (props: Props) => {
         <Text
           style={{
             fontSize: 30,
-            color: '#d1d1d1',
+            color: '#e9e9e9',
             fontFamily: 'monospace',
           }}>
           {dayOfWeek}
@@ -55,7 +55,7 @@ const CurrentDate = (props: Props) => {
       <Text
         style={{
           fontSize: 18,
-          color: '#d1d1d1',
+          color: '#e9e9e9',
           fontFamily: 'monospace',
           marginVertical: 10,
         }}>
@@ -64,7 +64,7 @@ const CurrentDate = (props: Props) => {
       <Text
         style={{
           fontSize: 16,
-          color: '#d1d1d1',
+          color: '#e9e9e9',
           fontFamily: 'monospace',
           marginVertical: 3,
         }}>

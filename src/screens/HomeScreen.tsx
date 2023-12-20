@@ -1,10 +1,19 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import CurrentDate from '../components/CurrentDate';
-//import  from 'react-native-vector-icons';
-type Props = {};
+import {RootStackScreenProps} from '../navigations/types';
+import BottomNavigationBar from '../components/BottomNavigationBar';
 
-const HomeScreen = (props: Props) => {
+interface Props extends RootStackScreenProps<'HomeScreen'> {}
+
+const HomeScreen = ({navigation}: Props) => {
   const [marginTop, setMarginTop] = useState(0);
   const [scrollY, setScrollY] = useState(0);
 
@@ -12,8 +21,6 @@ const HomeScreen = (props: Props) => {
     const currentScrollY = event.nativeEvent.contentOffset.y;
 
     if (currentScrollY > scrollY) {
-      // Scrolling down
-      // setScrollDirection('down');
       setMarginTop(prevMarginTop => prevMarginTop - 10);
     } else {
       setMarginTop(prevMarginTop => Math.min(0, prevMarginTop + 10));
@@ -32,7 +39,6 @@ const HomeScreen = (props: Props) => {
       }}>
       <View
         style={{
-          backgroundColor: '#15212F',
           width: '100%',
           height: 170,
           justifyContent: 'space-between',
@@ -51,7 +57,7 @@ const HomeScreen = (props: Props) => {
             style={{
               textAlign: 'center',
               fontSize: 40,
-              color: '#F5F6FA',
+              color: '#e9e9e9',
               fontFamily: 'monospace',
             }}>
             Yangon
@@ -60,7 +66,7 @@ const HomeScreen = (props: Props) => {
             style={{
               textAlign: 'center',
               fontSize: 35,
-              color: '#F5F6FA',
+              color: '#e9e9e9',
               fontFamily: 'monospace',
             }}>
             26°C
@@ -71,7 +77,7 @@ const HomeScreen = (props: Props) => {
         onScroll={handleScroll}
         scrollEventThrottle={2}
         style={{
-          backgroundColor: '#d1d1d1',
+          backgroundColor: '#e9e9e9',
           height: '150%',
           borderRadius: 23,
           padding: 3,
@@ -88,13 +94,14 @@ const HomeScreen = (props: Props) => {
           }}>
           <CurrentDate />
           <View style={{justifyContent: 'space-around'}}>
-            <View
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CurrencyConverter')}
               style={{
                 backgroundColor: '#212D3B',
                 height: 65,
                 width: 180,
                 borderRadius: 10,
-              }}></View>
+              }}></TouchableOpacity>
             <View
               style={{
                 backgroundColor: '#212D3B',
@@ -124,36 +131,19 @@ const HomeScreen = (props: Props) => {
                 key={index}
                 style={{
                   backgroundColor: '#212D3B',
-                  height: 70,
+                  height: 60,
                   width: '100%',
                   borderRadius: 10,
                   marginVertical: 10,
                   padding: 10,
                 }}>
-                <Text style={{fontSize: 20, color: '#d1d1d1'}}>Hello</Text>
+                <Text style={{fontSize: 20, color: '#e9e9e9'}}>Hello</Text>
               </View>
             ))}
           </View>
         </View>
-        <View
-          style={{
-            alignItems: 'center',
-            width: '100%',
-          }}>
-          <View
-            style={{
-              height: 90,
-              backgroundColor: '#eee',
-              width: '95%',
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30,
-              borderColor: '#2E5F66',
-
-              alignItems: 'center',
-              marginBottom: 1,
-            }}></View>
-        </View>
       </ScrollView>
+      <BottomNavigationBar />
     </View>
   );
 };
