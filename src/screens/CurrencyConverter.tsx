@@ -7,17 +7,26 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {RootStackScreenProps} from '../navigations/types';
 import {z} from 'zod';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useQuery} from '@tanstack/react-query';
+import {getCurrencies} from '../api/apiFunctions';
 
 interface Props extends RootStackScreenProps<'CurrencyConverter'> {}
 
 type FormField = z.infer<typeof schema>;
+type RenderPickersParams = {
+  renderPickers: (
+    setMethod: (value: string | ((prevValue: string) => string)) => void,
+    text: string,
+    values: string[],
+    // selectedValue: string,
+  ) => React.JSX.Element;
+};
 
 const schema = z.object({
   amount: z.string({required_error: 'Amount Cannot be Blank'}).refine(
@@ -31,12 +40,28 @@ const schema = z.object({
   ),
 });
 
-const {data} = useQuery({
-  queryKey: ['test'],
-});
-
 const CurrencyConverter = ({navigation}: Props) => {
-  const [fromValue, setFromValue] = useState('option1');
+  const [fromValue, setFromValue] = useState<string[]>([]);
+  const [toValue, setToValue] = useState<string[]>([]);
+  const [selectedFromValue, setSelectedFromValue] = useState<string>('');
+  const [selectedToValue, setSelectedToValue] = useState<string>('');
+  const {
+    data: responseData,
+    isLoading: isCurrencyLoading,
+    isError: isCurrencyFetchError,
+  } = useQuery({
+    queryKey: ['test'],
+    queryFn: getCurrencies,
+  });
+
+  useEffect(() => {
+    if (responseData) {
+      const currencyNames = Object.keys(responseData.data.data);
+      setFromValue(currencyNames);
+      setToValue(currencyNames);
+    }
+  }, [responseData]);
+
   const form = useForm<FormField>({resolver: zodResolver(schema)});
   const {control, handleSubmit, formState} = form;
   const {errors} = formState;
@@ -44,7 +69,46 @@ const CurrencyConverter = ({navigation}: Props) => {
   const onSubmit: SubmitHandler<FormField> = data => {
     console.log('submit');
     console.log('Form values:', data);
-    // Handle the form data as needed
+  };
+
+  const renderPickers: RenderPickersParams['renderPickers'] = (
+    setMethod,
+    text,
+    values,
+  ) => {
+    return (
+      <>
+        <Text style={styles.optionBoxText}>{text}</Text>
+        {responseData && values && Array.isArray(values) && (
+          <Picker
+            onValueChange={(itemValue, itemIndex) => setMethod(itemValue)}
+            style={styles.optionBox}>
+            {values.map((value: string, index: number) => (
+              <Picker.Item label={value} key={index} value={value} />
+            ))}
+          </Picker>
+        )}
+
+        {isCurrencyLoading && (
+          <Text
+            style={{
+              fontSize: 20,
+            }}>
+            Loading...
+          </Text>
+        )}
+
+        {isCurrencyFetchError && (
+          <Text
+            style={{
+              fontSize: 20,
+              color: '#15212F',
+            }}>
+            Something Went Wrong
+          </Text>
+        )}
+      </>
+    );
   };
 
   return (
@@ -61,27 +125,9 @@ const CurrencyConverter = ({navigation}: Props) => {
           Back
         </Text>
         <Text style={styles.titleText}>Currency Converter</Text>
-
+        {renderPickers(setSelectedFromValue, 'From', fromValue)}
+        {renderPickers(setSelectedToValue, 'To', toValue)}
         <View style={{marginTop: 20}}>
-          <Text style={styles.optionBoxText}>From:</Text>
-          <Picker
-            fromValue={fromValue}
-            onValueChange={(itemValue, itemIndex) => setFromValue(itemValue)}
-            style={styles.optionBox}>
-            <Picker.Item label="Option 1" value="option1" />
-            <Picker.Item label="Option 2" value="option2" />
-            <Picker.Item label="Option 3" value="option3" />
-          </Picker>
-
-          <Text style={styles.optionBoxText}>To:</Text>
-          <Picker
-            fromValue={fromValue}
-            onValueChange={(itemValue, itemIndex) => setFromValue(itemValue)}
-            style={styles.optionBox}>
-            <Picker.Item label="Option 1" value="option1" />
-            <Picker.Item label="Option 2" value="option2" />
-            <Picker.Item label="Option 3" value="option3" />
-          </Picker>
           <Controller
             control={control}
             name="amount"
