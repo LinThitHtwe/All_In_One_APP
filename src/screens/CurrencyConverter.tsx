@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import {RootStackScreenProps} from '../navigations/types';
 import {z} from 'zod';
@@ -16,6 +16,7 @@ import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useQuery} from '@tanstack/react-query';
 import {getCurrencies} from '../api/apiFunctions';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props extends RootStackScreenProps<'CurrencyConverter'> {}
 
@@ -136,16 +137,17 @@ The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
   return (
     <Pressable onPress={() => Keyboard.dismiss()} style={styles.mainContainer}>
       <View style={styles.bodyCard}>
-        <Text
-          onPress={() => navigation.goBack()}
-          style={{
-            color: '#15212F',
-            fontSize: 13,
-            fontWeight: '600',
-            marginBottom: 8,
-          }}>
-          Back
-        </Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Icon
+            style={{
+              color: '#15212F',
+              fontSize: 18,
+              fontWeight: '600',
+              marginBottom: 8,
+            }}
+            name="arrow-left"></Icon>
+        </TouchableOpacity>
+
         <Text style={styles.titleText}>Currency Converter</Text>
         {renderPickers(
           setSelectedFromValue,
@@ -192,13 +194,6 @@ The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
               <Text style={styles.amountConvertText}>Convert</Text>
             </TouchableOpacity>
           </View>
-          <Text style={{textAlign: 'center', color: '#15212F'}}>
-            Selected From Value: {selectedFromValue}
-          </Text>
-
-          <Text style={{textAlign: 'center', color: '#15212F'}}>
-            Selected To Value: {selectedToValue}
-          </Text>
         </View>
       </View>
     </Pressable>
