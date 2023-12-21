@@ -5,6 +5,7 @@ export type RootStackParamsList = {
   UnitConvertLists: undefined;
   CurrencyConverter: undefined;
   AllToDosList: undefined;
+  ToDoForm: undefined;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamsList> =

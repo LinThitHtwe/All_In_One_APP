@@ -17,57 +17,20 @@ interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
 const HomeScreen = ({navigation}: Props) => {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#15212F',
-      }}>
-      <View
-        style={{
-          width: '100%',
-          height: 170,
-          justifyContent: 'space-between',
-          flexDirection: 'row',
-          paddingHorizontal: 30,
-          alignItems: 'center',
-        }}>
+    <View style={styles.mainContainer}>
+      <View style={styles.weatherContainer}>
         <Image
           source={{
             uri: 'https://cdn1.iconfinder.com/data/icons/weather-forecast-meteorology-color-1/128/weather-sunny-512.png',
           }}
-          style={{height: 110, width: 110}}
+          style={styles.weatherImage}
         />
         <View style={{gap: 15}}>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 40,
-              color: '#e9e9e9',
-              fontFamily: 'monospace',
-            }}>
-            Yangon
-          </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 35,
-              color: '#e9e9e9',
-              fontFamily: 'monospace',
-            }}>
-            26°C
-          </Text>
+          <Text style={styles.weatherCityText}>Yangon</Text>
+          <Text style={styles.weatherTemperature}>26°C</Text>
         </View>
       </View>
-      <ScrollView
-        style={{
-          backgroundColor: '#e9e9e9',
-          height: '150%',
-          borderRadius: 23,
-          padding: 3,
-          position: 'relative',
-          marginBottom: 2,
-        }}>
+      <ScrollView style={styles.scrollContainer}>
         <View
           style={{
             height: 150,
@@ -159,4 +122,42 @@ const HomeScreen = ({navigation}: Props) => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#15212F',
+  },
+  weatherContainer: {
+    width: '100%',
+    height: 170,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    paddingHorizontal: 30,
+    alignItems: 'center',
+  },
+  weatherImage: {height: 110, width: 110},
+
+  weatherCityText: {
+    textAlign: 'center',
+    fontSize: 40,
+    color: '#e9e9e9',
+    fontFamily: 'monospace',
+  },
+
+  weatherTemperature: {
+    textAlign: 'center',
+    fontSize: 35,
+    color: '#e9e9e9',
+    fontFamily: 'monospace',
+  },
+
+  scrollContainer: {
+    backgroundColor: '#e9e9e9',
+    height: '150%',
+    borderRadius: 23,
+    padding: 3,
+    position: 'relative',
+    marginBottom: 2,
+  },
+});

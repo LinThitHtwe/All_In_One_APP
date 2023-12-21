@@ -6,14 +6,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
 
 const AllToDosList = ({navigation}: Props) => {
-  const [numColumns, setNumColumns] = useState(2);
   const data = Array.from({length: 10}, (_, index) => ({
     id: index.toString(),
     title: `Itemtfuiiiiiiiiikglkklgkgfifyuftuciiiiiiiii ${index + 1}`,
@@ -108,6 +107,7 @@ const AllToDosList = ({navigation}: Props) => {
             placeholderTextColor={'rgba(21, 33, 47,0.3)'}
           />
           <TouchableOpacity
+            onPress={() => navigation.navigate('ToDoForm')}
             style={{
               backgroundColor: '#283e58',
               justifyContent: 'center',
