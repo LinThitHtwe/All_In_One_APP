@@ -23,7 +23,7 @@ const AllToDosList = ({navigation}: Props) => {
     let truncatedTitle = item.title;
 
     if (item.title.length > 25) {
-      truncatedTitle = item.title.substring(0, 25) + '...';
+      truncatedTitle = item.title.substring(0, 18) + '...';
     }
     return (
       <View
@@ -38,7 +38,9 @@ const AllToDosList = ({navigation}: Props) => {
           borderRadius: 10,
           backgroundColor: '#15212F',
         }}>
-        <Text style={{fontSize: 20}}>{truncatedTitle}</Text>
+        <Text style={{fontSize: 20, fontFamily: 'monospace'}}>
+          {truncatedTitle}
+        </Text>
       </View>
     );
   };
@@ -85,6 +87,7 @@ const AllToDosList = ({navigation}: Props) => {
             fontSize: 25,
             fontWeight: '600',
             textAlign: 'center',
+            fontFamily: 'monospace',
           }}>
           Your Todos
         </Text>
@@ -100,8 +103,9 @@ const AllToDosList = ({navigation}: Props) => {
               borderWidth: 1,
               borderRadius: 15,
               borderColor: 'rgba(21, 33, 47,0.6)',
-              width: '78%',
+              width: '76%',
               padding: 10,
+              fontFamily: 'monospace',
             }}
             placeholder="Search todos"
             placeholderTextColor={'rgba(21, 33, 47,0.3)'}
@@ -114,7 +118,13 @@ const AllToDosList = ({navigation}: Props) => {
               padding: 8,
               borderRadius: 10,
             }}>
-            <Text style={{textAlign: 'center', fontSize: 14, color: '#e9e9e9'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 14,
+                color: '#e9e9e9',
+                fontFamily: 'monospace',
+              }}>
               Add More
             </Text>
           </TouchableOpacity>

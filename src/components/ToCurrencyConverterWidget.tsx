@@ -23,6 +23,7 @@ const ToCurrencyConverterWidget = (props: Props) => {
           color: '#e9e9e9',
           fontSize: 18,
           fontWeight: '700',
+          fontFamily: 'monospace',
         }}>
         Currency Converter
       </Text>

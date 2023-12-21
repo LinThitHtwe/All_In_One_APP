@@ -37,13 +37,19 @@ const BottomNavigationBar = (props: Props) => {
             width: '30%',
             justifyContent: 'center',
           }}>
-          <Text style={{textAlign: 'center'}}>Home</Text>
+          <Text style={{textAlign: 'center', fontFamily: 'monospace'}}>
+            Home
+          </Text>
         </View>
         <View style={{height: '100%', width: '30%', justifyContent: 'center'}}>
-          <Text style={{textAlign: 'center'}}>Home</Text>
+          <Text style={{textAlign: 'center', fontFamily: 'monospace'}}>
+            Home
+          </Text>
         </View>
         <View style={{height: '100%', width: '30%', justifyContent: 'center'}}>
-          <Text style={{textAlign: 'center'}}>Home</Text>
+          <Text style={{textAlign: 'center', fontFamily: 'monospace'}}>
+            Home
+          </Text>
         </View>
       </View>
     </View>

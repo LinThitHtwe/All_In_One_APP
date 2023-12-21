@@ -80,7 +80,7 @@ const CurrencyConverter = ({navigation}: Props) => {
       `The Result of ${
         data.amount
       } ${selectedFromValue} to ${selectedToValue} is ${convertedAmount} ${selectedToValue}.\n
-The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
+        The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
         5,
       )} ${selectedToValue}.`,
 
@@ -116,6 +116,8 @@ The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
           <Text
             style={{
               fontSize: 20,
+              color: '#15212F',
+              fontFamily: 'monospace',
             }}>
             Loading...
           </Text>
@@ -126,6 +128,7 @@ The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
             style={{
               fontSize: 20,
               color: '#15212F',
+              fontFamily: 'monospace',
             }}>
             Something Went Wrong
           </Text>
@@ -224,6 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '600',
     textAlign: 'center',
+    fontFamily: 'monospace',
   },
 
   optionBoxText: {
@@ -232,6 +236,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 10,
     marginTop: 20,
+    fontFamily: 'monospace',
   },
 
   optionBox: {
@@ -246,6 +251,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 10,
     marginTop: 30,
+    fontFamily: 'monospace',
   },
 
   amountInput: {
@@ -254,6 +260,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     color: '#15212F',
+    fontFamily: 'monospace',
   },
 
   amountConvertBtn: {
@@ -264,7 +271,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  amountConvertText: {textAlign: 'center', color: '#fff'},
+  amountConvertText: {
+    textAlign: 'center',
+    color: '#fff',
+    fontFamily: 'monospace',
+  },
 
   converBtnContainer: {alignItems: 'center', marginTop: 60, opacity: 0.8},
 });

@@ -70,6 +70,7 @@ const HomeScreen = ({navigation}: Props) => {
                 color: '#15212F',
                 fontSize: 17,
                 fontWeight: '500',
+                fontFamily: 'monospace',
               }}>
               Your Todos
             </Text>
@@ -84,7 +85,14 @@ const HomeScreen = ({navigation}: Props) => {
                   marginVertical: 10,
                   padding: 10,
                 }}>
-                <Text style={{fontSize: 20, color: '#e9e9e9'}}>Hello</Text>
+                <Text
+                  style={{
+                    fontSize: 20,
+                    color: '#e9e9e9',
+                    fontFamily: 'monospace',
+                  }}>
+                  Hello
+                </Text>
               </View>
             ))}
             <TouchableOpacity
@@ -102,6 +110,7 @@ const HomeScreen = ({navigation}: Props) => {
                   fontWeight: '500',
                   borderColor: 'rgba(21, 33, 47,0.8)',
                   borderBottomWidth: 1,
+                  fontFamily: 'monospace',
                 }}>
                 Show All
               </Text>
