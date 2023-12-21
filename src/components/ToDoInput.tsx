@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
-import {Control, Controller, FieldValues, Path} from 'react-hook-form';
+import {Controller} from 'react-hook-form';
 
 const ToDoInput = ({label, name, control, placeholder, height}) => {
   return (
@@ -11,20 +11,29 @@ const ToDoInput = ({label, name, control, placeholder, height}) => {
             style={{
               fontSize: 25,
               color: '#15212F',
-              marginVertical: 5,
+              marginTop: 25,
+              marginBottom: 10,
               fontWeight: '400',
               fontFamily: 'monospace',
             }}>
             {label}
           </Text>
+          {error && (
+            <Text style={{color: '#FF0000', fontSize: 12}}>
+              {error.message}
+            </Text>
+          )}
           <TextInput
+            value={value}
+            onChangeText={text => onChange(text)}
+            onBlur={onBlur}
             multiline
             numberOfLines={4}
-            placeholder={placeholder}
-            placeholderTextColor={'rgba(21, 33, 47,0.3)'}
+            placeholder={error ? error.message : placeholder}
+            placeholderTextColor={error ? '#FF0000' : 'rgba(21, 33, 47, 0.3)'}
             style={{
               borderWidth: 1,
-              borderColor: 'rgba(21, 33, 47,0.6)',
+              borderColor: error ? '#FF0000' : 'rgba(21, 33, 47, 0.6)',
               padding: 10,
               borderRadius: 15,
               color: '#15212F',

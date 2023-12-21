@@ -1,6 +1,7 @@
 import {
   Button,
   Platform,
+  Pressable,
   ScrollView,
   StyleSheet,
   Switch,
@@ -14,7 +15,7 @@ import {RootStackScreenProps} from '../navigations/types';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import ToDoInput from '../components/ToDoInput';
-import {useForm} from 'react-hook-form';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
@@ -24,22 +25,30 @@ const schema = z.object({
     .string({required_error: 'Amount Cannot be Blank'})
     .min(3, 'ToDo Title must be more than 3 words'),
 
-  toRemind: z.boolean({
-    required_error: 'isActive is required',
-    invalid_type_error: 'isActive must be a boolean',
-  }),
+  description: z.string().nullable(),
 });
-
+type FormField = z.infer<typeof schema>;
 const ToDoFrom = ({navigation}: Props) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<null | Date>(null);
+  const [selectedTime, setSelectedTime] = useState<null | Date>(null);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  const {control, formState} = useForm();
+  const {control, formState, handleSubmit} = useForm<FormField>({
+    resolver: zodResolver(schema),
+  });
   const {errors} = formState;
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => {
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setIsEnabled(previousState => !previousState);
+  };
+
+  const onSubmit: SubmitHandler<FormField> = data => {
+    console.log(data);
+    console.log('submitted');
+  };
   return (
     <View
       style={{
@@ -88,7 +97,7 @@ const ToDoFrom = ({navigation}: Props) => {
           Add Todo
         </Text>
 
-        <View style={{marginTop: 30}}>
+        <View style={{marginTop: 10, padding: 10}}>
           <ToDoInput
             label={'Title'}
             name={'title'}
@@ -99,14 +108,21 @@ const ToDoFrom = ({navigation}: Props) => {
 
           <ToDoInput
             label={'Description'}
-            name={'Description'}
+            name={'description'}
             control={control}
             placeholder={'Add Todo Description'}
             height={200}
           />
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+
+              alignItems: 'center',
+              marginTop: 20,
+            }}>
             <Text
               style={{
+                textAlign: 'left',
                 color: '#15212F',
                 fontWeight: '400',
                 fontFamily: 'monospace',
@@ -124,62 +140,166 @@ const ToDoFrom = ({navigation}: Props) => {
           </View>
 
           {isEnabled && (
-            <View style={{marginTop: 15}}>
+            <View style={{marginTop: 15, padding: 8}}>
               <Text
                 style={{
                   color: '#15212F',
-                  fontSize: 18,
+                  fontSize: 17,
+                  fontWeight: '700',
                   fontFamily: 'monospace',
                 }}>
-                Select reminder date.
+                Select reminder date and time.
               </Text>
-              <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: '#15212F',
-                    width: '45%',
-                    padding: 6,
-                    borderRadius: 10,
-                  }}
-                  onPress={() => setIsDatePickerOpen(true)}>
-                  <Text style={{textAlign: 'center'}}>Select Remind Date</Text>
-                </TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  marginTop: 20,
+                }}>
+                <View style={{width: '45%'}}>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: '#15212F',
+                      position: 'relative',
+                      padding: 6,
+                      borderRadius: 10,
+                      overflow: 'hidden',
+                    }}
+                    onPress={() => setIsDatePickerOpen(true)}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#e9e9e9',
+                        fontFamily: 'monospace',
+                      }}>
+                      Select Remind Date
+                    </Text>
+                    <Icon
+                      style={{
+                        position: 'absolute',
+                        fontSize: 40,
+                        color: '#888',
+                        opacity: 0.2,
+                        bottom: 0,
+                        right: -10,
+                        transform: [{rotate: '15deg'}],
+                      }}
+                      name="calendar-o"></Icon>
+                  </TouchableOpacity>
+                  {selectedDate && (
+                    <Text
+                      style={{
+                        color: '#15212F',
+                        marginTop: 10,
+                        fontFamily: 'monospace',
+                      }}>
+                      Selected Time:{' '}
+                      {selectedDate.getDate().toString().padStart(2, '0')}.
+                      {(selectedDate.getMonth() + 1)
+                        .toString()
+                        .padStart(2, '0')}
+                      .{selectedDate.getFullYear()}
+                    </Text>
+                  )}
+                </View>
+                <View style={{width: '45%'}}>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: '#15212F',
+                      padding: 6,
+                      borderRadius: 10,
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                    onPress={() => setIsTimePickerOpen(true)}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#e9e9e9',
+                        fontFamily: 'monospace',
+                      }}>
+                      Select Remind Time
+                    </Text>
 
-                <TouchableOpacity
-                  style={{
-                    backgroundColor: '#15212F',
-                    width: '45%',
-                    padding: 6,
-                    borderRadius: 10,
-                  }}
-                  onPress={() => setIsTimePickerOpen(true)}>
-                  <Text style={{textAlign: 'center'}}>Select Remind Time</Text>
-                </TouchableOpacity>
+                    <Icon
+                      style={{
+                        position: 'absolute',
+                        fontSize: 40,
+                        color: '#888',
+                        opacity: 0.2,
+                        bottom: 0,
+                        right: -10,
+                        transform: [{rotate: '15deg'}],
+                      }}
+                      name="clock-o"></Icon>
+                  </TouchableOpacity>
+                  {selectedTime && (
+                    <Text
+                      style={{
+                        color: '#15212F',
+                        marginTop: 10,
+                        fontFamily: 'monospace',
+                      }}>
+                      Selected Time:{' '}
+                      {selectedTime.getHours().toString().padStart(2, '0')}:
+                      {selectedTime.getMinutes().toString().padStart(2, '0')}
+                    </Text>
+                  )}
+                </View>
 
                 {isDatePickerOpen && (
                   <DateTimePicker
                     testID="datePicker"
-                    value={selectedDate}
+                    value={new Date()}
                     mode="date"
-                    // is24Hour={true}
                     display="default"
-                    onChange={() => setIsDatePickerOpen(false)}
+                    onChange={(event, selectedDate) => {
+                      setIsDatePickerOpen(false);
+                      if (selectedDate) {
+                        setSelectedDate(selectedDate);
+                      }
+                    }}
                   />
                 )}
 
                 {isTimePickerOpen && (
                   <DateTimePicker
-                    testID="datePicker"
-                    value={selectedDate}
+                    testID="timePicker"
+                    value={new Date()}
                     mode="time"
-                    is24Hour={false}
+                    is24Hour={true}
                     display="default"
-                    onChange={() => setIsDatePickerOpen(false)}
+                    onChange={(event, selectedTime) => {
+                      setIsTimePickerOpen(false);
+                      if (selectedTime) {
+                        setSelectedTime(selectedTime);
+                      }
+                    }}
                   />
                 )}
               </View>
             </View>
           )}
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
+            style={{
+              marginTop: 25,
+              backgroundColor: '#15212F',
+              width: '50%',
+              padding: 12,
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: '#e9e9e9',
+                fontFamily: 'monospace',
+              }}>
+              Add ToDo
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
