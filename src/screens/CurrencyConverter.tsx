@@ -190,7 +190,8 @@ The Rate is 1 ${selectedFromValue} = ${conversionRate.toFixed(
           <View style={styles.converBtnContainer}>
             <TouchableOpacity
               onPress={handleSubmit(onSubmit)}
-              style={styles.amountConvertBtn}>
+              style={styles.amountConvertBtn}
+              disabled={isCurrencyLoading || isCurrencyFetchError}>
               <Text style={styles.amountConvertText}>Convert</Text>
             </TouchableOpacity>
           </View>

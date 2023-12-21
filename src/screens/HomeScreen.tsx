@@ -11,6 +11,7 @@ import CurrentDate from '../components/CurrentDate';
 import {RootStackScreenProps} from '../navigations/types';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -76,57 +77,7 @@ const HomeScreen = ({navigation}: Props) => {
           }}>
           <CurrentDate />
           <View style={{justifyContent: 'space-around'}}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('CurrencyConverter')}
-              style={{
-                backgroundColor: '#212D3B',
-                height: 65,
-                width: 180,
-                borderRadius: 10,
-                padding: 10,
-                overflow: 'hidden',
-              }}>
-              <Text
-                style={{
-                  color: '#e9e9e9',
-                  fontSize: 18,
-                  fontWeight: '700',
-                }}>
-                Currency Converter
-              </Text>
-              <Icon
-                style={{
-                  position: 'absolute',
-                  fontSize: 13,
-                  color: '#e9e9e9',
-                  bottom: 10,
-                  right: 15,
-                }}
-                name="arrow-right"></Icon>
-              <Icon
-                style={{
-                  position: 'absolute',
-                  fontSize: 90,
-                  color: '#888',
-                  top: 10,
-                  left: -10,
-                  opacity: 0.1,
-                  transform: [{rotate: '15deg'}],
-                }}
-                name="money"></Icon>
-
-              <Icon
-                style={{
-                  position: 'absolute',
-                  fontSize: 90,
-                  color: '#888',
-                  top: -45,
-                  right: -30,
-                  opacity: 0.1,
-                  transform: [{rotate: '15deg'}],
-                }}
-                name="money"></Icon>
-            </TouchableOpacity>
+            <ToCurrencyConverterWidget />
             <View
               style={{
                 backgroundColor: '#212D3B',
@@ -146,11 +97,19 @@ const HomeScreen = ({navigation}: Props) => {
             style={{
               height: 370,
               width: '95%',
-              marginVertical: 30,
+              marginVertical: 15,
               borderRadius: 20,
 
               padding: 5,
             }}>
+            <Text
+              style={{
+                color: '#15212F',
+                fontSize: 17,
+                fontWeight: '500',
+              }}>
+              Your Todos
+            </Text>
             {[...Array(4).keys()].map(index => (
               <View
                 key={index}
@@ -165,6 +124,31 @@ const HomeScreen = ({navigation}: Props) => {
                 <Text style={{fontSize: 20, color: '#e9e9e9'}}>Hello</Text>
               </View>
             ))}
+            <TouchableOpacity
+              onPress={() => navigation.navigate('AllToDosList')}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                gap: 8,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'right',
+                  color: '#15212F',
+                  fontWeight: '500',
+                  borderColor: 'rgba(21, 33, 47,0.8)',
+                  borderBottomWidth: 1,
+                }}>
+                Show All
+              </Text>
+              <Icon
+                style={{
+                  fontSize: 15,
+                  color: '#15212F',
+                }}
+                name="arrow-right"></Icon>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
