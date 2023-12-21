@@ -1,5 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = {};
 
@@ -70,6 +71,18 @@ const CurrentDate = (props: Props) => {
         }}>
         {year}
       </Text>
+
+      <Icon
+        style={{
+          position: 'absolute',
+          fontSize: 90,
+          color: '#888',
+          bottom: 10,
+          right: -10,
+          opacity: 0.1,
+          transform: [{rotate: '15deg'}],
+        }}
+        name="calendar-o"></Icon>
     </View>
   );
 };

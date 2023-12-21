@@ -1,4 +1,6 @@
 import {
+  Button,
+  Platform,
   ScrollView,
   StyleSheet,
   Switch,
@@ -13,7 +15,7 @@ import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
 import ToDoInput from '../components/ToDoInput';
 import {useForm} from 'react-hook-form';
-import {Calendar} from 'react-native-calendars';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
 
@@ -29,6 +31,11 @@ const schema = z.object({
 });
 
 const ToDoFrom = ({navigation}: Props) => {
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
+
   const {control, formState} = useForm();
   const {errors} = formState;
   const [isEnabled, setIsEnabled] = useState(false);
@@ -71,6 +78,7 @@ const ToDoFrom = ({navigation}: Props) => {
         </TouchableOpacity>
         <Text
           style={{
+            marginTop: 5,
             color: '#15212F',
             fontSize: 25,
             fontWeight: '600',
@@ -116,21 +124,60 @@ const ToDoFrom = ({navigation}: Props) => {
           </View>
 
           {isEnabled && (
-            <View style={{alignItems: 'center'}}>
+            <View style={{marginTop: 15}}>
               <Text
                 style={{
                   color: '#15212F',
-                  fontSize: 20,
+                  fontSize: 18,
                   fontFamily: 'monospace',
                 }}>
                 Select reminder date.
               </Text>
-              <Calendar
-                style={{height: 'auto', width: 250}}
-                onDayPress={day => {
-                  console.log('selected day', day);
-                }}
-              />
+              <View style={{flexDirection: 'row'}}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#15212F',
+                    width: '45%',
+                    padding: 6,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => setIsDatePickerOpen(true)}>
+                  <Text style={{textAlign: 'center'}}>Select Remind Date</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#15212F',
+                    width: '45%',
+                    padding: 6,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => setIsTimePickerOpen(true)}>
+                  <Text style={{textAlign: 'center'}}>Select Remind Time</Text>
+                </TouchableOpacity>
+
+                {isDatePickerOpen && (
+                  <DateTimePicker
+                    testID="datePicker"
+                    value={selectedDate}
+                    mode="date"
+                    // is24Hour={true}
+                    display="default"
+                    onChange={() => setIsDatePickerOpen(false)}
+                  />
+                )}
+
+                {isTimePickerOpen && (
+                  <DateTimePicker
+                    testID="datePicker"
+                    value={selectedDate}
+                    mode="time"
+                    is24Hour={false}
+                    display="default"
+                    onChange={() => setIsDatePickerOpen(false)}
+                  />
+                )}
+              </View>
             </View>
           )}
         </View>
