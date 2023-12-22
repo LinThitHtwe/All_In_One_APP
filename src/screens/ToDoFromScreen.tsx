@@ -129,6 +129,20 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
       showToast(true);
     }
   };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const storedTodosString = await AsyncStorage.getItem('todos');
+      if (storedTodosString) {
+        const storedTodos: ToDoFormParams[] = JSON.parse(storedTodosString);
+        const updatedTodos = storedTodos.filter(todo => todo.id !== id);
+        await AsyncStorage.setItem('todos', JSON.stringify(updatedTodos));
+        navigation.navigate('AllToDosList');
+      }
+    } catch (error) {
+      ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
+    }
+  };
   return (
     <View
       style={{
@@ -361,24 +375,80 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
           )}
         </View>
         <View style={{alignItems: 'center'}}>
-          <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
-            style={{
-              marginTop: 5,
-              backgroundColor: '#15212F',
-              width: '50%',
-              padding: 12,
-              borderRadius: 10,
-            }}>
-            <Text
+          {oldTitle ? (
+            <View
               style={{
-                textAlign: 'center',
-                color: '#e9e9e9',
-                fontFamily: 'monospace',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                gap: 20,
               }}>
-              Add ToDo
-            </Text>
-          </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => handleDelete(oldId!)}
+                style={{
+                  marginTop: 5,
+                  backgroundColor: '#e00202',
+                  width: '40%',
+                  padding: 12,
+                  borderRadius: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 4,
+                }}>
+                <Text style={{color: '#e9e9e9', fontFamily: 'monospace'}}>
+                  Delete Todo
+                </Text>
+                <Icon
+                  style={{
+                    color: '#e9e9e9',
+                    fontSize: 16,
+                    fontWeight: '600',
+                  }}
+                  name="trash"></Icon>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  marginTop: 5,
+                  backgroundColor: '#3cb043',
+                  width: '40%',
+                  padding: 12,
+                  borderRadius: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: 4,
+                }}>
+                <Text style={{color: '#e9e9e9', fontFamily: 'monospace'}}>
+                  Update Todo
+                </Text>
+                <Icon
+                  style={{
+                    color: '#e9e9e9',
+                    fontSize: 16,
+                    fontWeight: '600',
+                  }}
+                  name="edit"></Icon>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
+              style={{
+                marginTop: 5,
+                backgroundColor: '#15212F',
+                width: '50%',
+                padding: 12,
+                borderRadius: 10,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#e9e9e9',
+                  fontFamily: 'monospace',
+                }}>
+                Add ToDo
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     </View>
