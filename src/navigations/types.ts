@@ -5,7 +5,15 @@ export type RootStackParamsList = {
   UnitConvertLists: undefined;
   CurrencyConverter: undefined;
   AllToDosList: undefined;
-  ToDoForm: undefined;
+  ToDoForm:
+    | undefined
+    | {
+        id: string;
+        title: string;
+        description: string | null;
+        selectedDate: string | null;
+        selectedTime: string | null;
+      };
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParamsList> =

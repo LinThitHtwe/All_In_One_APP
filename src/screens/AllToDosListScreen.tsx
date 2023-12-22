@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
-type TodoItem = {
+type RenderItemProps = {
   item: {
     id: string;
     title: string;
@@ -24,6 +24,7 @@ type TodoItem = {
     selectedDate: string | null;
     selectedTime: string | null;
   };
+  index: number;
 };
 
 type ToDoList = {
@@ -36,9 +37,17 @@ type ToDoList = {
 const AllToDosListScreen = ({navigation}: Props) => {
   const [todos, setTodos] = useState<ToDoList[] | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedItems, setSelectedItems] = useState<boolean[]>(
+    Array(todos?.length).fill(false),
+  );
 
+  const handleCheckBoxChange = (index: number) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index] = !newSelectedItems[index];
+    setSelectedItems(newSelectedItems);
+  };
   const [isDeleteEnable, setIsDeleteEnable] = useState<boolean>(false);
-  const renderItem = ({item}: TodoItem) => {
+  const renderItem = ({item, index}: RenderItemProps) => {
     let truncatedTitle = item.title;
     if (item.title.length > 25) {
       truncatedTitle = item.title.substring(0, 18) + '...';
@@ -66,7 +75,9 @@ const AllToDosListScreen = ({navigation}: Props) => {
           {truncatedTitle}
         </Text>
         {!isDeleteEnable && (
-          <TouchableOpacity style={{marginRight: 5}}>
+          <TouchableOpacity
+            style={{marginRight: 5}}
+            onPress={() => navigation.navigate('ToDoForm', item)}>
             <Icon
               style={{
                 color: '#e9e9e9',
@@ -80,15 +91,15 @@ const AllToDosListScreen = ({navigation}: Props) => {
           <CheckBox
             style={{borderRadius: 10}}
             disabled={false}
-            value={isDeleteEnable}
-            onValueChange={() => setIsDeleteEnable(!isDeleteEnable)}
+            value={selectedItems[index]}
+            onValueChange={() => handleCheckBoxChange(index)}
           />
         )}
       </Pressable>
     );
   };
-  // const storedTodos: string | null = AsyncStorage.getItem('todos');
   useEffect(() => {
+    console.log('useEffectRun');
     const getAsyncStorageData = async () => {
       try {
         const storedTodos: string | null = await AsyncStorage.getItem('todos');
@@ -104,6 +115,42 @@ const AllToDosListScreen = ({navigation}: Props) => {
   const filteredTodos = todos?.filter(todo =>
     todo.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
+  const DeleteMessage = () => {
+    const selectedCount = selectedItems.filter(item => item).length;
+    return (
+      <>
+        <TouchableOpacity
+          style={{
+            justifyContent: 'center',
+            marginTop: 10,
+          }}>
+          {selectedCount > 0 && (
+            <Text
+              style={{
+                color: '#ff0000',
+                textAlign: 'right',
+                fontFamily: 'monospace',
+                textDecorationLine: 'underline',
+              }}>
+              Delete {selectedCount} {''}
+              {selectedCount === 1 ? 'Todo' : 'Todos'} ?
+            </Text>
+          )}
+        </TouchableOpacity>
+        {isDeleteEnable && (
+          <TouchableOpacity
+            style={{marginTop: 10}}
+            onPress={() => {
+              setIsDeleteEnable(false);
+              setSelectedItems(Array(todos?.length).fill(false));
+            }}>
+            <Text style={{color: '#15212F', textAlign: 'right'}}>Cancel</Text>
+          </TouchableOpacity>
+        )}
+      </>
+    );
+  };
 
   return (
     <View
@@ -192,6 +239,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
             </Text>
           </TouchableOpacity>
         </View>
+        <DeleteMessage />
         {!todos || todos.length === 0 ? (
           <>
             <Text

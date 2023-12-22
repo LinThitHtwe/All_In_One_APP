@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
 import {z} from 'zod';
@@ -19,21 +19,42 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTodos} from '../hooks/useTodos';
 import {ToDoFormField} from '../hooks/useTodos';
-import {v4 as uuidv4} from 'uuid';
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
+type ToDoFormParams = {
+  description?: string;
+  id?: string;
+  title?: string;
+  selectedDate?: string;
+  selectedTime?: string;
+};
+const ToDoFromScreen = ({route, navigation}: Props) => {
+  const {params} = route;
 
-const ToDoFromScreen = ({navigation}: Props) => {
+  const {
+    description: oldDescription,
+    id: oldId,
+    title: oldTitle,
+    selectedDate: oldSelectedDate,
+    selectedTime: oldSelectedTime,
+  } = (params || {}) as ToDoFormParams;
+
+  console.log(
+    `${oldDescription}----${oldId}---${oldSelectedDate}--${oldSelectedTime}---${oldTitle}`,
+  );
+
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<null | Date>(null);
   const [selectedTime, setSelectedTime] = useState<null | Date>(null);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
-
-  const {control, handleSubmit} = useTodos();
-  const [isReminderSwitchEnabled, isSetReminderSwitchEnabled] = useState(false);
+  const {control, handleSubmit} = useTodos({
+    title: oldTitle ? oldTitle : '',
+    description: oldDescription,
+  });
+  const [isReminderSwitchEnabled, setIsReminderSwitchEnabled] = useState(false);
   const toggleSwitch = () => {
     setSelectedDate(null);
     setSelectedTime(null);
-    isSetReminderSwitchEnabled(previousState => !previousState);
+    setIsReminderSwitchEnabled(previousState => !previousState);
   };
 
   const showToast = (isError: boolean): void => {
@@ -42,6 +63,14 @@ const ToDoFromScreen = ({navigation}: Props) => {
       ToastAndroid.LONG,
     );
   };
+
+  useEffect(() => {
+    if (oldSelectedDate && oldSelectedTime) {
+      setIsReminderSwitchEnabled(true);
+      setSelectedDate(new Date(oldSelectedDate));
+      setSelectedTime(new Date(oldSelectedTime));
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<ToDoFormField> = async data => {
     if (
@@ -55,8 +84,6 @@ const ToDoFromScreen = ({navigation}: Props) => {
       );
       return;
     }
-    // const id = uuidv4();
-    // console.log(id);
     const todoData = {
       ...data,
       id: Date.now().toString(),
@@ -72,6 +99,20 @@ const ToDoFromScreen = ({navigation}: Props) => {
           await AsyncStorage.setItem('todos', JSON.stringify(updatedData));
           showToast(false);
           setSelectedDate(null), setSelectedTime(null);
+          setIsReminderSwitchEnabled(false);
+          const getAsyncStorageData = async () => {
+            try {
+              const storedTodos: string | null = await AsyncStorage.getItem(
+                'todos',
+              );
+              // if (storedTodos) setTodos(JSON.parse(storedTodos));
+              console.log('new-data----', storedTodos);
+            } catch (error) {
+              // ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
+            }
+          };
+          // console.log('hi');
+          getAsyncStorageData();
         } catch (error) {
           showToast(true);
         }
