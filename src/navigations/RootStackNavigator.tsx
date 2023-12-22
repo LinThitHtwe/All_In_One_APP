@@ -1,10 +1,10 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamsList} from './types';
 import HomeScreen from '../screens/HomeScreen';
-import UnitConvertLists from '../screens/UnitConvertLists';
-import CurrencyConverter from '../screens/CurrencyConverter';
-import AllToDosList from '../screens/AllToDosList';
-import ToDoFrom from '../screens/ToDoFrom';
+import UnitConvertListsScreen from '../screens/UnitConvertListsScreen';
+import CurrencyConverterScreen from '../screens/CurrencyConverterScreen';
+import AllToDosListScreen from '../screens/AllToDosListScreen';
+import ToDoFromScreen from '../screens/ToDoFromScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 const RootStackNavigator = () => {
@@ -13,10 +13,16 @@ const RootStackNavigator = () => {
       initialRouteName="HomeScreen"
       screenOptions={{headerShown: false}}>
       <Stack.Screen name={'HomeScreen'} component={HomeScreen} />
-      <Stack.Screen name={'CurrencyConverter'} component={CurrencyConverter} />
-      <Stack.Screen name={'AllToDosList'} component={AllToDosList} />
-      <Stack.Screen name={'ToDoForm'} component={ToDoFrom} />
-      <Stack.Screen name={'UnitConvertLists'} component={UnitConvertLists} />
+      <Stack.Screen
+        name={'CurrencyConverter'}
+        component={CurrencyConverterScreen}
+      />
+      <Stack.Screen name={'AllToDosList'} component={AllToDosListScreen} />
+      <Stack.Screen name={'ToDoForm'} component={ToDoFromScreen} />
+      <Stack.Screen
+        name={'UnitConvertLists'}
+        component={UnitConvertListsScreen}
+      />
     </Stack.Navigator>
   );
 };

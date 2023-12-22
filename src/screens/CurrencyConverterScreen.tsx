@@ -42,7 +42,7 @@ const schema = z.object({
   ),
 });
 
-const CurrencyConverter = ({navigation}: Props) => {
+const CurrencyConverterScreen = ({navigation}: Props) => {
   const [fromValue, setFromValue] = useState<string[]>([]);
   const [toValue, setToValue] = useState<string[]>([]);
   const [selectedFromValue, setSelectedFromValue] = useState<string>('');
@@ -204,7 +204,7 @@ const CurrencyConverter = ({navigation}: Props) => {
   );
 };
 
-export default CurrencyConverter;
+export default CurrencyConverterScreen;
 
 const styles = StyleSheet.create({
   mainContainer: {

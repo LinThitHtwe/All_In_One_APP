@@ -2,11 +2,17 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {RootStackParamsList} from '../navigations/types';
 
 type Props = {};
-
+type NavigationProps<T extends keyof RootStackParamsList> = {
+  navigation: {
+    navigate: (screen: T) => void;
+  };
+};
 const ToCurrencyConverterWidget = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps<'CurrencyConverter'>>();
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('CurrencyConverter')}

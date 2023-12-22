@@ -29,7 +29,7 @@ type ToDoList = {
   selectedDate: string | null;
   selectedTime: string | null;
 };
-const AllToDosList = ({navigation}: Props) => {
+const AllToDosListScreen = ({navigation}: Props) => {
   const [todos, setTodos] = useState<ToDoList[] | null>(null);
   const renderItem = ({item}: TodoItem) => {
     let truncatedTitle = item.title;
@@ -166,6 +166,6 @@ const AllToDosList = ({navigation}: Props) => {
   );
 };
 
-export default AllToDosList;
+export default AllToDosListScreen;
 
 const styles = StyleSheet.create({});

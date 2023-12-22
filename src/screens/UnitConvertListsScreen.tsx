@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {};
 
-const UnitConvertLists = (props: Props) => {
+const UnitConvertListsScreen = (props: Props) => {
   return (
     <View>
       <Text>UnitConvertLists</Text>
@@ -11,6 +11,6 @@ const UnitConvertLists = (props: Props) => {
   );
 };
 
-export default UnitConvertLists;
+export default UnitConvertListsScreen;
 
 const styles = StyleSheet.create({});
