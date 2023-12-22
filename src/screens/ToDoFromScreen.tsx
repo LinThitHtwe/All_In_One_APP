@@ -59,7 +59,11 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
 
   const showToast = (isError: boolean): void => {
     ToastAndroid.show(
-      `${isError ? 'Something Went Wrong' : 'Successfully added'}`,
+      `${
+        isError
+          ? 'Something Went Wrong'
+          : `Successfully ${oldTitle ? 'Updated' : 'Added'}`
+      }`,
       ToastAndroid.LONG,
     );
   };
@@ -90,29 +94,21 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
       selectedDate,
       selectedTime,
     };
+    const {id, ...restTodoData} = todoData;
     try {
       const storedTodos = await AsyncStorage.getItem('todos');
       if (storedTodos !== null) {
         const parsedData = JSON.parse(storedTodos);
-        const updatedData = [...parsedData, todoData];
+        let updatedData = oldTitle
+          ? parsedData.map((item: ToDoFormParams) =>
+              item.id === oldId ? {...item, ...restTodoData} : item,
+            )
+          : [...parsedData, todoData];
         try {
           await AsyncStorage.setItem('todos', JSON.stringify(updatedData));
           showToast(false);
           setSelectedDate(null), setSelectedTime(null);
           setIsReminderSwitchEnabled(false);
-          const getAsyncStorageData = async () => {
-            try {
-              const storedTodos: string | null = await AsyncStorage.getItem(
-                'todos',
-              );
-              // if (storedTodos) setTodos(JSON.parse(storedTodos));
-              console.log('new-data----', storedTodos);
-            } catch (error) {
-              // ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
-            }
-          };
-          // console.log('hi');
-          getAsyncStorageData();
         } catch (error) {
           showToast(true);
         }
@@ -132,13 +128,33 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
 
   const handleDelete = async (id: string) => {
     try {
-      const storedTodosString = await AsyncStorage.getItem('todos');
-      if (storedTodosString) {
-        const storedTodos: ToDoFormParams[] = JSON.parse(storedTodosString);
-        const updatedTodos = storedTodos.filter(todo => todo.id !== id);
-        await AsyncStorage.setItem('todos', JSON.stringify(updatedTodos));
-        navigation.navigate('AllToDosList');
-      }
+      Alert.alert(
+        'Confirm Deletion',
+        'Are you sure you want to delete this Todo?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Delete',
+            onPress: async () => {
+              const storedTodosString = await AsyncStorage.getItem('todos');
+              if (storedTodosString) {
+                const storedTodos: ToDoFormParams[] =
+                  JSON.parse(storedTodosString);
+                const updatedTodos = storedTodos.filter(todo => todo.id !== id);
+                await AsyncStorage.setItem(
+                  'todos',
+                  JSON.stringify(updatedTodos),
+                );
+                navigation.navigate('AllToDosList');
+              }
+            },
+          },
+        ],
+        {cancelable: false},
+      );
     } catch (error) {
       ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
     }
@@ -407,6 +423,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
               </TouchableOpacity>
 
               <TouchableOpacity
+                onPress={handleSubmit(onSubmit)}
                 style={{
                   marginTop: 5,
                   backgroundColor: '#3cb043',

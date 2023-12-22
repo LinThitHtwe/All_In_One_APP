@@ -111,7 +111,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
     // console.log('hi');
     getAsyncStorageData();
   }, []);
-
+  console.log('storedTodos--', todos);
   const filteredTodos = todos?.filter(todo =>
     todo.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );
