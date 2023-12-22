@@ -11,12 +11,27 @@ import React, {useEffect, useState} from 'react';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {string} from 'zod';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
+type TodoItem = {
+  item: {
+    title: string;
+    description: string | null;
+    selectedDate: string | null;
+    selectedTime: string | null;
+  };
+};
 
+type ToDoList = {
+  title: string;
+  description: string | null;
+  selectedDate: string | null;
+  selectedTime: string | null;
+};
 const AllToDosList = ({navigation}: Props) => {
-  const [todos, setTodos] = useState<[] | null>(null);
-  const renderItem = ({item}) => {
+  const [todos, setTodos] = useState<ToDoList[] | null>(null);
+  const renderItem = ({item}: TodoItem) => {
     let truncatedTitle = item.title;
     if (item.title.length > 25) {
       truncatedTitle = item.title.substring(0, 18) + '...';
@@ -43,13 +58,12 @@ const AllToDosList = ({navigation}: Props) => {
   useEffect(() => {
     const getAsyncStorageData = async () => {
       try {
-        const storedTodos = await AsyncStorage.getItem('todos');
-        setTodos(JSON.parse(storedTodos));
+        const storedTodos: string | null = await AsyncStorage.getItem('todos');
+        if (storedTodos) setTodos(JSON.parse(storedTodos));
       } catch (error) {
-        ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
+        // ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
       }
     };
-    console.log('mytodos---', todos);
     getAsyncStorageData();
   }, []);
 
@@ -137,15 +151,15 @@ const AllToDosList = ({navigation}: Props) => {
             </Text>
           </TouchableOpacity>
         </View>
-        {todos && todos.length > 0 ? (
+        {!todos || todos.length === 0 ? (
+          <Text>No Todo List Yet, Add One Now :3</Text>
+        ) : (
           <FlatList
             style={{marginTop: 20}}
             data={todos}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
           />
-        ) : (
-          <Text>No todos found</Text>
         )}
       </View>
     </View>

@@ -1,8 +1,19 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React from 'react';
-import {Controller} from 'react-hook-form';
+import {Control, Controller, FieldValues} from 'react-hook-form';
 
-const ToDoInput = ({label, name, control, placeholder, height}) => {
+type Props<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext extends object = object,
+> = {
+  label: string;
+  name: string;
+  control: Control<TFieldValues, TContext>;
+  placeholder: string;
+  height: number;
+};
+
+const ToDoInput = ({label, name, control, placeholder, height}: Props) => {
   return (
     <Controller
       render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
