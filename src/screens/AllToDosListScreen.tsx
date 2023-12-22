@@ -1,21 +1,24 @@
 import {
   FlatList,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
   ToastAndroid,
   TouchableOpacity,
+  Vibration,
   View,
 } from 'react-native';
+import CheckBox from '@react-native-community/checkbox';
 import React, {useEffect, useState} from 'react';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {string} from 'zod';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
 type TodoItem = {
   item: {
+    id: string;
     title: string;
     description: string | null;
     selectedDate: string | null;
@@ -24,6 +27,7 @@ type TodoItem = {
 };
 
 type ToDoList = {
+  id: string;
   title: string;
   description: string | null;
   selectedDate: string | null;
@@ -31,30 +35,59 @@ type ToDoList = {
 };
 const AllToDosListScreen = ({navigation}: Props) => {
   const [todos, setTodos] = useState<ToDoList[] | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const [isDeleteEnable, setIsDeleteEnable] = useState<boolean>(false);
   const renderItem = ({item}: TodoItem) => {
     let truncatedTitle = item.title;
     if (item.title.length > 25) {
       truncatedTitle = item.title.substring(0, 18) + '...';
     }
     return (
-      <View
+      <Pressable
+        onLongPress={() => {
+          Vibration.vibrate();
+          setIsDeleteEnable(true);
+        }}
         style={{
           flex: 1,
           padding: 10,
           height: 60,
           borderWidth: 1,
           borderColor: '#ccc',
-
+          flexDirection: 'row',
+          justifyContent: 'space-between',
           margin: 2,
           borderRadius: 10,
           backgroundColor: '#15212F',
+          alignItems: 'center',
         }}>
-        <Text style={{fontSize: 20, fontFamily: 'monospace'}}>
+        <Text style={{fontSize: 20, fontFamily: 'monospace', color: '#e9e9e9'}}>
           {truncatedTitle}
         </Text>
-      </View>
+        {!isDeleteEnable && (
+          <TouchableOpacity style={{marginRight: 5}}>
+            <Icon
+              style={{
+                color: '#e9e9e9',
+                fontSize: 18,
+                fontWeight: '600',
+              }}
+              name="edit"></Icon>
+          </TouchableOpacity>
+        )}
+        {isDeleteEnable && (
+          <CheckBox
+            style={{borderRadius: 10}}
+            disabled={false}
+            value={isDeleteEnable}
+            onValueChange={() => setIsDeleteEnable(!isDeleteEnable)}
+          />
+        )}
+      </Pressable>
     );
   };
+  // const storedTodos: string | null = AsyncStorage.getItem('todos');
   useEffect(() => {
     const getAsyncStorageData = async () => {
       try {
@@ -64,8 +97,13 @@ const AllToDosListScreen = ({navigation}: Props) => {
         // ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
       }
     };
+    // console.log('hi');
     getAsyncStorageData();
   }, []);
+
+  const filteredTodos = todos?.filter(todo =>
+    todo.title.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
   return (
     <View
@@ -94,7 +132,9 @@ const AllToDosListScreen = ({navigation}: Props) => {
             width: 50,
             height: 40,
           }}
-          onPress={() => navigation.goBack()}>
+          onPress={() => {
+            navigation.goBack();
+          }}>
           <Icon
             style={{
               color: '#15212F',
@@ -131,6 +171,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
             }}
             placeholder="Search todos"
             placeholderTextColor={'rgba(21, 33, 47,0.3)'}
+            onChangeText={text => setSearchQuery(text)}
           />
           <TouchableOpacity
             onPress={() => navigation.navigate('ToDoForm')}
@@ -152,11 +193,46 @@ const AllToDosListScreen = ({navigation}: Props) => {
           </TouchableOpacity>
         </View>
         {!todos || todos.length === 0 ? (
-          <Text>No Todo List Yet, Add One Now :3</Text>
+          <>
+            <Text
+              style={{
+                fontFamily: 'monospace',
+                color: '#15212F',
+                marginTop: 30,
+                textAlign: 'center',
+              }}>
+              No Todo List Yet, Add One Now :3
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 20,
+              }}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ToDoForm')}
+                style={{
+                  backgroundColor: '#283e58',
+                  justifyContent: 'center',
+                  padding: 12,
+                  borderRadius: 10,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 14,
+                    color: '#e9e9e9',
+                    fontFamily: 'monospace',
+                  }}>
+                  Add One
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </>
         ) : (
           <FlatList
             style={{marginTop: 20}}
-            data={todos}
+            data={filteredTodos}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
           />

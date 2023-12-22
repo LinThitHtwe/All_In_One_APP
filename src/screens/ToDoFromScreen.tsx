@@ -17,27 +17,18 @@ import ToDoInput from '../components/ToDoInput';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {useTodos} from '../hooks/useTodos';
+import {ToDoFormField} from '../hooks/useTodos';
+import {v4 as uuidv4} from 'uuid';
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
 
-const schema = z.object({
-  title: z
-    .string({required_error: 'Amount Cannot be Blank'})
-    .min(3, 'Todo Title must be more than 3 words'),
-
-  description: z.string().optional(),
-});
-type FormField = z.infer<typeof schema>;
 const ToDoFromScreen = ({navigation}: Props) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<null | Date>(null);
   const [selectedTime, setSelectedTime] = useState<null | Date>(null);
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
 
-  const {control, formState, handleSubmit} = useForm<FormField>({
-    resolver: zodResolver(schema),
-  });
-  const {errors} = formState;
+  const {control, handleSubmit} = useTodos();
   const [isReminderSwitchEnabled, isSetReminderSwitchEnabled] = useState(false);
   const toggleSwitch = () => {
     setSelectedDate(null);
@@ -52,7 +43,7 @@ const ToDoFromScreen = ({navigation}: Props) => {
     );
   };
 
-  const onSubmit: SubmitHandler<FormField> = async data => {
+  const onSubmit: SubmitHandler<ToDoFormField> = async data => {
     if (
       isReminderSwitchEnabled &&
       (selectedDate === null || selectedTime === null)
@@ -64,16 +55,23 @@ const ToDoFromScreen = ({navigation}: Props) => {
       );
       return;
     }
-    const todoData = {...data, selectedDate, selectedTime};
+    // const id = uuidv4();
+    // console.log(id);
+    const todoData = {
+      ...data,
+      id: Date.now().toString(),
+      selectedDate,
+      selectedTime,
+    };
     try {
       const storedTodos = await AsyncStorage.getItem('todos');
       if (storedTodos !== null) {
         const parsedData = JSON.parse(storedTodos);
-        console.log(parsedData);
         const updatedData = [...parsedData, todoData];
         try {
           await AsyncStorage.setItem('todos', JSON.stringify(updatedData));
           showToast(false);
+          setSelectedDate(null), setSelectedTime(null);
         } catch (error) {
           showToast(true);
         }
@@ -81,6 +79,8 @@ const ToDoFromScreen = ({navigation}: Props) => {
       }
       try {
         await AsyncStorage.setItem('todos', JSON.stringify([todoData]));
+        showToast(false);
+        setSelectedDate(null), setSelectedTime(null);
       } catch (error) {
         showToast(true);
       }
@@ -115,7 +115,7 @@ const ToDoFromScreen = ({navigation}: Props) => {
             width: 50,
             height: 40,
           }}
-          onPress={() => navigation.goBack()}>
+          onPress={() => navigation.navigate('AllToDosList')}>
           <Icon
             style={{
               color: '#15212F',

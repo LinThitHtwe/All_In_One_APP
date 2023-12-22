@@ -12,10 +12,22 @@ import {RootStackScreenProps} from '../navigations/types';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
 const HomeScreen = ({navigation}: Props) => {
+  // const handleDeleteData = async () => {
+  //   try {
+  //     // Replace 'todos' with the key you used to store your data
+  //     await AsyncStorage.removeItem('todos');
+  //     console.log('Data deleted successfully');
+  //   } catch (error) {
+  //     console.error('Error deleting data:', error);
+  //   }
+  // };
+
+  // handleDeleteData();
   return (
     <View style={styles.mainContainer}>
       <View style={styles.weatherContainer}>
