@@ -45,7 +45,7 @@ const ToDoFrom = ({navigation}: Props) => {
     isSetReminderSwitchEnabled(previousState => !previousState);
   };
 
-  const showToast = isError => {
+  const showToast = (isError: boolean): void => {
     ToastAndroid.show(
       `${isError ? 'Something Went Wrong' : 'Successfully added'}`,
       ToastAndroid.LONG,
