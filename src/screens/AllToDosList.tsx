@@ -3,25 +3,21 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
 
 const AllToDosList = ({navigation}: Props) => {
-  const data = Array.from({length: 10}, (_, index) => ({
-    id: index.toString(),
-    title: `Itemtfuiiiiiiiiikglkklgkgfifyuftuciiiiiiiii ${index + 1}`,
-    description: `Description for Item ${index + 1}`,
-  }));
-
+  const [todos, setTodos] = useState<[] | null>(null);
   const renderItem = ({item}) => {
     let truncatedTitle = item.title;
-
     if (item.title.length > 25) {
       truncatedTitle = item.title.substring(0, 18) + '...';
     }
@@ -44,6 +40,18 @@ const AllToDosList = ({navigation}: Props) => {
       </View>
     );
   };
+  useEffect(() => {
+    const getAsyncStorageData = async () => {
+      try {
+        const storedTodos = await AsyncStorage.getItem('todos');
+        setTodos(JSON.parse(storedTodos));
+      } catch (error) {
+        ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
+      }
+    };
+    console.log('mytodos---', todos);
+    getAsyncStorageData();
+  }, []);
 
   return (
     <View
@@ -129,15 +137,16 @@ const AllToDosList = ({navigation}: Props) => {
             </Text>
           </TouchableOpacity>
         </View>
-
-        <FlatList
-          style={{marginTop: 20}}
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          // key={`flatlist-${numColumns}`} // Ensure a unique key when changing the number of columns
-          // numColumns={numColumns}
-        />
+        {todos && todos.length > 0 ? (
+          <FlatList
+            style={{marginTop: 20}}
+            data={todos}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        ) : (
+          <Text>No todos found</Text>
+        )}
       </View>
     </View>
   );

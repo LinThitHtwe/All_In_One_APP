@@ -1,11 +1,10 @@
 import {
-  Button,
-  Platform,
-  Pressable,
+  Alert,
   ScrollView,
   StyleSheet,
   Switch,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,15 +16,16 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import ToDoInput from '../components/ToDoInput';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
 
 const schema = z.object({
   title: z
     .string({required_error: 'Amount Cannot be Blank'})
-    .min(3, 'ToDo Title must be more than 3 words'),
+    .min(3, 'Todo Title must be more than 3 words'),
 
-  description: z.string().nullable(),
+  description: z.string().optional(),
 });
 type FormField = z.infer<typeof schema>;
 const ToDoFrom = ({navigation}: Props) => {
@@ -38,16 +38,55 @@ const ToDoFrom = ({navigation}: Props) => {
     resolver: zodResolver(schema),
   });
   const {errors} = formState;
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isReminderSwitchEnabled, isSetReminderSwitchEnabled] = useState(false);
   const toggleSwitch = () => {
     setSelectedDate(null);
     setSelectedTime(null);
-    setIsEnabled(previousState => !previousState);
+    isSetReminderSwitchEnabled(previousState => !previousState);
   };
 
-  const onSubmit: SubmitHandler<FormField> = data => {
-    console.log(data);
-    console.log('submitted');
+  const showToast = isError => {
+    ToastAndroid.show(
+      `${isError ? 'Something Went Wrong' : 'Successfully added'}`,
+      ToastAndroid.LONG,
+    );
+  };
+
+  const onSubmit: SubmitHandler<FormField> = async data => {
+    if (
+      isReminderSwitchEnabled &&
+      (selectedDate === null || selectedTime === null)
+    ) {
+      Alert.alert(
+        'Required',
+        'Date and Time Should be selected when mode is set to remind',
+        [{text: 'Set Date and Time', onPress: () => console.log('OK Pressed')}],
+      );
+      return;
+    }
+    const todoData = {...data, selectedDate, selectedTime};
+    try {
+      const storedTodos = await AsyncStorage.getItem('todos');
+      if (storedTodos !== null) {
+        const parsedData = JSON.parse(storedTodos);
+        console.log(parsedData);
+        const updatedData = [...parsedData, todoData];
+        try {
+          await AsyncStorage.setItem('todos', JSON.stringify(updatedData));
+          showToast(false);
+        } catch (error) {
+          showToast(true);
+        }
+        return;
+      }
+      try {
+        await AsyncStorage.setItem('todos', JSON.stringify([todoData]));
+      } catch (error) {
+        showToast(true);
+      }
+    } catch (error) {
+      showToast(true);
+    }
   };
   return (
     <View
@@ -113,6 +152,7 @@ const ToDoFrom = ({navigation}: Props) => {
             placeholder={'Add Todo Description'}
             height={200}
           />
+
           <View
             style={{
               flexDirection: 'row',
@@ -132,14 +172,14 @@ const ToDoFrom = ({navigation}: Props) => {
             <Switch
               style={{height: 40}}
               trackColor={{false: '#15212F', true: '#3f6491'}}
-              thumbColor={isEnabled ? '#2f8cfa' : '#c7c7c7'}
+              thumbColor={isReminderSwitchEnabled ? '#2f8cfa' : '#c7c7c7'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
-              value={isEnabled}
+              value={isReminderSwitchEnabled}
             />
           </View>
 
-          {isEnabled && (
+          {isReminderSwitchEnabled && (
             <View style={{marginTop: 15, padding: 8}}>
               <Text
                 style={{
@@ -255,9 +295,8 @@ const ToDoFrom = ({navigation}: Props) => {
                     display="default"
                     onChange={(event, selectedDate) => {
                       setIsDatePickerOpen(false);
-                      if (selectedDate) {
+                      if (event.type === 'set' && selectedDate)
                         setSelectedDate(selectedDate);
-                      }
                     }}
                   />
                 )}
@@ -271,9 +310,8 @@ const ToDoFrom = ({navigation}: Props) => {
                     display="default"
                     onChange={(event, selectedTime) => {
                       setIsTimePickerOpen(false);
-                      if (selectedTime) {
+                      if (event.type === 'set' && selectedTime)
                         setSelectedTime(selectedTime);
-                      }
                     }}
                   />
                 )}
@@ -285,7 +323,7 @@ const ToDoFrom = ({navigation}: Props) => {
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             style={{
-              marginTop: 25,
+              marginTop: 5,
               backgroundColor: '#15212F',
               width: '50%',
               padding: 12,
