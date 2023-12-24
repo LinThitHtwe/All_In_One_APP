@@ -38,10 +38,6 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
     selectedTime: oldSelectedTime,
   } = (params || {}) as ToDoFormParams;
 
-  console.log(
-    `${oldDescription}----${oldId}---${oldSelectedDate}--${oldSelectedTime}---${oldTitle}`,
-  );
-
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<null | Date>(null);
   const [selectedTime, setSelectedTime] = useState<null | Date>(null);
@@ -109,6 +105,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
           showToast(false);
           setSelectedDate(null), setSelectedTime(null);
           setIsReminderSwitchEnabled(false);
+          navigation.navigate('AllToDosList');
         } catch (error) {
           showToast(true);
         }
@@ -118,6 +115,8 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
         await AsyncStorage.setItem('todos', JSON.stringify([todoData]));
         showToast(false);
         setSelectedDate(null), setSelectedTime(null);
+        setIsReminderSwitchEnabled(false);
+        navigation.navigate('AllToDosList');
       } catch (error) {
         showToast(true);
       }

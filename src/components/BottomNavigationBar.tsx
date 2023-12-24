@@ -1,9 +1,38 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
 
 type Props = {};
 
 const BottomNavigationBar = (props: Props) => {
+  const navigation = useNavigation();
+  const [activeTab, setActiveTab] = useState('HomeScreen');
+
+  const handlePress = screenName => {
+    setActiveTab(screenName);
+    navigation.navigate(screenName);
+  };
+
+  const renderTab = (screenName, label) => {
+    const isActive = activeTab === screenName;
+
+    return (
+      <TouchableOpacity
+        key={screenName}
+        style={[
+          styles.tab,
+          {
+            backgroundColor: isActive ? '#355578' : 'transparent',
+          },
+        ]}
+        onPress={() => handlePress(screenName)}>
+        <Text style={[styles.tabText, {color: isActive ? '#fff' : '#000'}]}>
+          {label}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View
       style={{
@@ -28,29 +57,9 @@ const BottomNavigationBar = (props: Props) => {
           marginBottom: 1,
           overflow: 'hidden',
         }}>
-        <View
-          style={{
-            backgroundColor: '#355578',
-            borderTopRightRadius: 40,
-            borderBottomRightRadius: 30,
-            height: '100%',
-            width: '30%',
-            justifyContent: 'center',
-          }}>
-          <Text style={{textAlign: 'center', fontFamily: 'monospace'}}>
-            Home
-          </Text>
-        </View>
-        <View style={{height: '100%', width: '30%', justifyContent: 'center'}}>
-          <Text style={{textAlign: 'center', fontFamily: 'monospace'}}>
-            Home
-          </Text>
-        </View>
-        <View style={{height: '100%', width: '30%', justifyContent: 'center'}}>
-          <Text style={{textAlign: 'center', fontFamily: 'monospace'}}>
-            Home
-          </Text>
-        </View>
+        {renderTab('HomeScreen', 'Home')}
+        {renderTab('BlogHomeScreen', 'Screen 1')}
+        {renderTab('SettingScreen', 'Screen 2')}
       </View>
     </View>
   );
@@ -58,4 +67,19 @@ const BottomNavigationBar = (props: Props) => {
 
 export default BottomNavigationBar;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  tab: {
+    height: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 40,
+    borderBottomRightRadius: 23,
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 23,
+  },
+  tabText: {
+    textAlign: 'center',
+    fontFamily: 'monospace',
+  },
+});

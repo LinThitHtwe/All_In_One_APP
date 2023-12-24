@@ -14,6 +14,7 @@ import React, {useEffect, useState} from 'react';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
 type RenderItemProps = {
@@ -98,19 +99,27 @@ const AllToDosListScreen = ({navigation}: Props) => {
       </Pressable>
     );
   };
-  useEffect(() => {
-    console.log('useEffectRun');
-    const getAsyncStorageData = async () => {
-      try {
-        const storedTodos: string | null = await AsyncStorage.getItem('todos');
-        if (storedTodos) setTodos(JSON.parse(storedTodos));
-      } catch (error) {
-        // ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
-      }
-    };
-    // console.log('hi');
-    getAsyncStorageData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('useEffectRun');
+      const getAsyncStorageData = async () => {
+        try {
+          const storedTodos: string | null = await AsyncStorage.getItem(
+            'todos',
+          );
+          if (storedTodos) setTodos(JSON.parse(storedTodos));
+        } catch (error) {
+          // ToastAndroid.show(`Something Went Wrong`, ToastAndroid.LONG);
+        }
+      };
+
+      getAsyncStorageData();
+
+      return () => {
+        // Cleanup code
+      };
+    }, []),
+  );
   console.log('storedTodos--', todos);
   const filteredTodos = todos?.filter(todo =>
     todo.title.toLowerCase().includes(searchQuery.toLowerCase()),

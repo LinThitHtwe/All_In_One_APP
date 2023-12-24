@@ -5,6 +5,8 @@ export type RootStackParamsList = {
   UnitConvertLists: undefined;
   CurrencyConverter: undefined;
   AllToDosList: undefined;
+  BlogHomeScreen: undefined;
+  SettingScreen: undefined;
   ToDoForm:
     | undefined
     | {

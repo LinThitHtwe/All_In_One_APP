@@ -5,6 +5,8 @@ import UnitConvertListsScreen from '../screens/UnitConvertListsScreen';
 import CurrencyConverterScreen from '../screens/CurrencyConverterScreen';
 import AllToDosListScreen from '../screens/AllToDosListScreen';
 import ToDoFromScreen from '../screens/ToDoFromScreen';
+import BlogHomeScreen from '../screens/BlogHomeScreen';
+import SettingScreen from '../screens/SettingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 const RootStackNavigator = () => {
@@ -19,6 +21,8 @@ const RootStackNavigator = () => {
       />
       <Stack.Screen name={'AllToDosList'} component={AllToDosListScreen} />
       <Stack.Screen name={'ToDoForm'} component={ToDoFromScreen} />
+      <Stack.Screen name={'BlogHomeScreen'} component={BlogHomeScreen} />
+      <Stack.Screen name={'SettingScreen'} component={SettingScreen} />
       <Stack.Screen
         name={'UnitConvertLists'}
         component={UnitConvertListsScreen}
