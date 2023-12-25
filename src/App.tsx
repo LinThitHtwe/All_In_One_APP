@@ -2,8 +2,7 @@ import React from 'react';
 import RootStackNavigator from './navigations/RootStackNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
-
-type Props = {};
+import BottomNavigationBar from './components/BottomNavigationBar';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,16 +15,22 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = (props: Props) => {
+const App = () => {
+  // const navigation = useNavigation();
+  // const routeNames = ['HomeScreen', 'BlogHomeScreen', 'SettingScreen'];
+
+  // // Access the current screen name
+  // const currentScreenName = navigation.getCurrentRoute().name;
+
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <NavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <>
           <RootStackNavigator />
-        </NavigationContainer>
-      </QueryClientProvider>
-    </>
+          <BottomNavigationBar />
+        </>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 };
-
 export default App;

@@ -101,7 +101,6 @@ const AllToDosListScreen = ({navigation}: Props) => {
   };
   useFocusEffect(
     React.useCallback(() => {
-      console.log('useEffectRun');
       const getAsyncStorageData = async () => {
         try {
           const storedTodos: string | null = await AsyncStorage.getItem(
@@ -120,7 +119,6 @@ const AllToDosListScreen = ({navigation}: Props) => {
       };
     }, []),
   );
-  console.log('storedTodos--', todos);
   const filteredTodos = todos?.filter(todo =>
     todo.title.toLowerCase().includes(searchQuery.toLowerCase()),
   );

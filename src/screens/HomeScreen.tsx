@@ -136,7 +136,7 @@ const HomeScreen = ({navigation}: Props) => {
           </View>
         </View>
       </ScrollView>
-      <BottomNavigationBar />
+      {/* <BottomNavigationBar /> */}
     </View>
   );
 };

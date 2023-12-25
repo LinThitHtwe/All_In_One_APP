@@ -26,7 +26,7 @@ const BottomNavigationBar = (props: Props) => {
           },
         ]}
         onPress={() => handlePress(screenName)}>
-        <Text style={[styles.tabText, {color: isActive ? '#fff' : '#000'}]}>
+        <Text style={[styles.tabText, {color: isActive ? '#fff' : '#bbb'}]}>
           {label}
         </Text>
       </TouchableOpacity>
@@ -58,8 +58,8 @@ const BottomNavigationBar = (props: Props) => {
           overflow: 'hidden',
         }}>
         {renderTab('HomeScreen', 'Home')}
-        {renderTab('BlogHomeScreen', 'Screen 1')}
-        {renderTab('SettingScreen', 'Screen 2')}
+        {renderTab('BlogHomeScreen', 'Blogs')}
+        {renderTab('SettingScreen', 'Settings')}
       </View>
     </View>
   );
