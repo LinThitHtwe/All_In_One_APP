@@ -13,12 +13,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
-import ToDoInput from '../components/ToDoInput';
 import {SubmitHandler, useForm} from 'react-hook-form';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTodos} from '../hooks/useTodos';
 import {ToDoFormField} from '../hooks/useTodos';
+import CustomInput from '../components/CustomInput';
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
 type ToDoFormParams = {
   description?: string;
@@ -207,7 +207,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
         </Text>
 
         <View style={{marginTop: 10, padding: 10}}>
-          <ToDoInput
+          <CustomInput
             label={'Title'}
             name={'title'}
             control={control}
@@ -215,7 +215,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             height={50}
           />
 
-          <ToDoInput
+          <CustomInput
             label={'Description'}
             name={'description'}
             control={control}

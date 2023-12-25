@@ -59,7 +59,7 @@ const BottomNavigationBar = (props: Props) => {
         }}>
         {renderTab('HomeScreen', 'Home')}
         {renderTab('BlogHomeScreen', 'Blogs')}
-        {renderTab('SettingScreen', 'Settings')}
+        {renderTab('AddBlogFormScreen', 'Add Blog')}
       </View>
     </View>
   );

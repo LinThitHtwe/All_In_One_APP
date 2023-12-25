@@ -10,7 +10,13 @@ type Props = {
   height: number;
 };
 
-const ToDoInput: FC<Props> = ({label, name, control, placeholder, height}) => {
+const CustomInput: FC<Props> = ({
+  label,
+  name,
+  control,
+  placeholder,
+  height,
+}) => {
   return (
     <Controller
       render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
@@ -57,6 +63,6 @@ const ToDoInput: FC<Props> = ({label, name, control, placeholder, height}) => {
   );
 };
 
-export default ToDoInput;
+export default CustomInput;
 
 const styles = StyleSheet.create({});

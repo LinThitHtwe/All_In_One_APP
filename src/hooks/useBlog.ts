@@ -4,19 +4,21 @@ import {z} from 'zod';
 
 const schema = z.object({
   title: z
-    .string({required_error: 'Title Cannot be Blank'})
-    .min(3, 'Todo Title must be more than 3 words'),
+    .string({required_error: 'Amount Cannot be Blank'})
+    .min(6, 'Todo Title must be more than 6 words'),
 
-  description: z.string().optional(),
+  detail: z
+    .string({required_error: 'Detail Cannot be Blank'})
+    .min(6, 'Todo Title must be more than 6 words'),
 });
 export type ToDoFormField = z.infer<typeof schema>;
 
-export const useTodos = (initialValues?: ToDoFormField) => {
+export const useBlog = (initialValues?: ToDoFormField) => {
   const {control, handleSubmit} = useForm<ToDoFormField>({
     resolver: zodResolver(schema),
     defaultValues: {
       title: initialValues?.title || '',
-      description: initialValues?.description || '',
+      detail: initialValues?.detail || '',
     },
   });
 
