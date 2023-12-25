@@ -8,10 +8,11 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {RootStackScreenProps} from '../navigations/types';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
-const BlogHomeScreen = (props: Props) => {
+const BlogHomeScreen = ({navigation}: Props) => {
   const data = Array(6).fill(null);
 
   const renderItem = () => {
@@ -106,6 +107,7 @@ const BlogHomeScreen = (props: Props) => {
           </View>
 
           <TouchableOpacity
+            onPress={() => navigation.navigate('BlogDetail')}
             style={{
               flexDirection: 'row',
               gap: 10,

@@ -8,6 +8,7 @@ import AllToDosListScreen from '../screens/AllToDosListScreen';
 import ToDoFromScreen from '../screens/ToDoFromScreen';
 import BlogHomeScreen from '../screens/BlogHomeScreen';
 import AddBlogFormScreen from '../screens/AddBlogFormScreen';
+import BlogDetail from '../screens/BlogDetail';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -30,6 +31,7 @@ const RootStackNavigator = () => {
         name={'UnitConvertLists'}
         component={UnitConvertListsScreen}
       />
+      <Stack.Screen name={'BlogDetail'} component={BlogDetail} />
     </Stack.Navigator>
   );
 };
