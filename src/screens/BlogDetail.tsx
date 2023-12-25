@@ -1,5 +1,6 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import CommentSection from '../components/CommentSection';
 
 type Props = {};
 
@@ -97,26 +98,31 @@ const BlogDetail = (props: Props) => {
                 maxime ullam, iure porro asperiores facilis sequi dicta quam!r
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. De
               </Text>
-            </View>
-            <View style={{marginTop: 20, marginBottom: 60}}>
+
               <Text
                 style={{
                   color: '#15212F',
                   fontFamily: 'monospace',
-                  marginVertical: 10,
+                  marginTop: 20,
+                  textAlign: 'right',
+                  fontWeight: '600',
+                  fontSize: 12,
                 }}>
-                Comments
+                Thanks for Reading
               </Text>
-              <View
+              <Text
                 style={{
-                  backgroundColor: '#d3d3d3',
-                  padding: 10,
-                  borderRadius: 10,
-                  marginVertical: 6,
+                  color: '#15212F',
+                  fontFamily: 'monospace',
+                  marginTop: 6,
+                  textAlign: 'right',
+                  fontWeight: '700',
+                  fontSize: 12,
                 }}>
-                <Text style={{color: '#15212F'}}>LinThit : Very Goooood</Text>
-              </View>
+                Ivan
+              </Text>
             </View>
+            <CommentSection />
           </View>
         </ScrollView>
       </View>
