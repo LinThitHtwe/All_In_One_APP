@@ -1,10 +1,19 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import CommentSection from '../components/CommentSection';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {RootStackScreenProps} from '../navigations/types';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'BlogDetail'> {}
 
-const BlogDetail = (props: Props) => {
+const BlogDetail = ({navigation}: Props) => {
   return (
     <View
       style={{
@@ -14,6 +23,26 @@ const BlogDetail = (props: Props) => {
         justifyContent: 'center',
         padding: 13,
       }}>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'flex-start',
+          width: '100%',
+          position: 'absolute',
+          top: 30,
+          left: 20,
+          zIndex: 20,
+        }}
+        onPress={() => navigation.goBack()}>
+        <Icon
+          style={{
+            color: '#15212F',
+            fontSize: 18,
+            fontWeight: '600',
+            marginBottom: 8,
+          }}
+          name="arrow-left"></Icon>
+      </TouchableOpacity>
       <View
         style={{
           height: 740,

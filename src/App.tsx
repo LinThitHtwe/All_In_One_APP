@@ -25,10 +25,8 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <>
-          <RootStackNavigator />
-          <BottomNavigationBar />
-        </>
+        <RootStackNavigator />
+        <BottomNavigationBar />
       </NavigationContainer>
     </QueryClientProvider>
   );

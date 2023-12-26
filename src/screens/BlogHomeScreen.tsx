@@ -9,11 +9,17 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
+import BottomNavigationBar from '../components/BottomNavigationBar';
+import useFetchData from '../hooks/useFetchData';
+import {getAllBlogs} from '../api/apiFunctions';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
 const BlogHomeScreen = ({navigation}: Props) => {
   const data = Array(6).fill(null);
+
+  const {data: bookData} = useFetchData(['blogs'], getAllBlogs);
+  console.log('bookdata---', bookData);
 
   const renderItem = () => {
     return (

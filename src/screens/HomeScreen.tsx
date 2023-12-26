@@ -9,10 +9,8 @@ import {
 import React from 'react';
 import CurrentDate from '../components/CurrentDate';
 import {RootStackScreenProps} from '../navigations/types';
-import BottomNavigationBar from '../components/BottomNavigationBar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
