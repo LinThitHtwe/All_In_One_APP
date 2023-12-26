@@ -17,7 +17,6 @@ const LoginScreen = (props: Props) => {
   const {control, handleSubmit} = useLoginSignup();
 
   const onSubmit = async data => {
-    console.log('data---', data);
     try {
       const response = await login({
         email: data.email,

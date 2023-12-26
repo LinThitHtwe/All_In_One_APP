@@ -11,6 +11,7 @@ import CustomInput from '../components/CustomInput';
 import {useBlog} from '../hooks/useBlog';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Image} from 'react-native';
+import {postBlog} from '../api/apiFunctions';
 
 type Props = {};
 
@@ -28,6 +29,18 @@ const AddBlogFormScreen = (props: Props) => {
     }).then(image => {
       setImageData(image?.data);
     });
+  };
+
+  const onSubmit = async data => {
+    try {
+      const response = await postBlog({
+        ...data,
+        picture: imageData,
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
   };
   return (
     <View
@@ -69,9 +82,9 @@ const AddBlogFormScreen = (props: Props) => {
 
           <CustomInput
             height={450}
-            label="Detail"
-            name="detail"
-            placeholder="Blog Detail"
+            label="Blog Content"
+            name="content"
+            placeholder="Blog Content"
             control={control}
             inputType="text"
           />
@@ -127,6 +140,7 @@ const AddBlogFormScreen = (props: Props) => {
               marginBottom: 90,
             }}>
             <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
               style={{
                 backgroundColor: '#15212F',
                 padding: 15,
