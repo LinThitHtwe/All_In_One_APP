@@ -8,14 +8,24 @@ import {
 import React from 'react';
 import CustomInput from '../components/CustomInput';
 import {useLoginSignup} from '../hooks/useLoginSignup';
+import {register} from '../api/apiFunctions';
 
 type Props = {};
 
 const RegisterScreen = (props: Props) => {
   const {control, handleSubmit} = useLoginSignup();
 
-  const onSubmit = () => {
-    console.log('hihi');
+  const onSubmit = async data => {
+    console.log('data---', data);
+    try {
+      const response = await register({
+        email: data.email,
+        password: data.password,
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
   };
   return (
     <View

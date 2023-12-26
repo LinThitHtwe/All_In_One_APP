@@ -1,36 +1,33 @@
-import {Button, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import {useBlog} from '../hooks/useBlog';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {Image} from 'react-native';
 
 type Props = {};
 
 const AddBlogFormScreen = (props: Props) => {
   const {control, handleSubmit} = useBlog();
-
+  const [imageData, setImageData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImagePicker = () => {
-    ImagePicker.showImagePicker(
-      {
-        title: 'Select Image',
-        cancelButtonTitle: 'Cancel',
-        takePhotoButtonTitle: 'Take Photo',
-        chooseFromLibraryButtonTitle: 'Choose from Library',
-        quality: 0.5,
-      },
-      response => {
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else {
-          setSelectedImage(response.uri);
-        }
-      },
-    );
+    ImagePicker.openPicker({
+      width: 316,
+      height: 260,
+      cropping: true,
+      includeBase64: true,
+    }).then(image => {
+      setImageData(image?.data);
+    });
   };
   return (
     <View
@@ -44,7 +41,6 @@ const AddBlogFormScreen = (props: Props) => {
       <ScrollView style={{width: '100%'}}>
         <View
           style={{
-            height: 740,
             backgroundColor: '#e9e9e9',
             width: '100%',
             borderRadius: 10,
@@ -68,24 +64,79 @@ const AddBlogFormScreen = (props: Props) => {
             name="title"
             placeholder="Blog Title"
             control={control}
+            inputType="text"
           />
 
           <CustomInput
             height={450}
-            label="Detial"
+            label="Detail"
             name="detail"
-            placeholder="Blog etail"
+            placeholder="Blog Detail"
             control={control}
+            inputType="text"
           />
 
-          <View>
-            {selectedImage && (
-              <Image
-                source={{uri: selectedImage}}
-                style={{width: 200, height: 200}}
-              />
+          <View
+            style={{
+              alignItems: 'center',
+              marginVertical: 20,
+              borderRadius: 10,
+              overflow: 'hidden',
+            }}>
+            {imageData && (
+              <>
+                <Text
+                  style={{
+                    color: '#15212F',
+                    width: '95%',
+                    marginVertical: 6,
+                    fontFamily: 'monospace',
+                  }}>
+                  Image Preview :
+                </Text>
+                <Image
+                  source={{uri: `data:image/jpeg;base64,${imageData}`}}
+                  style={{width: 316, height: 260, borderRadius: 10}}
+                />
+              </>
             )}
-            <Button title="Pick an Image" onPress={handleImagePicker} />
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: 60,
+            }}>
+            <TouchableOpacity
+              onPress={handleImagePicker}
+              style={{
+                backgroundColor: '#15212F',
+                padding: 10,
+                borderRadius: 10,
+              }}>
+              <Text style={{color: '#e9e9e9'}}>
+                {imageData ? 'Change Image' : 'Pick an Image'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: 90,
+            }}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#15212F',
+                padding: 15,
+                borderRadius: 10,
+                width: '90%',
+              }}>
+              <Text style={{color: '#e9e9e9', textAlign: 'center'}}>
+                Post Blog
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
