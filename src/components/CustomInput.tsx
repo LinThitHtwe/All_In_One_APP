@@ -4,10 +4,20 @@ import {Control, Controller, FieldValues} from 'react-hook-form';
 
 type Props = {
   label: string;
-  name: 'title' | 'description';
-  control: Control<{title: string; description?: string | undefined}, any>;
+  name: 'title' | 'description' | 'email' | 'password';
+  // control: Control<
+  //   {
+  //     title: string;
+  //     description?: string | undefined;
+  //     email: string;
+  //     password: string;
+  //   },
+  //   any
+  // >;
+  control: Control<any>;
   placeholder: string;
   height: number;
+  inputType: string;
 };
 
 const CustomInput: FC<Props> = ({
@@ -16,6 +26,7 @@ const CustomInput: FC<Props> = ({
   control,
   placeholder,
   height,
+  inputType,
 }) => {
   return (
     <Controller
@@ -41,6 +52,7 @@ const CustomInput: FC<Props> = ({
             value={value}
             onChangeText={text => onChange(text)}
             onBlur={onBlur}
+            inputMode={inputType}
             multiline
             numberOfLines={4}
             placeholder={error ? error.message : placeholder}

@@ -51,13 +51,14 @@ const HomeScreen = ({navigation}: Props) => {
           <CurrentDate />
           <View style={{justifyContent: 'space-around'}}>
             <ToCurrencyConverterWidget />
-            <View
+            <TouchableOpacity
+              onPress={() => navigation.navigate('LoginScreen')}
               style={{
                 backgroundColor: '#212D3B',
                 height: 65,
                 width: 180,
                 borderRadius: 10,
-              }}></View>
+              }}></TouchableOpacity>
           </View>
         </View>
 

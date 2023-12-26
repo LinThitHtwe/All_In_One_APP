@@ -9,6 +9,7 @@ import ToDoFromScreen from '../screens/ToDoFromScreen';
 import BlogHomeScreen from '../screens/BlogHomeScreen';
 import AddBlogFormScreen from '../screens/AddBlogFormScreen';
 import BlogDetail from '../screens/BlogDetail';
+import LoginScreen from '../screens/LoginScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -23,6 +24,7 @@ const RootStackNavigator = () => {
         name={'CurrencyConverter'}
         component={CurrencyConverterScreen}
       />
+      <Stack.Screen name={'LoginScreen'} component={LoginScreen} />
       <Stack.Screen name={'AllToDosList'} component={AllToDosListScreen} />
       <Stack.Screen name={'ToDoForm'} component={ToDoFromScreen} />
       <Stack.Screen name={'BlogHomeScreen'} component={BlogHomeScreen} />

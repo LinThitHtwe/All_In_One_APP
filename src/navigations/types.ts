@@ -7,6 +7,7 @@ export type RootStackParamsList = {
   AllToDosList: undefined;
   BlogHomeScreen: undefined;
   AddBlogFormScreen: undefined;
+  LoginScreen: undefined;
   BlogDetail: {
     blogId: string;
   };

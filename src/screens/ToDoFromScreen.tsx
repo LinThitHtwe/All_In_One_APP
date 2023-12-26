@@ -213,6 +213,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             control={control}
             placeholder={'Add Todo Title'}
             height={50}
+            inputType="text"
           />
 
           <CustomInput
@@ -221,6 +222,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             control={control}
             placeholder={'Add Todo Description'}
             height={200}
+            inputType="text"
           />
 
           <View
