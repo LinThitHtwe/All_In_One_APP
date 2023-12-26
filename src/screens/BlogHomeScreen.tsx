@@ -12,6 +12,7 @@ import {RootStackScreenProps} from '../navigations/types';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import useFetchData from '../hooks/useFetchData';
 import {getAllBlogs} from '../api/apiFunctions';
+import {formatDistanceToNow} from 'date-fns';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
@@ -31,10 +32,13 @@ const BlogHomeScreen = ({navigation}: Props) => {
         }}>
         <Image
           source={{
-            uri: 'https://images.unsplash.com/photo-1682686579688-c2ba945eda0e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            uri: data.picture
+              ? `data:image/jpeg;base64,${data.picture}`
+              : 'https://plus.unsplash.com/premium_photo-1681487807762-98fbe8a9db5e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
           }}
           style={{height: 260, width: '100%', borderRadius: 10}}
         />
+
         <Text
           style={{
             color: '#15212F',
@@ -55,7 +59,11 @@ const BlogHomeScreen = ({navigation}: Props) => {
             marginTop: 5,
             fontWeight: '800',
           }}>
-          Ivan (1 hour ago){' '}
+          {data?.updatedAt
+            ? `Ivan (${formatDistanceToNow(new Date(data.updatedAt), {
+                addSuffix: true,
+              })})`
+            : 'Ivan (N/A)'}
         </Text>
 
         <Text
@@ -69,7 +77,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
             opacity: 0.7,
           }}>
           {data.content.length > 20
-            ? `${data.content.slice(0, 100)}..`
+            ? `${data.content.slice(0, 90)}..`
             : data.content}
         </Text>
         <View
