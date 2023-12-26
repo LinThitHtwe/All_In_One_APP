@@ -19,7 +19,6 @@ const BlogHomeScreen = ({navigation}: Props) => {
   const {data: bookData} = useFetchData(['blogs'], getAllBlogs);
 
   const renderItem = data => {
-    console.log('data-----', data.title);
     return (
       <View
         style={{
@@ -112,7 +111,9 @@ const BlogHomeScreen = ({navigation}: Props) => {
           </View>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate('BlogDetail')}
+            onPress={() =>
+              navigation.navigate('BlogDetail', {blogId: data._id})
+            }
             style={{
               flexDirection: 'row',
               gap: 10,

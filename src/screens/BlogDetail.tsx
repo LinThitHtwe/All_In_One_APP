@@ -10,10 +10,17 @@ import React from 'react';
 import CommentSection from '../components/CommentSection';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
+import useFetchData from '../hooks/useFetchData';
+import {getBlogById} from '../api/apiFunctions';
 
 interface Props extends RootStackScreenProps<'BlogDetail'> {}
 
-const BlogDetail = ({navigation}: Props) => {
+const BlogDetail = ({route, navigation}: Props) => {
+  const {blogId} = route.params;
+  const {data: blogData, isLoading} = useFetchData([`blog${blogId}`], () =>
+    getBlogById(blogId),
+  );
+
   return (
     <View
       style={{
@@ -60,7 +67,8 @@ const BlogDetail = ({navigation}: Props) => {
               color: '#15212F',
               fontSize: 23,
             }}>
-            Lorem ipsum dolor, sit am...
+            {blogData?.title}
+            {isLoading && 'Loading'}
           </Text>
           <View style={{padding: 10, marginTop: 30}}>
             <Image
@@ -78,7 +86,8 @@ const BlogDetail = ({navigation}: Props) => {
                   marginTop: 15,
                   fontSize: 20,
                 }}>
-                Quality Of Life
+                {blogData?.title}
+                {isLoading && 'Loading'}
               </Text>
               <Text
                 style={{
@@ -102,30 +111,8 @@ const BlogDetail = ({navigation}: Props) => {
                   paddingLeft: 8,
                   lineHeight: 25,
                 }}>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Debitis cumque facere veritatis cupiditate doloremque, eligendi
-                amet doloribus culpa consequuntur ut nemo maxime ullam, iure
-                porro asperiores facilis sequi dicta quam!r Lorem ipsum dolor
-                sit amet, consectetur adipisicing elit. Debitis cumque facere
-                veritatis cupiditate doloremque, eligendi amet doloribus culpa
-                consequuntur ut nemo maxime ullam, iure porro asperiores facilis
-                sequi dicta quam!r Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit. Debitis cumque facere veritatis cupiditate
-                doloremque, eligendi amet doloribus culpa consequuntur ut nemo
-                maxime ullam, iure porro asperiores facilis sequi dicta quam!r
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Debitis cumque facere veritatis cupiditate doloremque, eligendi
-                amet doloribus culpa consequuntur ut nemo maxime ullam, iure
-                porro asperiores facilis sequi dicta quam!r Lorem ipsum dolor
-                sit amet, consectetur adipisicing elit. Debitis cumque facere
-                veritatis cupiditate doloremque, eligendi amet doloribus culpa
-                consequuntur ut nemo maxime ullam, iure porro asperiores facilis
-                sequi dicta quam!r maxime ullam, iure porro asperiores facilis
-                sequi dicta quam!r Lorem ipsum dolor sit amet, consectetur
-                adipisicing elit. Debitis cumque facere veritatis cupiditate
-                doloremque, eligendi amet doloribus culpa consequuntur ut nemo
-                maxime ullam, iure porro asperiores facilis sequi dicta quam!r
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. De
+                {blogData?.content}
+                {isLoading && 'Loading'}
               </Text>
 
               <Text
