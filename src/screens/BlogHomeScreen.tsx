@@ -16,12 +16,10 @@ import {getAllBlogs} from '../api/apiFunctions';
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
 const BlogHomeScreen = ({navigation}: Props) => {
-  const data = Array(6).fill(null);
-
   const {data: bookData} = useFetchData(['blogs'], getAllBlogs);
-  console.log('bookdata---', bookData);
 
-  const renderItem = () => {
+  const renderItem = data => {
+    console.log('data-----', data.title);
     return (
       <View
         style={{
@@ -47,7 +45,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
             fontFamily: 'monospace',
             fontWeight: '700',
           }}>
-          Quality Of Life
+          {data.title}
         </Text>
         <Text
           style={{
@@ -71,8 +69,9 @@ const BlogHomeScreen = ({navigation}: Props) => {
             paddingLeft: 8,
             opacity: 0.7,
           }}>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium
-          voluptates tempora ullam ipsam sit in deleniti .....
+          {data.content.length > 20
+            ? `${data.content.slice(0, 100)}..`
+            : data.content}
         </Text>
         <View
           style={{
@@ -161,13 +160,15 @@ const BlogHomeScreen = ({navigation}: Props) => {
           padding: 10,
           position: 'relative',
         }}>
-        <FlatList
-          style={{marginBottom: 30}}
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={<View style={{marginTop: 20}}></View>}
-        />
+        {bookData && (
+          <FlatList
+            style={{marginBottom: 30}}
+            data={bookData}
+            renderItem={({item}) => renderItem(item)}
+            keyExtractor={item => item._id}
+            ItemSeparatorComponent={<View style={{marginTop: 20}}></View>}
+          />
+        )}
       </View>
     </View>
   );
