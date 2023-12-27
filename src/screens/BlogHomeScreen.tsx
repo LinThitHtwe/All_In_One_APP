@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
-import BottomNavigationBar from '../components/BottomNavigationBar';
 import useFetchData from '../hooks/useFetchData';
 import {getAllBlogs} from '../api/apiFunctions';
 import {formatDistanceToNow} from 'date-fns';
@@ -17,7 +16,7 @@ import {formatDistanceToNow} from 'date-fns';
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
 const BlogHomeScreen = ({navigation}: Props) => {
-  const {data: bookData} = useFetchData(['blogs'], getAllBlogs);
+  const {data: blogData, isLoading} = useFetchData(['blogs'], getAllBlogs);
 
   const renderItem = data => {
     return (
@@ -169,10 +168,10 @@ const BlogHomeScreen = ({navigation}: Props) => {
           padding: 10,
           position: 'relative',
         }}>
-        {bookData && (
+        {blogData && (
           <FlatList
             style={{marginBottom: 30}}
-            data={bookData}
+            data={blogData}
             renderItem={({item}) => renderItem(item)}
             keyExtractor={item => item._id}
             ItemSeparatorComponent={<View style={{marginTop: 20}}></View>}

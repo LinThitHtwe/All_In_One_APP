@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
 import useFetchData from '../hooks/useFetchData';
 import {getBlogById} from '../api/apiFunctions';
+import {formatDistanceToNow} from 'date-fns';
 
 interface Props extends RootStackScreenProps<'BlogDetail'> {}
 
@@ -98,7 +99,11 @@ const BlogDetail = ({route, navigation}: Props) => {
                   marginTop: 5,
                   fontWeight: '800',
                 }}>
-                Ivan (1 hour ago){' '}
+                {blogData?.updatedAt
+                  ? `Ivan (${formatDistanceToNow(new Date(blogData.updatedAt), {
+                      addSuffix: true,
+                    })})`
+                  : 'Ivan (N/A)'}
               </Text>
 
               <Text

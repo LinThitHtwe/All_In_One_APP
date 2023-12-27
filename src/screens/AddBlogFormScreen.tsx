@@ -1,5 +1,4 @@
 import {
-  Button,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,6 +11,7 @@ import {useBlog} from '../hooks/useBlog';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Image} from 'react-native';
 import {postBlog} from '../api/apiFunctions';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 type Props = {};
 
@@ -97,7 +97,7 @@ const AddBlogFormScreen = (props: Props) => {
               overflow: 'hidden',
             }}>
             {imageData && (
-              <>
+              <View>
                 <Text
                   style={{
                     color: '#15212F',
@@ -109,9 +109,26 @@ const AddBlogFormScreen = (props: Props) => {
                 </Text>
                 <Image
                   source={{uri: `data:image/jpeg;base64,${imageData}`}}
-                  style={{width: 316, height: 260, borderRadius: 10}}
+                  style={{
+                    width: 316,
+                    height: 260,
+                    borderRadius: 10,
+                    position: 'relative',
+                  }}
                 />
-              </>
+
+                <TouchableOpacity
+                  onPress={() => setImageData(null)}
+                  style={{position: 'absolute', top: 15, right: 0}}>
+                  <Icon
+                    style={{
+                      color: '#15212F',
+                      fontSize: 25,
+                      fontWeight: '600',
+                    }}
+                    name="times"></Icon>
+                </TouchableOpacity>
+              </View>
             )}
           </View>
 
