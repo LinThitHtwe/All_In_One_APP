@@ -26,7 +26,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <RootStackNavigator />
-        <BottomNavigationBar />
+        {/* <BottomNavigationBar /> */}
       </NavigationContainer>
     </QueryClientProvider>
   );

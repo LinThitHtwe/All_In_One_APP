@@ -27,116 +27,142 @@ const HomeScreen = ({navigation}: Props) => {
 
   // handleDeleteData();
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.weatherContainer}>
-        <Image
-          source={{
-            uri: 'https://cdn1.iconfinder.com/data/icons/weather-forecast-meteorology-color-1/128/weather-sunny-512.png',
+    <View style={{backgroundColor: '#F7F9F7', flex: 1}}>
+      <View
+        style={{
+          height: 60,
+          borderBottomEndRadius: 5,
+          borderBottomStartRadius: 5,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 20,
+        }}>
+        <Icon
+          style={{
+            color: '#719071',
+            fontSize: 26,
+            fontWeight: '600',
           }}
-          style={styles.weatherImage}
-        />
-        <View style={{gap: 15}}>
-          <Text style={styles.weatherCityText}>Yangon</Text>
-          <Text style={styles.weatherTemperature}>26°C</Text>
-        </View>
+          name="book"></Icon>
+        <Text style={{color: '#719071', fontSize: 20, fontWeight: '700'}}>
+          Login
+        </Text>
       </View>
-      <ScrollView style={styles.scrollContainer}>
+      <ScrollView style={{width: '100%'}}>
         <View
           style={{
-            height: 150,
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            marginTop: 13,
-          }}>
-          <CurrentDate />
-          <View style={{justifyContent: 'space-around'}}>
-            <ToCurrencyConverterWidget />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('LoginScreen')}
-              style={{
-                backgroundColor: '#212D3B',
-                height: 65,
-                width: 180,
-                borderRadius: 10,
-              }}></TouchableOpacity>
-          </View>
-        </View>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
+            padding: 10,
+            marginTop: 10,
+            height: 'auto',
+            alignItems: 'center',
           }}>
           <View
             style={{
-              height: 370,
-              width: '95%',
-              marginVertical: 15,
-              borderRadius: 20,
-
-              padding: 5,
+              backgroundColor: '#F7F9F7',
+              borderTopStartRadius: 60,
+              borderTopEndRadius: 60,
+              borderBottomStartRadius: 30,
+              borderBottomEndRadius: 30,
+              height: 420,
+              width: 350,
+              shadowColor: '#719071',
+              elevation: 15,
+              shadowOffset: {width: 20, height: 20},
+              shadowOpacity: 1,
+              shadowRadius: 9,
+              borderColor: 'rgba(113, 144, 113,0.1)',
+              borderWidth: 1,
+              overflow: 'hidden',
+              position: 'relative',
             }}>
-            <Text
+            <Image
+              source={{
+                uri: 'https://images.unsplash.com/photo-1602300991431-27a957a5bcf7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGdyZWVufGVufDB8fDB8fHww',
+              }}
               style={{
-                color: '#15212F',
-                fontSize: 17,
-                fontWeight: '500',
-                fontFamily: 'monospace',
-              }}>
-              Your Todos
-            </Text>
-            {[...Array(4).keys()].map(index => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('RegisterScreen')}
-                key={index}
-                style={{
-                  backgroundColor: '#212D3B',
-                  height: 60,
-                  width: '100%',
-                  borderRadius: 10,
-                  marginVertical: 10,
-                  padding: 10,
-                }}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    color: '#e9e9e9',
-                    fontFamily: 'monospace',
-                  }}>
-                  Hello
-                </Text>
-              </TouchableOpacity>
-            ))}
-            <TouchableOpacity
-              onPress={() => navigation.navigate('AllToDosList')}
+                height: '83%',
+                width: '100%',
+                borderTopLeftRadius: 60,
+                borderTopRightRadius: 60,
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
+              }}
+            />
+            <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-                gap: 8,
+                backgroundColor: 'rgba(247, 249, 247,1)',
+                justifyContent: 'center',
+                padding: 8,
+                height: '17%',
+                bottom: 0,
+                zIndex: 10,
+                right: 0,
+                left: 0,
+                width: 350,
               }}>
               <Text
+                numberOfLines={2}
                 style={{
-                  textAlign: 'right',
-                  color: '#15212F',
-                  fontWeight: '500',
-                  borderColor: 'rgba(21, 33, 47,0.8)',
-                  borderBottomWidth: 1,
-                  fontFamily: 'monospace',
+                  fontSize: 22,
+                  color: '#080A08',
+                  fontWeight: '700',
+                  letterSpacing: 3,
+                  fontFamily: 'System',
+                  textAlign: 'center',
+                  lineHeight: 30,
                 }}>
-                Show All
+                The Importance of Sleep
               </Text>
-              <Icon
-                style={{
-                  fontSize: 15,
-                  color: '#15212F',
-                }}
-                name="arrow-right"></Icon>
-            </TouchableOpacity>
+            </View>
           </View>
+          <View
+            style={{
+              height: 'auto',
+              width: '103%',
+              marginTop: 25,
+              padding: 0,
+              justifyContent: 'space-around',
+              flexDirection: 'row',
+              marginBottom: 20,
+            }}>
+            <View
+              style={{
+                backgroundColor: '#719071',
+                height: 150,
+                width: '53%',
+                borderRadius: 10,
+              }}></View>
+            <View style={{width: '40%', justifyContent: 'space-between'}}>
+              <View
+                style={{
+                  backgroundColor: '#AABDBA',
+                  height: 70,
+                  borderRadius: 10,
+                }}></View>
+
+              <View
+                style={{
+                  backgroundColor: '#92A8AA',
+                  height: 70,
+                  borderRadius: 10,
+                }}></View>
+            </View>
+          </View>
+          {Array.from({length: 3}, (_, index) => (
+            <View
+              key={index}
+              style={{
+                height: 60,
+                marginVertical: 5,
+                width: '100%',
+                borderRadius: 10,
+                backgroundColor: '#719071',
+              }}
+            />
+          ))}
         </View>
       </ScrollView>
-      {/* <BottomNavigationBar /> */}
     </View>
   );
 };
@@ -147,7 +173,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#15212F',
+    backgroundColor: '#F9FCF9',
   },
   weatherContainer: {
     width: '100%',
@@ -174,7 +200,7 @@ const styles = StyleSheet.create({
   },
 
   scrollContainer: {
-    backgroundColor: '#e9e9e9',
+    backgroundColor: '#719071',
     height: '150%',
     borderRadius: 23,
     padding: 3,

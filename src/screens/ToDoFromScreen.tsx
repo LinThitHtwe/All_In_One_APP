@@ -212,7 +212,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             name={'title'}
             control={control}
             placeholder={'Add Todo Title'}
-            height={50}
+            height={40}
             inputType="text"
           />
 

@@ -11,6 +11,7 @@ import AddBlogFormScreen from '../screens/AddBlogFormScreen';
 import BlogDetail from '../screens/BlogDetail';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -27,6 +28,7 @@ const RootStackNavigator = () => {
       />
       <Stack.Screen name={'LoginScreen'} component={LoginScreen} />
       <Stack.Screen name={'RegisterScreen'} component={RegisterScreen} />
+      <Stack.Screen name={'ProfileScreen'} component={ProfileScreen} />
       <Stack.Screen name={'AllToDosList'} component={AllToDosListScreen} />
       <Stack.Screen name={'ToDoForm'} component={ToDoFromScreen} />
       <Stack.Screen name={'BlogHomeScreen'} component={BlogHomeScreen} />

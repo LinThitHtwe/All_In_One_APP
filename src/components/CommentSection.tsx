@@ -20,14 +20,27 @@ const CommentSection = (props: Props) => {
         }}>
         Comments
       </Text>
-      <View
-        style={{
-          backgroundColor: '#d3d3d3',
-          padding: 10,
-          borderRadius: 10,
-          marginVertical: 6,
-        }}>
-        <Text style={{color: '#15212F'}}>LinThit : Very Goooood</Text>
+      <View>
+        <View
+          style={{
+            backgroundColor: '#d3d3d3',
+            padding: 10,
+            borderRadius: 10,
+            marginVertical: 6,
+          }}>
+          <Text style={{color: '#15212F', fontFamily: 'monospace'}}>
+            LinThit : Very Goooood
+          </Text>
+        </View>
+        <Text
+          style={{
+            color: '#15212F',
+            fontFamily: 'monospace',
+            fontSize: 10,
+            textAlign: 'right',
+          }}>
+          1 min ago
+        </Text>
       </View>
 
       <TextInput

@@ -12,6 +12,7 @@ import {RootStackScreenProps} from '../navigations/types';
 import useFetchData from '../hooks/useFetchData';
 import {getAllBlogs} from '../api/apiFunctions';
 import {formatDistanceToNow} from 'date-fns';
+import BlogHomeHeader from '../components/BlogHomeHeader';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
@@ -28,6 +29,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
           borderRadius: 10,
           padding: 10,
           borderColor: 'rgba(21, 33, 47,0.3)',
+          marginVertical: 10,
         }}>
         <Image
           source={{
@@ -158,7 +160,9 @@ const BlogHomeScreen = ({navigation}: Props) => {
         backgroundColor: '#15212F',
         justifyContent: 'center',
         padding: 13,
+        position: 'relative',
       }}>
+      <BlogHomeHeader />
       <View
         style={{
           height: 740,
@@ -167,14 +171,14 @@ const BlogHomeScreen = ({navigation}: Props) => {
           borderRadius: 10,
           padding: 10,
           position: 'relative',
+          marginTop: 72,
         }}>
         {blogData && (
           <FlatList
-            style={{marginBottom: 30}}
+            style={{marginBottom: 60}}
             data={blogData}
             renderItem={({item}) => renderItem(item)}
             keyExtractor={item => item._id}
-            ItemSeparatorComponent={<View style={{marginTop: 20}}></View>}
           />
         )}
       </View>

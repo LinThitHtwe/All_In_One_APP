@@ -37,7 +37,7 @@ const BottomNavigationBar = (props: Props) => {
     <View
       style={{
         position: 'absolute',
-        bottom: 0,
+        bottom: -2,
         width: '100%',
         alignItems: 'center',
       }}>
