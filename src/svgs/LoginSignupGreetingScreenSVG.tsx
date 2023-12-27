@@ -8,8 +8,8 @@ const LoginSignupGreetingScreenSVG = (props: Props) => {
   return (
     <Svg
       xmlns="http://www.w3.org/2000/svg"
-      width="297.754664"
-      height="531.571184"
+      width="279.1449975"
+      height="498.3479855"
       viewBox="0 0 372.19333 664.46398"
       xmlnsXlink="http://www.w3.org/1999/xlink">
       <Rect x="5.50001" width="326" height="594" rx="58.72835" fill="#3f3d56" />
