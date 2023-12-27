@@ -86,7 +86,8 @@ const HomeScreen = ({navigation}: Props) => {
               Your Todos
             </Text>
             {[...Array(4).keys()].map(index => (
-              <View
+              <TouchableOpacity
+                onPress={() => navigation.navigate('RegisterScreen')}
                 key={index}
                 style={{
                   backgroundColor: '#212D3B',
@@ -104,7 +105,7 @@ const HomeScreen = ({navigation}: Props) => {
                   }}>
                   Hello
                 </Text>
-              </View>
+              </TouchableOpacity>
             ))}
             <TouchableOpacity
               onPress={() => navigation.navigate('AllToDosList')}

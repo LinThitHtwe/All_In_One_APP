@@ -8,6 +8,7 @@ export type RootStackParamsList = {
   BlogHomeScreen: undefined;
   AddBlogFormScreen: undefined;
   LoginScreen: undefined;
+  RegisterScreen: undefined;
   BlogDetail: {
     blogId: string;
   };

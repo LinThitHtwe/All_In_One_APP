@@ -12,14 +12,15 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Image} from 'react-native';
 import {postBlog} from '../api/apiFunctions';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {storage} from '../../MMKV';
+import {useMiddleware} from '../hooks/useMIddleware';
 
 type Props = {};
 
 const AddBlogFormScreen = (props: Props) => {
   const {control, handleSubmit} = useBlog();
   const [imageData, setImageData] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-
+  useMiddleware();
   const handleImagePicker = () => {
     ImagePicker.openPicker({
       width: 316,

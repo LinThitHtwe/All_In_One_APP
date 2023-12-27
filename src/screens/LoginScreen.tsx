@@ -9,20 +9,30 @@ import React from 'react';
 import CustomInput from '../components/CustomInput';
 import {useLogin} from '../hooks/useLogin';
 import {login, register} from '../api/apiFunctions';
+import {RootStackScreenProps} from '../navigations/types';
+import {SubmitHandler} from 'react-hook-form';
+import {storage} from '../../MMKV';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'LoginScreen'> {}
+type RegisterFormValues = {
+  email: string;
+  password: string;
+};
+type RegisterScreenSubmit = SubmitHandler<RegisterFormValues>;
 
-const LoginScreen = (props: Props) => {
+const LoginScreen = ({navigation}: Props) => {
   const {control, handleSubmit} = useLogin();
 
-  const onSubmit = async data => {
+  const onSubmit: RegisterScreenSubmit = async data => {
     try {
       const response = await login({
         email: data.email,
         password: data.password,
       });
+      storage.set('loginuser', JSON.stringify(response.data));
       return response;
     } catch (error) {
+      console.log('ERROR--', error);
       throw error;
     }
   };
@@ -89,6 +99,14 @@ const LoginScreen = (props: Props) => {
                 borderRadius: 10,
               }}>
               <Text style={{textAlign: 'center'}}>Login</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{paddingTop: 20}}
+              onPress={() => navigation.navigate('RegisterScreen')}>
+              <Text style={{color: '#15212F', borderBottomWidth: 1}}>
+                Don't have an account? Sign up here
+              </Text>
             </TouchableOpacity>
           </View>
         </View>

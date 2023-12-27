@@ -9,7 +9,8 @@ const schema = z.object({
   email: z.string().email().min(3, 'Email should be more than 3 word'),
   password: z
     .string({required_error: 'Password Cannot be Blank'})
-    .min(6, 'Password must be more than 6 characters'),
+    .min(6, 'Password must be more than 6 characters')
+    .max(20, 'Password shouldnt be more than 20 character'),
 });
 
 export type ToDoFormField = z.infer<typeof schema>;
