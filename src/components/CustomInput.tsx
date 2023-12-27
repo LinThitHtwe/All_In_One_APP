@@ -54,7 +54,7 @@ const CustomInput: FC<Props> = ({
             onBlur={onBlur}
             inputMode={inputType}
             multiline
-            numberOfLines={4}
+            numberOfLines={10}
             placeholder={error ? error.message : placeholder}
             placeholderTextColor={error ? '#FF0000' : 'rgba(21, 33, 47, 0.3)'}
             style={{
@@ -65,6 +65,7 @@ const CustomInput: FC<Props> = ({
               color: '#15212F',
               height: height,
               fontFamily: 'monospace',
+              textAlignVertical: 'top',
             }}
           />
         </>

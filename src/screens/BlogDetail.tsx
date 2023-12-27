@@ -74,7 +74,9 @@ const BlogDetail = ({route, navigation}: Props) => {
           <View style={{padding: 10, marginTop: 30}}>
             <Image
               source={{
-                uri: 'https://images.unsplash.com/photo-1682686579688-c2ba945eda0e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                uri: blogData?.picture
+                  ? `data:image/jpeg;base64,${blogData?.picture}`
+                  : 'https://plus.unsplash.com/premium_photo-1681487807762-98fbe8a9db5e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
               }}
               style={{height: 260, width: '100%', borderRadius: 10}}
             />

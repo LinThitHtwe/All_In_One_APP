@@ -11,7 +11,7 @@ const schema = z.object({
 
 export type ToDoFormField = z.infer<typeof schema>;
 
-export const useLoginSignup = (initialValues?: ToDoFormField) => {
+export const useLogin = (initialValues?: ToDoFormField) => {
   const {control, handleSubmit} = useForm<ToDoFormField>({
     resolver: zodResolver(schema),
     defaultValues: {

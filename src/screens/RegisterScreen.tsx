@@ -7,18 +7,19 @@ import {
 } from 'react-native';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
-import {useLoginSignup} from '../hooks/useLoginSignup';
+
 import {register} from '../api/apiFunctions';
+import {useRegister} from '../hooks/useRegister';
 
 type Props = {};
 
 const RegisterScreen = (props: Props) => {
-  const {control, handleSubmit} = useLoginSignup();
+  const {control, handleSubmit} = useRegister();
 
   const onSubmit = async data => {
-    console.log('data---', data);
     try {
       const response = await register({
+        name: data.name,
         email: data.email,
         password: data.password,
       });
@@ -65,12 +66,19 @@ const RegisterScreen = (props: Props) => {
           <CustomInput
             control={control}
             height={40}
+            placeholder="John Doe"
+            inputType="text"
+            label="Username"
+            name="name"
+          />
+          <CustomInput
+            control={control}
+            height={40}
             placeholder="example@email.com"
             inputType="email"
             label="Email"
             name="email"
           />
-
           <CustomInput
             control={control}
             height={40}

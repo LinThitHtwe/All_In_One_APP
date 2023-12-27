@@ -7,14 +7,13 @@ import {
 } from 'react-native';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
-import {useLoginSignup} from '../hooks/useLoginSignup';
+import {useLogin} from '../hooks/useLogin';
 import {login, register} from '../api/apiFunctions';
-import useCustomMutate from '../hooks/useCustomMutate';
 
 type Props = {};
 
 const LoginScreen = (props: Props) => {
-  const {control, handleSubmit} = useLoginSignup();
+  const {control, handleSubmit} = useLogin();
 
   const onSubmit = async data => {
     try {
