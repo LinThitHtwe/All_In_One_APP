@@ -12,6 +12,7 @@ import BlogDetail from '../screens/BlogDetail';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import LoginSignupGreetingScreen from '../screens/LoginSignupGreetingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -25,6 +26,10 @@ const RootStackNavigator = () => {
       <Stack.Screen
         name={'CurrencyConverter'}
         component={CurrencyConverterScreen}
+      />
+      <Stack.Screen
+        name={'LoginSignupGreetingScreen'}
+        component={LoginSignupGreetingScreen}
       />
       <Stack.Screen name={'LoginScreen'} component={LoginScreen} />
       <Stack.Screen name={'RegisterScreen'} component={RegisterScreen} />

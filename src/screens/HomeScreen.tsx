@@ -45,9 +45,12 @@ const HomeScreen = ({navigation}: Props) => {
             fontWeight: '600',
           }}
           name="book"></Icon>
-        <Text style={{color: '#719071', fontSize: 20, fontWeight: '700'}}>
-          Login
-        </Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
+          <Text style={{color: '#719071', fontSize: 20, fontWeight: '700'}}>
+            Login
+          </Text>
+        </TouchableOpacity>
       </View>
       <ScrollView style={{width: '100%'}}>
         <View
@@ -134,12 +137,7 @@ const HomeScreen = ({navigation}: Props) => {
                 borderRadius: 10,
               }}></View>
             <View style={{width: '40%', justifyContent: 'space-between'}}>
-              <View
-                style={{
-                  backgroundColor: '#AABDBA',
-                  height: 70,
-                  borderRadius: 10,
-                }}></View>
+              <ToCurrencyConverterWidget />
 
               <View
                 style={{
