@@ -12,7 +12,6 @@ import {login, register} from '../api/apiFunctions';
 import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
 import {storage} from '../../MMKV';
-import LoginSignupGreetingScreenSVG from '../svgs/LoginSignupGreetingScreenSVG';
 
 interface Props extends RootStackScreenProps<'LoginScreen'> {}
 type RegisterFormValues = {
@@ -33,7 +32,6 @@ const LoginScreen = ({navigation}: Props) => {
       storage.set('loginuser', JSON.stringify(response.data));
       return response;
     } catch (error) {
-      console.log('ERROR--', error);
       throw error;
     }
   };
@@ -73,9 +71,10 @@ const LoginScreen = ({navigation}: Props) => {
           transform: [{rotate: '35deg'}],
           opacity: 0.9,
         }}></View>
+
       <View
         style={{
-          height: 430,
+          height: 410,
           width: '100%',
           borderRadius: 10,
           padding: 10,
@@ -93,7 +92,6 @@ const LoginScreen = ({navigation}: Props) => {
 
         <View
           style={{
-            marginTop: 10,
             justifyContent: 'center',
             height: '80%',
           }}>
