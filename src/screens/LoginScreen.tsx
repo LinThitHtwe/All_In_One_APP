@@ -12,6 +12,7 @@ import {login, register} from '../api/apiFunctions';
 import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
 import {storage} from '../../MMKV';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 interface Props extends RootStackScreenProps<'LoginScreen'> {}
 type RegisterFormValues = {
@@ -46,6 +47,22 @@ const LoginScreen = ({navigation}: Props) => {
         padding: 13,
         position: 'relative',
       }}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          position: 'absolute',
+          top: 23,
+          left: 23,
+          zIndex: 10,
+        }}>
+        <Icon
+          style={{
+            fontSize: 23,
+            color: '#F7F9F7',
+            opacity: 0.8,
+          }}
+          name="arrow-left"></Icon>
+      </TouchableOpacity>
       <View
         style={{
           position: 'absolute',

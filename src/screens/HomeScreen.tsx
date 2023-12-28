@@ -60,7 +60,7 @@ const HomeScreen = ({navigation}: Props) => {
             height: 'auto',
             alignItems: 'center',
           }}>
-          <View
+          <TouchableOpacity
             style={{
               backgroundColor: '#F7F9F7',
               borderTopStartRadius: 60,
@@ -118,7 +118,7 @@ const HomeScreen = ({navigation}: Props) => {
                 The Importance of Sleep
               </Text>
             </View>
-          </View>
+          </TouchableOpacity>
           <View
             style={{
               height: 'auto',

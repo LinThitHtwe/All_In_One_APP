@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   Keyboard,
   Pressable,
@@ -51,6 +52,7 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
     data: responseData,
     isLoading: isCurrencyLoading,
     isError: isCurrencyFetchError,
+    refetch,
   } = useQuery({
     queryKey: ['currencies'],
     queryFn: getCurrencies,
@@ -100,106 +102,209 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
   ) => {
     return (
       <>
-        <Text style={styles.optionBoxText}>{text}</Text>
+        <Text
+          style={{
+            color: '#090B09',
+            marginTop: 30,
+            marginBottom: 20,
+            fontSize: 20,
+          }}>
+          {text}
+        </Text>
         {responseData && values && Array.isArray(values) && (
           <Picker
             selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) => setMethod(itemValue)}
-            style={styles.optionBox}>
+            onValueChange={itemValue => setMethod(itemValue)}
+            style={{
+              backgroundColor: '#A9BCB9',
+              color: '#F7F9F7',
+              fontWeight: '400',
+            }}>
             {values.map((value: string, index: number) => (
               <Picker.Item label={value} key={index} value={value} />
             ))}
           </Picker>
-        )}
-
-        {isCurrencyLoading && (
-          <Text
-            style={{
-              fontSize: 20,
-              color: '#15212F',
-              fontFamily: 'monospace',
-            }}>
-            Loading...
-          </Text>
-        )}
-
-        {isCurrencyFetchError && (
-          <Text
-            style={{
-              fontSize: 20,
-              color: '#15212F',
-              fontFamily: 'monospace',
-            }}>
-            Something Went Wrong
-          </Text>
         )}
       </>
     );
   };
 
   return (
-    <Pressable onPress={() => Keyboard.dismiss()} style={styles.mainContainer}>
-      <View style={styles.bodyCard}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon
-            style={{
-              color: '#15212F',
-              fontSize: 18,
-              fontWeight: '600',
-              marginBottom: 8,
-            }}
-            name="arrow-left"></Icon>
-        </TouchableOpacity>
+    <Pressable
+      onPress={() => Keyboard.dismiss()}
+      style={{
+        flex: 1,
+        backgroundColor: '#F6F8F6',
+        position: 'relative',
+        alignItems: 'center',
+        padding: 8,
+      }}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          position: 'absolute',
+          top: 34,
+          left: 18,
+          zIndex: 10,
+        }}>
+        <Icon
+          style={{
+            fontSize: 20,
+            color: '#708F70',
+            opacity: 0.8,
+          }}
+          name="arrow-left"></Icon>
+      </TouchableOpacity>
 
-        <Text style={styles.titleText}>Currency Converter</Text>
-        {renderPickers(
-          setSelectedFromValue,
-          'From',
-          fromValue,
-          selectedFromValue,
-        )}
-        {renderPickers(setSelectedToValue, 'To', toValue, selectedToValue)}
-        <View style={{marginTop: 20}}>
-          <Controller
-            control={control}
-            name="amount"
-            render={({
-              field: {value, onChange, onBlur},
-              fieldState: {error},
-            }) => (
-              <>
-                <Text style={styles.amountInputLabel}>Amount:</Text>
-                <TextInput
-                  value={value}
-                  onBlur={onBlur}
-                  style={styles.amountInput}
-                  inputMode="decimal"
-                  placeholder="Amount to Convert"
-                  placeholderTextColor={'rgba(21, 33, 47, 0.3)'}
-                  onChangeText={text => {
-                    const cleanedText = text.replace(/[^0-9.]/g, '');
-                    onChange(cleanedText);
-                  }}
-                />
-                {Object.keys(errors).length !== 0 && (
-                  <Text style={{color: '#FF0000', padding: 10, fontSize: 16}}>
-                    {errors.amount?.message}
+      <Icon
+        style={{
+          position: 'absolute',
+          fontSize: 300,
+          color: '#708F70',
+          bottom: -160,
+          left: -128,
+          opacity: 0.4,
+          transform: [{rotate: '45deg'}],
+        }}
+        name="money"></Icon>
+      <Text
+        style={{
+          textAlign: 'center',
+          color: '#708F70',
+          fontSize: 28,
+          fontWeight: '800',
+          letterSpacing: 3,
+          marginTop: 20,
+        }}>
+        Currency Converter
+      </Text>
+      {responseData && !isCurrencyFetchError && !isCurrencyLoading && (
+        <View style={{height: 400, width: '100%', marginTop: 40, padding: 10}}>
+          {renderPickers(
+            setSelectedFromValue,
+            'From',
+            fromValue,
+            selectedFromValue,
+          )}
+          {renderPickers(setSelectedToValue, 'To', toValue, selectedToValue)}
+
+          <View style={{marginTop: 20}}>
+            <Controller
+              control={control}
+              name="amount"
+              render={({
+                field: {value, onChange, onBlur},
+                fieldState: {error},
+              }) => (
+                <>
+                  <Text
+                    style={{
+                      color: '#090B09',
+                      marginVertical: 20,
+                      fontSize: 20,
+                    }}>
+                    Amount:
                   </Text>
-                )}
-              </>
-            )}
-          />
-
-          <View style={styles.converBtnContainer}>
+                  <TextInput
+                    value={value}
+                    onBlur={onBlur}
+                    style={{
+                      borderBottomWidth: 1,
+                      borderColor: 'rgba(9, 11, 9,0.2)',
+                      color: '#090B09',
+                      fontSize: 20,
+                    }}
+                    inputMode="decimal"
+                    placeholder="Amount to Convert"
+                    placeholderTextColor={'rgba(169, 188, 185, 0.6)'}
+                    onChangeText={text => {
+                      const cleanedText = text.replace(/[^0-9.]/g, '');
+                      onChange(cleanedText);
+                    }}
+                  />
+                  {Object.keys(errors).length !== 0 && (
+                    <Text style={{color: '#FF0000', padding: 10, fontSize: 16}}>
+                      {errors.amount?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+            />
+          </View>
+          <View style={{alignItems: 'center', marginTop: 60}}>
             <TouchableOpacity
               onPress={handleSubmit(onSubmit)}
-              style={styles.amountConvertBtn}
+              style={{
+                backgroundColor: '#708F70',
+                padding: 10,
+                paddingVertical: 13,
+                width: '90%',
+                borderRadius: 10,
+              }}
               disabled={isCurrencyLoading || isCurrencyFetchError}>
-              <Text style={styles.amountConvertText}>Convert</Text>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#F7F9F7',
+                  fontSize: 18,
+                  fontWeight: '800',
+                }}>
+                Convert
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      )}
+      {isCurrencyLoading && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            height: 350,
+            width: 400,
+          }}>
+          <ActivityIndicator size={80} color={'#A9BCB9'} />
+        </View>
+      )}
+      {isCurrencyFetchError && (
+        <View
+          style={{
+            flex: 1,
+            height: 350,
+            width: 300,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text
+            style={{
+              color: '#090B09',
+              textAlign: 'center',
+              fontSize: 20,
+              marginBottom: 40,
+            }}>
+            Something Went Wrong :(
+          </Text>
+          <TouchableOpacity
+            onPress={() => refetch()}
+            style={{
+              padding: 13,
+              borderColor: 'rgba(112, 143, 112,0.8)',
+              borderWidth: 1,
+              width: '60%',
+              marginBottom: 120,
+              borderRadius: 10,
+            }}>
+            <Text
+              style={{
+                color: '#090B09',
+                textAlign: 'center',
+                fontWeight: '500',
+              }}>
+              Try Again
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </Pressable>
   );
 };
@@ -209,7 +314,7 @@ export default CurrencyConverterScreen;
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#15212F',
+    backgroundColor: '#F6F8F6',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 8,

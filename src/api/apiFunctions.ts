@@ -1,7 +1,10 @@
 import axios from 'axios';
 import API from './interceptors';
 
-export const getCurrencies = () => axios.get(``);
+export const getCurrencies = () =>
+  axios.get(
+    `https://api.freecurrencyapi.com/v1/latest?apikey=9KUkGeviPGLrY5t7Bgu2zgRqexYQgOUMEow62lgG`,
+  );
 export const getAllBlogs = async () => {
   try {
     const response = await API.get('/blog/all');

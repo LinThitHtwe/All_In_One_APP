@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import CustomInput from '../components/CustomInput';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {register} from '../api/apiFunctions';
 import {useRegister} from '../hooks/useRegister';
 import {RootStackScreenProps} from '../navigations/types';
@@ -46,6 +46,22 @@ const RegisterScreen = ({navigation}: Props) => {
         padding: 13,
         position: 'relative',
       }}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{
+          position: 'absolute',
+          top: 23,
+          left: 23,
+          zIndex: 10,
+        }}>
+        <Icon
+          style={{
+            fontSize: 23,
+            color: '#F7F9F7',
+            opacity: 0.8,
+          }}
+          name="arrow-left"></Icon>
+      </TouchableOpacity>
       <View
         style={{
           position: 'absolute',
