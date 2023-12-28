@@ -7,11 +7,11 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import CurrentDate from '../components/CurrentDate';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
 import ToWeatherForecast from '../components/ToWeatherForecast';
+import ReadBlogsToday from '../components/ReadBlogsToday';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -57,10 +57,34 @@ const HomeScreen = ({navigation}: Props) => {
         <View
           style={{
             padding: 10,
-            marginTop: 10,
+            marginTop: 0,
             height: 'auto',
             alignItems: 'center',
           }}>
+          <View
+            style={{
+              width: '95%',
+              marginBottom: 6,
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                color: '#090B09',
+                fontSize: 16,
+                fontWeight: '500',
+              }}>
+              Read Latest Blog{' '}
+            </Text>
+            <Icon
+              style={{
+                color: '#090B09',
+                fontSize: 13,
+                marginTop: 3,
+                marginLeft: 5,
+              }}
+              name="arrow-down"></Icon>
+          </View>
           <TouchableOpacity
             style={{
               backgroundColor: '#F7F9F7',
@@ -129,14 +153,10 @@ const HomeScreen = ({navigation}: Props) => {
               justifyContent: 'space-around',
               flexDirection: 'row',
               marginBottom: 20,
+              position: 'relative',
             }}>
-            <View
-              style={{
-                backgroundColor: '#719071',
-                height: 150,
-                width: '53%',
-                borderRadius: 10,
-              }}></View>
+            <ReadBlogsToday />
+
             <View style={{width: '40%', justifyContent: 'space-between'}}>
               <ToCurrencyConverterWidget />
               <ToWeatherForecast />
@@ -181,15 +201,13 @@ const styles = StyleSheet.create({
   weatherCityText: {
     textAlign: 'center',
     fontSize: 40,
-    color: '#e9e9e9',
-    fontFamily: 'monospace',
+    color: '#F7F9F7',
   },
 
   weatherTemperature: {
     textAlign: 'center',
     fontSize: 35,
-    color: '#e9e9e9',
-    fontFamily: 'monospace',
+    color: '#F7F9F7',
   },
 
   scrollContainer: {
