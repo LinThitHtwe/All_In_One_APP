@@ -151,7 +151,7 @@ const RegisterScreen = ({navigation}: Props) => {
                 backgroundColor: '#708F70',
                 padding: 13,
                 width: '90%',
-                borderRadius: 10,
+                borderRadius: 25,
               }}>
               <Text
                 style={{

@@ -11,6 +11,7 @@ import CurrentDate from '../components/CurrentDate';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
+import ToWeatherForecast from '../components/ToWeatherForecast';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -138,13 +139,7 @@ const HomeScreen = ({navigation}: Props) => {
               }}></View>
             <View style={{width: '40%', justifyContent: 'space-between'}}>
               <ToCurrencyConverterWidget />
-
-              <View
-                style={{
-                  backgroundColor: '#92A8AA',
-                  height: 70,
-                  borderRadius: 10,
-                }}></View>
+              <ToWeatherForecast />
             </View>
           </View>
           {Array.from({length: 3}, (_, index) => (

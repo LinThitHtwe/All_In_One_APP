@@ -34,7 +34,7 @@ const CustomInput: FC<Props> = ({
         <>
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 18,
               color: '#15212F',
               marginTop: 25,
               marginBottom: 10,
@@ -57,7 +57,7 @@ const CustomInput: FC<Props> = ({
             placeholder={error ? error.message : placeholder}
             placeholderTextColor={error ? '#FF0000' : 'rgba(8, 10, 8, 0.3)'}
             style={{
-              borderWidth: 1,
+              borderBottomWidth: 1,
               borderColor: error ? '#FF0000' : 'rgba(8, 10, 8, 0.5)',
               padding: 10,
               borderRadius: 15,
