@@ -34,12 +34,11 @@ const CustomInput: FC<Props> = ({
         <>
           <Text
             style={{
-              fontSize: 25,
+              fontSize: 20,
               color: '#15212F',
               marginTop: 25,
               marginBottom: 10,
               fontWeight: '400',
-              fontFamily: 'monospace',
             }}>
             {label}
           </Text>
@@ -56,15 +55,14 @@ const CustomInput: FC<Props> = ({
             multiline
             numberOfLines={10}
             placeholder={error ? error.message : placeholder}
-            placeholderTextColor={error ? '#FF0000' : 'rgba(21, 33, 47, 0.3)'}
+            placeholderTextColor={error ? '#FF0000' : 'rgba(8, 10, 8, 0.3)'}
             style={{
               borderWidth: 1,
-              borderColor: error ? '#FF0000' : 'rgba(21, 33, 47, 0.6)',
+              borderColor: error ? '#FF0000' : 'rgba(8, 10, 8, 0.5)',
               padding: 10,
               borderRadius: 15,
               color: '#15212F',
               height: height,
-              fontFamily: 'monospace',
               textAlignVertical: 'top',
             }}
           />

@@ -12,6 +12,7 @@ import {login, register} from '../api/apiFunctions';
 import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
 import {storage} from '../../MMKV';
+import LoginSignupGreetingScreenSVG from '../svgs/LoginSignupGreetingScreenSVG';
 
 interface Props extends RootStackScreenProps<'LoginScreen'> {}
 type RegisterFormValues = {
@@ -42,14 +43,39 @@ const LoginScreen = ({navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#15212F',
+        backgroundColor: '#F7F9F7',
         justifyContent: 'center',
         padding: 13,
+        position: 'relative',
       }}>
       <View
         style={{
+          position: 'absolute',
+          height: 350,
+          width: 350,
+          backgroundColor: '#719071',
+          top: -180,
+          left: -160,
+          borderRadius: 130,
+          transform: [{rotate: '35deg'}],
+          opacity: 0.9,
+        }}></View>
+
+      <View
+        style={{
+          position: 'absolute',
+          height: 370,
+          width: 370,
+          backgroundColor: '#719071',
+          bottom: -260,
+          right: 10,
+          borderRadius: 120,
+          transform: [{rotate: '35deg'}],
+          opacity: 0.9,
+        }}></View>
+      <View
+        style={{
           height: 430,
-          backgroundColor: '#e9e9e9',
           width: '100%',
           borderRadius: 10,
           padding: 10,
@@ -57,9 +83,8 @@ const LoginScreen = ({navigation}: Props) => {
         }}>
         <Text
           style={{
-            color: '#15212F',
-            fontFamily: 'monospace',
-            fontSize: 20,
+            color: '#080A08',
+            fontSize: 30,
             fontWeight: '700',
             textAlign: 'center',
           }}>
@@ -74,7 +99,7 @@ const LoginScreen = ({navigation}: Props) => {
           }}>
           <CustomInput
             control={control}
-            height={40}
+            height={45}
             placeholder="example@email.com"
             inputType="email"
             label="Email"
@@ -83,7 +108,7 @@ const LoginScreen = ({navigation}: Props) => {
 
           <CustomInput
             control={control}
-            height={40}
+            height={45}
             placeholder="your password"
             inputType="email"
             label="Password"
@@ -93,18 +118,31 @@ const LoginScreen = ({navigation}: Props) => {
             <TouchableOpacity
               onPress={handleSubmit(onSubmit)}
               style={{
-                backgroundColor: '#15212F',
-                padding: 10,
-                width: '40%',
-                borderRadius: 10,
+                backgroundColor: '#719071',
+                padding: 13,
+                width: '90%',
+                borderRadius: 20,
               }}>
-              <Text style={{textAlign: 'center'}}>Login</Text>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: '#F7F9F7',
+                  fontSize: 18,
+                  fontWeight: '700',
+                }}>
+                Login
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{paddingTop: 20}}
+              style={{paddingTop: 40}}
               onPress={() => navigation.navigate('RegisterScreen')}>
-              <Text style={{color: '#15212F', borderBottomWidth: 1}}>
+              <Text
+                style={{
+                  color: '#AABDBA',
+                  borderBottomWidth: 1,
+                  borderColor: '#AABDBA',
+                }}>
                 Don't have an account? Sign up here
               </Text>
             </TouchableOpacity>
