@@ -15,27 +15,26 @@ const CommentSection = (props: Props) => {
       <Text
         style={{
           color: '#15212F',
-          fontFamily: 'monospace',
+
           marginVertical: 10,
         }}>
-        Comments
+        Comments (1)
       </Text>
       <View>
         <View
           style={{
-            backgroundColor: '#d3d3d3',
-            padding: 10,
+            backgroundColor: 'rgba(170, 189, 186,0.1)',
+            padding: 13,
             borderRadius: 10,
             marginVertical: 6,
           }}>
-          <Text style={{color: '#15212F', fontFamily: 'monospace'}}>
+          <Text style={{color: '#15212F', fontSize: 15, fontWeight: '400'}}>
             LinThit : Very Goooood
           </Text>
         </View>
         <Text
           style={{
             color: '#15212F',
-            fontFamily: 'monospace',
             fontSize: 10,
             textAlign: 'right',
           }}>
@@ -61,8 +60,8 @@ const CommentSection = (props: Props) => {
           marginTop: 4,
         }}>
         <TouchableOpacity
-          style={{backgroundColor: '#15212F', padding: 5, borderRadius: 10}}>
-          <Text>Comment</Text>
+          style={{backgroundColor: '#719071', padding: 10, borderRadius: 10}}>
+          <Text style={{color: '#F7F9F7', fontWeight: '600'}}>Comment</Text>
         </TouchableOpacity>
       </View>
     </View>
