@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -13,31 +14,38 @@ import {RootStackScreenProps} from '../navigations/types';
 import useFetchData from '../hooks/useFetchData';
 import {getBlogById} from '../api/apiFunctions';
 import {formatDistanceToNow} from 'date-fns';
+import BlogHomeHeader from '../components/BlogHomeHeader';
+import TimeOutSvg from '../svgs/TimeOutSvg';
 
 interface Props extends RootStackScreenProps<'BlogDetail'> {}
 
 const BlogDetail = ({route, navigation}: Props) => {
   const {blogId} = route.params;
-  const {data: blogData, isLoading} = useFetchData([`blog${blogId}`], () =>
-    getBlogById(blogId),
-  );
+  const {
+    data: blogData,
+    isError,
+    isLoading,
+    refetch,
+  } = useFetchData([`blog${blogId}`], () => getBlogById(blogId));
 
   return (
     <View
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#15212F',
+        backgroundColor: '#F7F9F7',
         justifyContent: 'center',
-        padding: 13,
+        padding: 10,
+        position: 'relative',
       }}>
+      <BlogHomeHeader />
       <TouchableOpacity
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-start',
           width: '100%',
           position: 'absolute',
-          top: 30,
+          top: 60,
           left: 20,
           zIndex: 20,
         }}
@@ -51,26 +59,21 @@ const BlogDetail = ({route, navigation}: Props) => {
           }}
           name="arrow-left"></Icon>
       </TouchableOpacity>
-      <View
-        style={{
-          height: 740,
-          backgroundColor: '#e9e9e9',
-          width: '100%',
-          borderRadius: 10,
-          padding: 10,
-          position: 'relative',
-        }}>
-        <ScrollView style={{width: '100%'}}>
-          <Text
-            style={{
-              fontFamily: 'monospace',
-              textAlign: 'center',
-              color: '#15212F',
-              fontSize: 23,
-            }}>
-            {blogData?.title}
-            {isLoading && 'Loading'}
-          </Text>
+      {blogData && !isError && !isLoading && (
+        <ScrollView style={{width: '100%', marginTop: 50}}>
+          <View style={{alignItems: 'center'}}>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: '#15212F',
+                fontSize: 23,
+                fontWeight: '800',
+                width: '75%',
+              }}>
+              {blogData?.title}
+              {isLoading && 'Loading'}
+            </Text>
+          </View>
           <View style={{padding: 10, marginTop: 30}}>
             <Image
               source={{
@@ -84,7 +87,7 @@ const BlogDetail = ({route, navigation}: Props) => {
               <Text
                 style={{
                   color: '#15212F',
-                  fontFamily: 'monospace',
+
                   fontWeight: '700',
                   marginTop: 15,
                   fontSize: 20,
@@ -92,10 +95,11 @@ const BlogDetail = ({route, navigation}: Props) => {
                 {blogData?.title}
                 {isLoading && 'Loading'}
               </Text>
+
               <Text
                 style={{
                   color: '#15212F',
-                  fontFamily: 'monospace',
+
                   fontSize: 12,
                   paddingLeft: 6,
                   marginTop: 5,
@@ -107,11 +111,45 @@ const BlogDetail = ({route, navigation}: Props) => {
                     })})`
                   : 'Ivan (N/A)'}
               </Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginVertical: 20,
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 5,
+                }}>
+                <View style={{flexDirection: 'row', gap: 10}}>
+                  <TouchableOpacity>
+                    <Icon
+                      style={{
+                        fontSize: 24,
+                        color: '#090B09',
+                      }}
+                      name="thumbs-o-up"></Icon>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Icon
+                      style={{
+                        fontSize: 24,
+                        color: '#090B09',
+                      }}
+                      name="thumbs-o-down"></Icon>
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity>
+                  <Icon
+                    style={{
+                      fontSize: 24,
+                      color: '#090B09',
+                    }}
+                    name="bookmark-o"></Icon>
+                </TouchableOpacity>
+              </View>
 
               <Text
                 style={{
                   color: '#15212F',
-                  fontFamily: 'monospace',
+
                   fontWeight: '400',
                   fontSize: 16,
                   marginTop: 12,
@@ -125,7 +163,7 @@ const BlogDetail = ({route, navigation}: Props) => {
               <Text
                 style={{
                   color: '#15212F',
-                  fontFamily: 'monospace',
+
                   marginTop: 20,
                   textAlign: 'right',
                   fontWeight: '600',
@@ -136,7 +174,7 @@ const BlogDetail = ({route, navigation}: Props) => {
               <Text
                 style={{
                   color: '#15212F',
-                  fontFamily: 'monospace',
+
                   marginTop: 6,
                   textAlign: 'right',
                   fontWeight: '700',
@@ -148,7 +186,62 @@ const BlogDetail = ({route, navigation}: Props) => {
             <CommentSection />
           </View>
         </ScrollView>
-      </View>
+      )}
+
+      {isLoading && (
+        <ActivityIndicator
+          size={60}
+          style={{marginTop: 60}}
+          color={'#719071'}
+        />
+      )}
+      {isError && (
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 550,
+          }}>
+          <Text
+            style={{
+              color: '#090B09',
+              fontSize: 30,
+              fontWeight: '700',
+              marginBottom: 80,
+            }}>
+            Connection Time Out ( • ᴖ • )
+          </Text>
+          <TimeOutSvg />
+          <TouchableOpacity
+            onPress={() => refetch()}
+            style={{
+              borderColor: '#719071',
+              borderWidth: 1,
+              borderRadius: 10,
+              marginTop: 60,
+              padding: 13,
+              width: '80%',
+              flexDirection: 'row',
+              gap: 10,
+            }}>
+            <Text
+              style={{
+                color: '#719071',
+                textAlign: 'left',
+                fontSize: 16,
+                fontWeight: '600',
+              }}>
+              Reload
+            </Text>
+            <Icon
+              style={{
+                color: '#719071',
+                fontSize: 18,
+              }}
+              name="refresh"></Icon>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };
