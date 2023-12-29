@@ -64,6 +64,7 @@ const CustomInput: FC<Props> = ({
               color: '#15212F',
               height: height,
               textAlignVertical: 'top',
+              fontSize: 18,
             }}
           />
         </>

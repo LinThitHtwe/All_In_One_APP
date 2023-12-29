@@ -10,42 +10,30 @@ const BlogHomeHeader = (props: Props) => {
   return (
     <View
       style={{
+        height: 60,
+        borderBottomEndRadius: 5,
+        borderBottomStartRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
         position: 'absolute',
-        backgroundColor: '#283e58',
-        width: '110%',
         top: 0,
         right: 0,
         left: 0,
-        height: 50,
-        zIndex: 10,
-        flexDirection: 'row',
-        paddingHorizontal: 20,
-        alignItems: 'center',
-        justifyContent: 'space-between',
       }}>
+      <Icon
+        style={{
+          color: '#719071',
+          fontSize: 26,
+          fontWeight: '600',
+        }}
+        name="book"></Icon>
       <TouchableOpacity
-        style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-        <Icon
-          style={{
-            color: '#e9e9e9',
-            fontSize: 26,
-            fontWeight: '600',
-          }}
-          name="book"></Icon>
-        <Text style={{color: '#e9e9e9'}}>Blog</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate('ProfileScreen')}
-        style={{flexDirection: 'row', alignItems: 'center', gap: 6}}>
-        <Icon
-          style={{
-            color: '#e9e9e9',
-            fontSize: 26,
-            marginRight: 10,
-            fontWeight: '600',
-          }}
-          name="user"></Icon>
+        onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
+        <Text style={{color: '#719071', fontSize: 20, fontWeight: '700'}}>
+          Login
+        </Text>
       </TouchableOpacity>
     </View>
   );

@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
 import ToWeatherForecast from '../components/ToWeatherForecast';
 import ReadBlogsToday from '../components/ReadBlogsToday';
+import BlogHomeHeader from '../components/BlogHomeHeader';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -28,32 +29,9 @@ const HomeScreen = ({navigation}: Props) => {
 
   // handleDeleteData();
   return (
-    <View style={{backgroundColor: '#F7F9F7', flex: 1}}>
-      <View
-        style={{
-          height: 60,
-          borderBottomEndRadius: 5,
-          borderBottomStartRadius: 5,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingHorizontal: 20,
-        }}>
-        <Icon
-          style={{
-            color: '#719071',
-            fontSize: 26,
-            fontWeight: '600',
-          }}
-          name="book"></Icon>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
-          <Text style={{color: '#719071', fontSize: 20, fontWeight: '700'}}>
-            Login
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={{width: '100%'}}>
+    <View style={{backgroundColor: '#F7F9F7', flex: 1, position: 'relative'}}>
+      <BlogHomeHeader />
+      <ScrollView style={{width: '100%', marginTop: 60}}>
         <View
           style={{
             padding: 10,

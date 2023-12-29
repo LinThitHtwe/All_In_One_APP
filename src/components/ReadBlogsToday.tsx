@@ -2,11 +2,14 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import OnlineArticle from '../svgs/OnlineArticle';
+import {useNavigation} from '@react-navigation/native';
 type Props = {};
 
 const ReadBlogsToday = (props: Props) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
+      onPress={() => navigation.navigate('BlogHomeScreen')}
       style={{
         backgroundColor: '#719071',
         height: 150,
