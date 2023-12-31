@@ -163,14 +163,13 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#15212F',
+        backgroundColor: '#F7F9F7',
         justifyContent: 'center',
-        padding: 13,
       }}>
       <ScrollView
         style={{
           height: 730,
-          backgroundColor: '#e9e9e9',
+          backgroundColor: '#F7F9F7',
           width: '100%',
           borderRadius: 10,
           padding: 10,
@@ -179,7 +178,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
         <TouchableOpacity
           style={{
             position: 'absolute',
-            top: 15,
+            top: 25,
             left: 15,
             zIndex: 30,
             width: 50,
@@ -188,20 +187,19 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
           onPress={() => navigation.navigate('AllToDosList')}>
           <Icon
             style={{
-              color: '#15212F',
-              fontSize: 18,
+              color: '#080A08',
+              fontSize: 22,
               fontWeight: '600',
             }}
             name="arrow-left"></Icon>
         </TouchableOpacity>
         <Text
           style={{
-            marginTop: 5,
-            color: '#15212F',
+            marginTop: 25,
+            color: '#080A08',
             fontSize: 25,
             fontWeight: '600',
             textAlign: 'center',
-            fontFamily: 'monospace',
           }}>
           Add Todo
         </Text>
@@ -221,7 +219,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             name={'description'}
             control={control}
             placeholder={'Add Todo Description'}
-            height={200}
+            height={50}
             inputType="text"
           />
 
@@ -235,16 +233,15 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             <Text
               style={{
                 textAlign: 'left',
-                color: '#15212F',
+                color: '#080A08',
                 fontWeight: '400',
-                fontFamily: 'monospace',
               }}>
               Remind Me :
             </Text>
             <Switch
               style={{height: 40}}
-              trackColor={{false: '#15212F', true: '#3f6491'}}
-              thumbColor={isReminderSwitchEnabled ? '#2f8cfa' : '#c7c7c7'}
+              trackColor={{false: '#080A08', true: '#92A8AA'}}
+              thumbColor={isReminderSwitchEnabled ? '#719071' : '#AABDBA'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
               value={isReminderSwitchEnabled}
@@ -255,10 +252,9 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             <View style={{marginTop: 15, padding: 8}}>
               <Text
                 style={{
-                  color: '#15212F',
+                  color: '#080A08',
                   fontSize: 17,
-                  fontWeight: '700',
-                  fontFamily: 'monospace',
+                  fontWeight: '500',
                 }}>
                 Select reminder date and time.
               </Text>
@@ -267,22 +263,26 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                   flexDirection: 'row',
                   justifyContent: 'space-around',
                   marginTop: 20,
+                  height: 'auto',
                 }}>
-                <View style={{width: '45%'}}>
+                <View style={{width: '45%', height: 'auto'}}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#15212F',
+                      backgroundColor: '#AABDBA',
                       position: 'relative',
                       padding: 6,
                       borderRadius: 10,
                       overflow: 'hidden',
+                      height: 60,
+                      justifyContent: 'center',
                     }}
                     onPress={() => setIsDatePickerOpen(true)}>
                     <Text
                       style={{
                         textAlign: 'center',
-                        color: '#e9e9e9',
-                        fontFamily: 'monospace',
+                        color: '#F7F9F7',
+                        fontSize: 18,
+                        fontWeight: '900',
                       }}>
                       Select Remind Date
                     </Text>
@@ -290,9 +290,10 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                       style={{
                         position: 'absolute',
                         fontSize: 40,
-                        color: '#888',
-                        opacity: 0.2,
+                        color: '#92A8AA',
+                        opacity: 0.4,
                         bottom: 0,
+                        zIndex: -10,
                         right: -10,
                         transform: [{rotate: '15deg'}],
                       }}
@@ -303,9 +304,8 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                       style={{
                         color: '#15212F',
                         marginTop: 10,
-                        fontFamily: 'monospace',
                       }}>
-                      Selected Time:{' '}
+                      Selected Date:{' '}
                       {selectedDate.getDate().toString().padStart(2, '0')}.
                       {(selectedDate.getMonth() + 1)
                         .toString()
@@ -317,18 +317,21 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                 <View style={{width: '45%'}}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#15212F',
+                      backgroundColor: '#AABDBA',
+                      position: 'relative',
                       padding: 6,
                       borderRadius: 10,
-                      position: 'relative',
                       overflow: 'hidden',
+                      height: 60,
+                      justifyContent: 'center',
                     }}
                     onPress={() => setIsTimePickerOpen(true)}>
                     <Text
                       style={{
                         textAlign: 'center',
-                        color: '#e9e9e9',
-                        fontFamily: 'monospace',
+                        color: '#F7F9F7',
+                        fontSize: 18,
+                        fontWeight: '900',
                       }}>
                       Select Remind Time
                     </Text>
@@ -350,7 +353,6 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                       style={{
                         color: '#15212F',
                         marginTop: 10,
-                        fontFamily: 'monospace',
                       }}>
                       Selected Time:{' '}
                       {selectedTime.getHours().toString().padStart(2, '0')}:
@@ -411,12 +413,12 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                   alignItems: 'center',
                   gap: 4,
                 }}>
-                <Text style={{color: '#e9e9e9', fontFamily: 'monospace'}}>
+                <Text style={{color: '#F7F9F7', fontFamily: 'monospace'}}>
                   Delete Todo
                 </Text>
                 <Icon
                   style={{
-                    color: '#e9e9e9',
+                    color: '#F7F9F7',
                     fontSize: 16,
                     fontWeight: '600',
                   }}
@@ -435,12 +437,12 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                   alignItems: 'center',
                   gap: 4,
                 }}>
-                <Text style={{color: '#e9e9e9', fontFamily: 'monospace'}}>
+                <Text style={{color: '#F7F9F7', fontFamily: 'monospace'}}>
                   Update Todo
                 </Text>
                 <Icon
                   style={{
-                    color: '#e9e9e9',
+                    color: '#F7F9F7',
                     fontSize: 16,
                     fontWeight: '600',
                   }}
@@ -452,7 +454,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
               onPress={handleSubmit(onSubmit)}
               style={{
                 marginTop: 5,
-                backgroundColor: '#15212F',
+                backgroundColor: '#719071',
                 width: '50%',
                 padding: 12,
                 borderRadius: 10,
@@ -460,8 +462,9 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
               <Text
                 style={{
                   textAlign: 'center',
-                  color: '#e9e9e9',
-                  fontFamily: 'monospace',
+                  color: '#F7F9F7',
+                  fontSize: 18,
+                  fontWeight: '800',
                 }}>
                 Add ToDo
               </Text>

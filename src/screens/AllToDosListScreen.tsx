@@ -63,24 +63,23 @@ const AllToDosListScreen = ({navigation}: Props) => {
           padding: 10,
           height: 60,
           borderWidth: 1,
-          borderColor: '#ccc',
+          borderColor: '#719071',
           flexDirection: 'row',
           justifyContent: 'space-between',
           margin: 2,
           borderRadius: 10,
-          backgroundColor: '#15212F',
+          backgroundColor: '#719071',
           alignItems: 'center',
+          width: '99%',
         }}>
-        <Text style={{fontSize: 20, fontFamily: 'monospace', color: '#e9e9e9'}}>
-          {truncatedTitle}
-        </Text>
+        <Text style={{fontSize: 20, color: '#F7F9F7'}}>{truncatedTitle}</Text>
         {!isDeleteEnable && (
           <TouchableOpacity
             style={{marginRight: 5}}
             onPress={() => navigation.navigate('ToDoForm', item)}>
             <Icon
               style={{
-                color: '#e9e9e9',
+                color: '#F7F9F7',
                 fontSize: 18,
                 fontWeight: '600',
               }}
@@ -130,13 +129,14 @@ const AllToDosListScreen = ({navigation}: Props) => {
           style={{
             justifyContent: 'center',
             marginTop: 10,
+            width: '100%',
           }}>
           {selectedCount > 0 && (
             <Text
               style={{
                 color: '#ff0000',
                 textAlign: 'right',
-                fontFamily: 'monospace',
+
                 textDecorationLine: 'underline',
               }}>
               Delete {selectedCount} {''}
@@ -146,7 +146,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
         </TouchableOpacity>
         {isDeleteEnable && (
           <TouchableOpacity
-            style={{marginTop: 10}}
+            style={{marginTop: 10, width: '100%'}}
             onPress={() => {
               setIsDeleteEnable(false);
               setSelectedItems(Array(todos?.length).fill(false));
@@ -163,135 +163,124 @@ const AllToDosListScreen = ({navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#15212F',
+        backgroundColor: '#F7F9F7',
         justifyContent: 'center',
         padding: 13,
+        position: 'relative',
       }}>
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: 25,
+          left: 15,
+          zIndex: 30,
+          width: 50,
+          height: 40,
+        }}
+        onPress={() => {
+          navigation.goBack();
+        }}>
+        <Icon
+          style={{
+            color: '#080A08',
+            fontSize: 18,
+            fontWeight: '600',
+          }}
+          name="arrow-left"></Icon>
+      </TouchableOpacity>
+      <Text
+        style={{
+          color: '#080A08',
+          fontSize: 25,
+          fontWeight: '600',
+          textAlign: 'center',
+          letterSpacing: 3,
+          marginTop: 10,
+        }}>
+        Your Todos
+      </Text>
+
       <View
         style={{
-          height: 730,
-          backgroundColor: '#e9e9e9',
+          flexDirection: 'row',
+          marginTop: 20,
+          justifyContent: 'space-between',
           width: '100%',
-          borderRadius: 10,
-          padding: 10,
-          position: 'relative',
         }}>
-        <TouchableOpacity
+        <TextInput
           style={{
-            position: 'absolute',
-            top: 15,
-            left: 15,
-            zIndex: 30,
-            width: 50,
-            height: 40,
+            borderWidth: 1,
+            borderRadius: 15,
+            borderColor: 'rgba(21, 33, 47,0.6)',
+            width: '78%',
+            padding: 10,
           }}
-          onPress={() => {
-            navigation.goBack();
+          placeholder="Search todos"
+          placeholderTextColor={'rgba(21, 33, 47,0.3)'}
+          onChangeText={text => setSearchQuery(text)}
+        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ToDoForm')}
+          style={{
+            backgroundColor: '#719071',
+            justifyContent: 'center',
+            padding: 8,
+            borderRadius: 10,
           }}>
-          <Icon
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 14,
+              color: '#F7F9F7',
+            }}>
+            Add More
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <DeleteMessage />
+      {!todos || todos.length === 0 ? (
+        <>
+          <Text
             style={{
               color: '#15212F',
-              fontSize: 18,
-              fontWeight: '600',
-            }}
-            name="arrow-left"></Icon>
-        </TouchableOpacity>
-        <Text
-          style={{
-            color: '#15212F',
-            fontSize: 25,
-            fontWeight: '600',
-            textAlign: 'center',
-            fontFamily: 'monospace',
-          }}>
-          Your Todos
-        </Text>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 20,
-            justifyContent: 'space-between',
-          }}>
-          <TextInput
-            style={{
-              borderWidth: 1,
-              borderRadius: 15,
-              borderColor: 'rgba(21, 33, 47,0.6)',
-              width: '76%',
-              padding: 10,
-              fontFamily: 'monospace',
-            }}
-            placeholder="Search todos"
-            placeholderTextColor={'rgba(21, 33, 47,0.3)'}
-            onChangeText={text => setSearchQuery(text)}
-          />
-          <TouchableOpacity
-            onPress={() => navigation.navigate('ToDoForm')}
-            style={{
-              backgroundColor: '#283e58',
-              justifyContent: 'center',
-              padding: 8,
-              borderRadius: 10,
+              marginTop: 30,
+              textAlign: 'center',
             }}>
-            <Text
+            No Todo List Yet, Add One Now :3
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 20,
+            }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ToDoForm')}
               style={{
-                textAlign: 'center',
-                fontSize: 14,
-                color: '#e9e9e9',
-                fontFamily: 'monospace',
-              }}>
-              Add More
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <DeleteMessage />
-        {!todos || todos.length === 0 ? (
-          <>
-            <Text
-              style={{
-                fontFamily: 'monospace',
-                color: '#15212F',
-                marginTop: 30,
-                textAlign: 'center',
-              }}>
-              No Todo List Yet, Add One Now :3
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
+                backgroundColor: '#283e58',
                 justifyContent: 'center',
-                marginTop: 20,
+                padding: 12,
+                borderRadius: 10,
               }}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('ToDoForm')}
+              <Text
                 style={{
-                  backgroundColor: '#283e58',
-                  justifyContent: 'center',
-                  padding: 12,
-                  borderRadius: 10,
+                  textAlign: 'center',
+                  fontSize: 14,
+                  color: '#F7F9F7',
                 }}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontSize: 14,
-                    color: '#e9e9e9',
-                    fontFamily: 'monospace',
-                  }}>
-                  Add One
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        ) : (
-          <FlatList
-            style={{marginTop: 20}}
-            data={filteredTodos}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        )}
-      </View>
+                Add One
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : (
+        <FlatList
+          style={{marginTop: 20}}
+          data={filteredTodos}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
+      )}
     </View>
   );
 };

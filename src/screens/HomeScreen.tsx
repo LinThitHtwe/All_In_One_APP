@@ -143,7 +143,8 @@ const HomeScreen = ({navigation}: Props) => {
             </View>
           </View>
 
-          <View
+          <TouchableOpacity
+            onPress={() => navigation.navigate('AllToDosList')}
             style={{
               height: 60,
               marginVertical: 5,
@@ -179,7 +180,7 @@ const HomeScreen = ({navigation}: Props) => {
             <View
               style={{
                 position: 'absolute',
-                right: 75,
+                right: 35,
                 top: 5,
 
                 // backgroundColor: '#F7F9F7',
@@ -192,7 +193,7 @@ const HomeScreen = ({navigation}: Props) => {
                 shouldHumanAppear={false}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           {Array.from({length: 3}, (_, index) => (
             <View
               key={index}
