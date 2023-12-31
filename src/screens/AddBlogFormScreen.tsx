@@ -14,6 +14,7 @@ import {postBlog} from '../api/apiFunctions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {storage} from '../../MMKV';
 import {useMiddleware} from '../hooks/useMIddleware';
+import BottomNavigationBar from '../components/BottomNavigationBar';
 
 type Props = {};
 
@@ -23,7 +24,7 @@ const AddBlogFormScreen = (props: Props) => {
   useMiddleware();
   const handleImagePicker = () => {
     ImagePicker.openPicker({
-      width: 316,
+      width: 320,
       height: 260,
       cropping: true,
       includeBase64: true,
@@ -44,34 +45,20 @@ const AddBlogFormScreen = (props: Props) => {
     }
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#15212F',
-        justifyContent: 'center',
-        padding: 13,
-      }}>
+    <View style={{flex: 1, backgroundColor: '#F7F9F7', alignItems: 'center'}}>
       <ScrollView style={{width: '100%'}}>
-        <View
+        <Text
           style={{
-            backgroundColor: '#e9e9e9',
-            width: '100%',
-            borderRadius: 10,
-            padding: 10,
-            position: 'relative',
+            color: '#080A08',
+            fontWeight: '700',
+            fontSize: 30,
+            marginTop: 12,
+            textAlign: 'center',
           }}>
-          <Text
-            style={{
-              color: '#15212F',
-              fontSize: 24,
-              textAlign: 'center',
-              fontWeight: '700',
-              fontFamily: 'monospace',
-            }}>
-            Post New Blog
-          </Text>
+          Post New Blog
+        </Text>
 
+        <View style={{padding: 20, marginTop: 20}}>
           <CustomInput
             height={50}
             label="Title"
@@ -82,7 +69,7 @@ const AddBlogFormScreen = (props: Props) => {
           />
 
           <CustomInput
-            height={450}
+            height={50}
             label="Blog Content"
             name="content"
             placeholder="Blog Content"
@@ -90,88 +77,99 @@ const AddBlogFormScreen = (props: Props) => {
             inputType="text"
           />
 
-          <View
-            style={{
-              alignItems: 'center',
-              marginVertical: 20,
-              borderRadius: 10,
-              overflow: 'hidden',
-            }}>
-            {imageData && (
-              <View>
-                <Text
+          {imageData && (
+            <View style={{alignItems: 'center', marginTop: 40}}>
+              <Image
+                source={{uri: `data:image/jpeg;base64,${imageData}`}}
+                style={{
+                  width: 320,
+                  height: 260,
+                  borderRadius: 10,
+                  position: 'relative',
+                }}
+              />
+              <TouchableOpacity
+                onPress={() => setImageData(null)}
+                style={{
+                  position: 'absolute',
+                  top: -14,
+                  right: 6,
+                  backgroundColor: '#92A8AA',
+                  paddingHorizontal: 4,
+                  borderRadius: 40,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 27,
+                }}>
+                <Icon
                   style={{
                     color: '#15212F',
-                    width: '95%',
-                    marginVertical: 6,
-                    fontFamily: 'monospace',
-                  }}>
-                  Image Preview :
-                </Text>
-                <Image
-                  source={{uri: `data:image/jpeg;base64,${imageData}`}}
-                  style={{
-                    width: 316,
-                    height: 260,
-                    borderRadius: 10,
-                    position: 'relative',
+                    fontSize: 20,
+                    fontWeight: '600',
                   }}
-                />
+                  name="times"></Icon>
+              </TouchableOpacity>
+            </View>
+          )}
 
-                <TouchableOpacity
-                  onPress={() => setImageData(null)}
-                  style={{position: 'absolute', top: 15, right: 0}}>
-                  <Icon
-                    style={{
-                      color: '#15212F',
-                      fontSize: 25,
-                      fontWeight: '600',
-                    }}
-                    name="times"></Icon>
-                </TouchableOpacity>
-              </View>
-            )}
-          </View>
+          <TouchableOpacity
+            onPress={handleImagePicker}
+            style={{
+              marginTop: 30,
+              paddingLeft: 10,
+              borderColor: 'rgba(113, 144, 113,0.7)',
+              borderWidth: 1,
+              width: '50%',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 12,
+              padding: 10,
+              borderRadius: 10,
+            }}>
+            <Icon
+              style={{
+                color: '#719071',
+                fontSize: 24,
+              }}
+              name="upload"></Icon>
+            <Text style={{color: '#080A08'}}>
+              {imageData ? 'Change Image' : 'Upload Image'}
+            </Text>
+          </TouchableOpacity>
 
-          <View
+          <TouchableOpacity
+            onPress={handleSubmit(onSubmit)}
             style={{
+              backgroundColor: '#719071',
+              marginTop: 30,
+              padding: 10,
+              borderRadius: 20,
               flexDirection: 'row',
+              alignItems: 'center',
               justifyContent: 'center',
-              marginBottom: 60,
+              gap: 8,
+              marginBottom: 50,
             }}>
-            <TouchableOpacity
-              onPress={handleImagePicker}
+            <Text
               style={{
-                backgroundColor: '#15212F',
-                padding: 10,
-                borderRadius: 10,
+                color: '#F7F9F7',
+                textAlign: 'center',
+                fontSize: 20,
+                fontWeight: '700',
               }}>
-              <Text style={{color: '#e9e9e9'}}>
-                {imageData ? 'Change Image' : 'Pick an Image'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginBottom: 90,
-            }}>
-            <TouchableOpacity
-              onPress={handleSubmit(onSubmit)}
+              Post Blog
+            </Text>
+            <Icon
               style={{
-                backgroundColor: '#15212F',
-                padding: 15,
-                borderRadius: 10,
-                width: '90%',
-              }}>
-              <Text style={{color: '#e9e9e9', textAlign: 'center'}}>
-                Post Blog
-              </Text>
-            </TouchableOpacity>
-          </View>
+                color: '#F7F9F7',
+                fontSize: 15,
+              }}
+              name="upload"></Icon>
+          </TouchableOpacity>
         </View>
       </ScrollView>
+
+      <BottomNavigationBar />
     </View>
   );
 };

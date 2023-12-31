@@ -15,6 +15,7 @@ import {getAllBlogs} from '../api/apiFunctions';
 import {formatDistanceToNow} from 'date-fns';
 import BlogHomeHeader from '../components/BlogHomeHeader';
 import TimeOutSvg from '../svgs/TimeOutSvg';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
@@ -25,6 +26,12 @@ const BlogHomeScreen = ({navigation}: Props) => {
     isError,
     refetch,
   } = useFetchData(['blogs'], getAllBlogs);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+    }, []),
+  );
 
   const renderItem = data => {
     return (

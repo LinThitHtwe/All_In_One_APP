@@ -3,6 +3,7 @@ import RootStackNavigator from './navigations/RootStackNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import BottomNavigationBar from './components/BottomNavigationBar';
+import BottomTabNavigator from './navigations/BottomTabNavigator';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,6 +27,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <RootStackNavigator />
+
         {/* <BottomNavigationBar /> */}
       </NavigationContainer>
     </QueryClientProvider>

@@ -13,6 +13,7 @@ import ToCurrencyConverterWidget from '../components/ToCurrencyConverterWidget';
 import ToWeatherForecast from '../components/ToWeatherForecast';
 import ReadBlogsToday from '../components/ReadBlogsToday';
 import BlogHomeHeader from '../components/BlogHomeHeader';
+import BottomNavigationBar from '../components/BottomNavigationBar';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -154,6 +155,7 @@ const HomeScreen = ({navigation}: Props) => {
           ))}
         </View>
       </ScrollView>
+      <BottomNavigationBar />
     </View>
   );
 };
