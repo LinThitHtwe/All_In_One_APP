@@ -14,6 +14,7 @@ import ToWeatherForecast from '../components/ToWeatherForecast';
 import ReadBlogsToday from '../components/ReadBlogsToday';
 import BlogHomeHeader from '../components/BlogHomeHeader';
 import BottomNavigationBar from '../components/BottomNavigationBar';
+import ToDoListSvg from '../svgs/ToDoListSVG';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -139,6 +140,57 @@ const HomeScreen = ({navigation}: Props) => {
             <View style={{width: '40%', justifyContent: 'space-between'}}>
               <ToCurrencyConverterWidget />
               <ToWeatherForecast />
+            </View>
+          </View>
+
+          <View
+            style={{
+              height: 60,
+              marginVertical: 5,
+              width: '100%',
+              borderRadius: 10,
+              backgroundColor: '#719071',
+              padding: 10,
+              justifyContent: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+            <Text
+              style={{
+                color: '#F7F9F7',
+                letterSpacing: 2,
+                fontSize: 26,
+                fontWeight: '700',
+              }}>
+              Your Todos
+            </Text>
+
+            <Icon
+              style={{
+                color: '#F7F9F7',
+                fontSize: 18,
+                marginTop: 3,
+                marginLeft: 5,
+                position: 'absolute',
+                right: 20,
+              }}
+              name="arrow-right"></Icon>
+
+            <View
+              style={{
+                position: 'absolute',
+                right: 75,
+                top: 5,
+
+                // backgroundColor: '#F7F9F7',
+
+                transform: [{rotate: '15deg'}],
+              }}>
+              <ToDoListSvg
+                height={'46.944265'}
+                width={'84.867538'}
+                shouldHumanAppear={false}
+              />
             </View>
           </View>
           {Array.from({length: 3}, (_, index) => (

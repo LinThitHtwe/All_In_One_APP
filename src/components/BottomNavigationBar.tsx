@@ -23,7 +23,9 @@ const BottomNavigationBar = (props: Props) => {
         alignItems: 'center',
         paddingVertical: 10,
       }}>
-      <TouchableOpacity style={{alignItems: 'center'}}>
+      <TouchableOpacity
+        style={{alignItems: 'center'}}
+        onPress={() => navigation.navigate('HomeScreen')}>
         <Icon
           style={{
             color: '#92A8AA',
