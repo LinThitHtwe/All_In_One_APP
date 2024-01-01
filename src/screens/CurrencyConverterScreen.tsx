@@ -18,6 +18,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useQuery} from '@tanstack/react-query';
 import {getCurrencies} from '../api/apiFunctions';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'CurrencyConverter'> {}
 
@@ -44,6 +45,7 @@ const schema = z.object({
 });
 
 const CurrencyConverterScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const [fromValue, setFromValue] = useState<string[]>([]);
   const [toValue, setToValue] = useState<string[]>([]);
   const [selectedFromValue, setSelectedFromValue] = useState<string>('');
@@ -104,7 +106,7 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
       <>
         <Text
           style={{
-            color: '#090B09',
+            color: isDarkTheme ? '#F4F6F4' : '#090B09',
             marginTop: 30,
             marginBottom: 20,
             fontSize: 20,
@@ -116,7 +118,7 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
             selectedValue={selectedValue}
             onValueChange={itemValue => setMethod(itemValue)}
             style={{
-              backgroundColor: '#A9BCB9',
+              backgroundColor: isDarkTheme ? '#435653' : '#A9BCB9',
               color: '#F7F9F7',
               fontWeight: '400',
             }}>
@@ -134,7 +136,7 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
       onPress={() => Keyboard.dismiss()}
       style={{
         flex: 1,
-        backgroundColor: '#F6F8F6',
+        backgroundColor: isDarkTheme ? '#070907' : '#F6F8F6',
         position: 'relative',
         alignItems: 'center',
         padding: 8,
@@ -199,7 +201,7 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
                 <>
                   <Text
                     style={{
-                      color: '#090B09',
+                      color: isDarkTheme ? '#F4F6F4' : '#090B09',
                       marginVertical: 20,
                       fontSize: 20,
                     }}>
@@ -210,7 +212,9 @@ const CurrencyConverterScreen = ({navigation}: Props) => {
                     onBlur={onBlur}
                     style={{
                       borderBottomWidth: 1,
-                      borderColor: 'rgba(9, 11, 9,0.2)',
+                      borderColor: isDarkTheme
+                        ? 'rgba(112, 143, 112,0.6)'
+                        : 'rgba(9, 11, 9,0.2)',
                       color: '#090B09',
                       fontSize: 20,
                     }}
