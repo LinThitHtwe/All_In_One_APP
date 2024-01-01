@@ -208,7 +208,7 @@ const HomeScreen = ({navigation}: Props) => {
           ))}
         </View>
       </ScrollView>
-      <BottomNavigationBar />
+      <BottomNavigationBar currentPage="HomeScreen" />
     </View>
   );
 };

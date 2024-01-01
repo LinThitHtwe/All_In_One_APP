@@ -169,7 +169,7 @@ const AddBlogFormScreen = (props: Props) => {
         </View>
       </ScrollView>
 
-      <BottomNavigationBar />
+      <BottomNavigationBar currentPage="AddBlogFormScreen" />
     </View>
   );
 };

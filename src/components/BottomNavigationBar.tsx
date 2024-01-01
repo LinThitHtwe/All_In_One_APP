@@ -3,9 +3,11 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 
-type Props = {};
+type Props = {
+  currentPage: string;
+};
 
-const BottomNavigationBar = (props: Props) => {
+const BottomNavigationBar = ({currentPage}: Props) => {
   const navigation = useNavigation();
   return (
     <View
@@ -28,42 +30,79 @@ const BottomNavigationBar = (props: Props) => {
         onPress={() => navigation.navigate('HomeScreen')}>
         <Icon
           style={{
-            color: '#92A8AA',
+            color:
+              currentPage === 'HomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
           name="home"></Icon>
-        <Text style={{color: '#92A8AA', fontWeight: '900'}}>Home</Text>
+
+        <Text
+          style={{
+            color:
+              currentPage === 'HomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            fontWeight: '900',
+          }}>
+          Home
+        </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{alignItems: 'center'}}>
+      <TouchableOpacity
+        style={{alignItems: 'center'}}
+        onPress={() => navigation.navigate('BlogHomeScreen')}>
         <Icon
           style={{
-            color: '#92A8AA',
+            color:
+              currentPage === 'BlogHomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
           name="list-alt"></Icon>
-        <Text style={{color: '#92A8AA', fontWeight: '900'}}>Blogs</Text>
+        <Text
+          style={{
+            color:
+              currentPage === 'BlogHomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            fontWeight: '900',
+          }}>
+          Blogs
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{alignItems: 'center'}}
         onPress={() => navigation.navigate('AddBlogFormScreen')}>
         <Icon
           style={{
-            color: '#92A8AA',
+            color:
+              currentPage === 'AddBlogFormScreen'
+                ? '#92A8AA'
+                : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
           name="plus"></Icon>
-        <Text style={{color: '#92A8AA', fontWeight: '900'}}>Post Blog</Text>
+        <Text
+          style={{
+            color:
+              currentPage === 'AddBlogFormScreen'
+                ? '#92A8AA'
+                : 'rgba(8,10,8,0.3)',
+            fontWeight: '900',
+          }}>
+          Post Blog
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={{alignItems: 'center'}}>
         <Icon
           style={{
-            color: '#92A8AA',
+            color: currentPage === 'r' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
             fontSize: 26,
           }}
           name="list"></Icon>
-        <Text style={{color: '#92A8AA', fontWeight: '900'}}>Setting</Text>
+        <Text
+          style={{
+            color: currentPage === 'r' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            fontWeight: '900',
+          }}>
+          Setting
+        </Text>
       </TouchableOpacity>
     </View>
   );
