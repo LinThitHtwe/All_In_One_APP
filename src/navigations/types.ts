@@ -11,6 +11,7 @@ export type RootStackParamsList = {
   RegisterScreen: undefined;
   ProfileScreen: undefined;
   LoginSignupGreetingScreen: undefined;
+  OtherToolsScreen: undefined;
   BlogDetail: {
     blogId: string;
   };

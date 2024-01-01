@@ -88,19 +88,27 @@ const BottomNavigationBar = ({currentPage}: Props) => {
         </Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={{alignItems: 'center'}}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('OtherToolsScreen')}
+        style={{alignItems: 'center'}}>
         <Icon
           style={{
-            color: currentPage === 'r' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            color:
+              currentPage === 'OtherToolsScreen'
+                ? '#92A8AA'
+                : 'rgba(8,10,8,0.3)',
             fontSize: 26,
           }}
           name="list"></Icon>
         <Text
           style={{
-            color: currentPage === 'r' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            color:
+              currentPage === 'OtherToolsScreen'
+                ? '#92A8AA'
+                : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
-          Setting
+          Others
         </Text>
       </TouchableOpacity>
     </View>

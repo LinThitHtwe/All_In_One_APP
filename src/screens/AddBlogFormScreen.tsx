@@ -41,9 +41,7 @@ const AddBlogFormScreen = ({navigation}: Props) => {
         ...data,
         picture: imageData,
       });
-      if (response.data) {
-        console.log('response---', response);
-      } else {
+      if (response.error) {
         Alert.alert(
           'Error',
           'Something Went Wrong',
