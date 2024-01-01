@@ -4,6 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import BottomNavigationBar from './components/BottomNavigationBar';
 import BottomTabNavigator from './navigations/BottomTabNavigator';
+import {Provider} from 'react-redux';
+import store from './redux/app/store';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,11 +27,13 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
-        <RootStackNavigator />
+      <Provider store={store}>
+        <NavigationContainer>
+          <RootStackNavigator />
 
-        {/* <BottomNavigationBar /> */}
-      </NavigationContainer>
+          {/* <BottomNavigationBar /> */}
+        </NavigationContainer>
+      </Provider>
     </QueryClientProvider>
   );
 };

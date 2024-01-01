@@ -2,11 +2,14 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {useAppSelector} from '../redux/app/hook';
 
 type Props = {};
 
 const BlogHomeHeader = (props: Props) => {
   const navigation = useNavigation();
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+
   return (
     <View
       style={{
@@ -24,14 +27,19 @@ const BlogHomeHeader = (props: Props) => {
       }}>
       <Icon
         style={{
-          color: '#719071',
+          color: isDarkTheme ? '#708F70' : '#719071',
           fontSize: 26,
           fontWeight: '600',
         }}
         name="book"></Icon>
       <TouchableOpacity
         onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
-        <Text style={{color: '#719071', fontSize: 20, fontWeight: '700'}}>
+        <Text
+          style={{
+            color: isDarkTheme ? '#708F70' : '#719071',
+            fontSize: 20,
+            fontWeight: '700',
+          }}>
           Login
         </Text>
       </TouchableOpacity>

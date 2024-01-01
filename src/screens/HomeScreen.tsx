@@ -18,10 +18,12 @@ import ToDoListSvg from '../svgs/ToDoListSVG';
 import useFetchData from '../hooks/useFetchData';
 import {getLatestBlog} from '../api/apiFunctions';
 import {RefreshControl} from 'react-native';
+import {useAppDispatch, useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
 const HomeScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const {
     data: latestBlog,
     isRefetching,
@@ -39,7 +41,12 @@ const HomeScreen = ({navigation}: Props) => {
 
   // handleDeleteData();
   return (
-    <View style={{backgroundColor: '#F7F9F7', flex: 1, position: 'relative'}}>
+    <View
+      style={{
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
+        flex: 1,
+        position: 'relative',
+      }}>
       <BlogHomeHeader />
       <ScrollView
         style={{width: '100%', marginTop: 60}}
@@ -62,7 +69,7 @@ const HomeScreen = ({navigation}: Props) => {
             }}>
             <Text
               style={{
-                color: '#090B09',
+                color: isDarkTheme ? '#F4F6F4' : '#090B09',
                 fontSize: 16,
                 fontWeight: '500',
               }}>
@@ -70,7 +77,7 @@ const HomeScreen = ({navigation}: Props) => {
             </Text>
             <Icon
               style={{
-                color: '#090B09',
+                color: isDarkTheme ? '#F4F6F4' : '#090B09',
                 fontSize: 13,
                 marginTop: 3,
                 marginLeft: 5,
@@ -83,7 +90,7 @@ const HomeScreen = ({navigation}: Props) => {
               navigation.navigate('BlogDetail', {blogId: latestBlog._id})
             }
             style={{
-              backgroundColor: '#F7F9F7',
+              backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
               borderTopStartRadius: 60,
               borderTopEndRadius: 60,
               borderBottomStartRadius: 30,
@@ -95,8 +102,10 @@ const HomeScreen = ({navigation}: Props) => {
               shadowOffset: {width: 20, height: 20},
               shadowOpacity: 1,
               shadowRadius: 9,
-              borderColor: 'rgba(113, 144, 113,0.1)',
-              borderWidth: 1,
+              borderColor: isDarkTheme
+                ? 'rgba(244, 246, 244,0.4)'
+                : 'rgba(113, 144, 113,0.1)',
+              borderWidth: isDarkTheme ? 0 : 1,
               overflow: 'hidden',
               position: 'relative',
             }}>
@@ -113,13 +122,15 @@ const HomeScreen = ({navigation}: Props) => {
                     width: '100%',
                     borderTopLeftRadius: 60,
                     borderTopRightRadius: 60,
-                    borderBottomLeftRadius: 20,
-                    borderBottomRightRadius: 20,
+                    borderBottomLeftRadius: isDarkTheme ? 0 : 20,
+                    borderBottomRightRadius: isDarkTheme ? 0 : 20,
                   }}
                 />
                 <View
                   style={{
-                    backgroundColor: 'rgba(247, 249, 247,1)',
+                    backgroundColor: isDarkTheme
+                      ? 'rgba(244, 246, 244,1)'
+                      : 'rgba(247, 249, 247,)',
                     justifyContent: 'center',
                     padding: 8,
                     height: '17%',
@@ -133,7 +144,7 @@ const HomeScreen = ({navigation}: Props) => {
                     numberOfLines={2}
                     style={{
                       fontSize: 22,
-                      color: '#080A08',
+                      color: isDarkTheme ? '#070907' : '#080A08',
                       fontWeight: '700',
                       letterSpacing: 3,
                       fontFamily: 'System',
@@ -172,7 +183,7 @@ const HomeScreen = ({navigation}: Props) => {
               marginVertical: 5,
               width: '100%',
               borderRadius: 10,
-              backgroundColor: '#719071',
+              backgroundColor: isDarkTheme ? '#708F70' : '#719071',
               padding: 10,
               justifyContent: 'center',
               position: 'relative',

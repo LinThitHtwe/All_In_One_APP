@@ -18,10 +18,12 @@ import BlogHomeHeader from '../components/BlogHomeHeader';
 import TimeOutSvg from '../svgs/TimeOutSvg';
 import {useFocusEffect} from '@react-navigation/native';
 import BottomNavigationBar from '../components/BottomNavigationBar';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
 const BlogHomeScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const {
     data: blogData,
     isLoading,
@@ -46,11 +48,13 @@ const BlogHomeScreen = ({navigation}: Props) => {
           borderTopLeftRadius: 55,
           borderTopRightRadius: 55,
           borderRadius: 30,
-          borderColor: 'rgba(8, 10, 8,0.1)',
+          borderColor: isDarkTheme
+            ? 'rgba(112, 143, 112,0.2)'
+            : 'rgba(8, 10, 8,0.1)',
           marginVertical: 10,
-          backgroundColor: '#F7F9F7',
+          backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
           shadowColor: '#719071',
-          elevation: 2.5,
+          elevation: 3.5,
           shadowOffset: {width: 10, height: 10},
           shadowOpacity: 0.1,
           shadowRadius: 40,
@@ -76,7 +80,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
           }}>
           <Text
             style={{
-              color: '#15212F',
+              color: isDarkTheme ? '#F4F6F4' : '#090B09',
               marginTop: 8,
               paddingLeft: 3,
               fontSize: 20,
@@ -87,8 +91,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
           </Text>
           <Text
             style={{
-              color: '#15212F',
-
+              color: isDarkTheme ? '#F4F6F4' : '#090B09',
               fontSize: 12,
               paddingLeft: 6,
               marginTop: 5,
@@ -103,7 +106,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
 
           <Text
             style={{
-              color: '#090B09',
+              color: isDarkTheme ? '#F4F6F4' : '#090B09',
               fontWeight: '300',
               lineHeight: 18,
               fontSize: 13,
@@ -132,7 +135,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
               <TouchableOpacity>
                 <Icon
                   style={{
-                    color: '#15212F',
+                    color: isDarkTheme ? '#F4F6F4' : '#15212F',
                     fontSize: 20,
                     fontWeight: '600',
                   }}
@@ -141,7 +144,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
               <TouchableOpacity>
                 <Icon
                   style={{
-                    color: '#15212F',
+                    color: isDarkTheme ? '#F4F6F4' : '#15212F',
                     fontSize: 20,
                     fontWeight: '600',
                   }}
@@ -159,7 +162,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
                 alignItems: 'center',
                 paddingVertical: 7,
                 paddingHorizontal: 10,
-                backgroundColor: '#719071',
+                backgroundColor: isDarkTheme ? '#708F70' : '#719071',
                 borderRadius: 30,
               }}>
               <Text style={{color: '#F7F9F7', fontWeight: '800'}}>
@@ -167,7 +170,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
               </Text>
               <Icon
                 style={{
-                  color: '#F7F9F7',
+                  color: isDarkTheme ? '#F4F6F4' : '#F7F9F7',
                   fontSize: 14,
                   fontWeight: '600',
                 }}
@@ -178,7 +181,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
             style={{position: 'absolute', top: 3, right: 10, opacity: 0.8}}>
             <Icon
               style={{
-                color: '#15212F',
+                color: isDarkTheme ? '#F4F6F4' : '#15212F',
                 fontSize: 28,
                 fontWeight: '600',
               }}
@@ -193,7 +196,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F9F7',
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         justifyContent: 'center',
         padding: 13,
         position: 'relative',
@@ -224,7 +227,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
             }}>
             <Text
               style={{
-                color: '#090B09',
+                color: isDarkTheme ? '#F4F6F4' : '#090B09',
                 fontSize: 30,
                 fontWeight: '700',
                 marginBottom: 80,

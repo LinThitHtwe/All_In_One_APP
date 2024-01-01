@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
+import {useAppSelector} from '../redux/app/hook';
 
 type Props = {
   currentPage: string;
@@ -9,11 +10,13 @@ type Props = {
 
 const BottomNavigationBar = ({currentPage}: Props) => {
   const navigation = useNavigation();
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   return (
     <View
       style={{
-        borderColor: '#719071',
-        backgroundColor: '#F7F9F7',
+        borderColor: '#708F70',
+        borderTopWidth: isDarkTheme ? 1 : 0,
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         height: 55,
         position: 'absolute',
         bottom: 0,
@@ -29,16 +32,26 @@ const BottomNavigationBar = ({currentPage}: Props) => {
         onPress={() => navigation.navigate('HomeScreen')}>
         <Icon
           style={{
-            color:
-              currentPage === 'HomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'HomeScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'HomeScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
           name="home"></Icon>
 
         <Text
           style={{
-            color:
-              currentPage === 'HomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'HomeScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'HomeScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
           Home
@@ -50,15 +63,25 @@ const BottomNavigationBar = ({currentPage}: Props) => {
         onPress={() => navigation.navigate('BlogHomeScreen')}>
         <Icon
           style={{
-            color:
-              currentPage === 'BlogHomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'BlogHomeScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'BlogHomeScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
           name="list-alt"></Icon>
         <Text
           style={{
-            color:
-              currentPage === 'BlogHomeScreen' ? '#92A8AA' : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'BlogHomeScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'BlogHomeScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
           Blogs
@@ -69,19 +92,25 @@ const BottomNavigationBar = ({currentPage}: Props) => {
         onPress={() => navigation.navigate('AddBlogFormScreen')}>
         <Icon
           style={{
-            color:
-              currentPage === 'AddBlogFormScreen'
-                ? '#92A8AA'
-                : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'AddBlogFormScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'AddBlogFormScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
           name="plus"></Icon>
         <Text
           style={{
-            color:
-              currentPage === 'AddBlogFormScreen'
-                ? '#92A8AA'
-                : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'AddBlogFormScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'AddBlogFormScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
           Post Blog
@@ -93,19 +122,25 @@ const BottomNavigationBar = ({currentPage}: Props) => {
         style={{alignItems: 'center'}}>
         <Icon
           style={{
-            color:
-              currentPage === 'OtherToolsScreen'
-                ? '#92A8AA'
-                : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'OtherToolsScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'OtherToolsScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontSize: 26,
           }}
           name="list"></Icon>
         <Text
           style={{
-            color:
-              currentPage === 'OtherToolsScreen'
-                ? '#92A8AA'
-                : 'rgba(8,10,8,0.3)',
+            color: isDarkTheme
+              ? currentPage === 'OtherToolsScreen'
+                ? '#708F70'
+                : 'rgba(244, 246, 244,0.3)'
+              : currentPage === 'OtherToolsScreen'
+              ? '#92A8AA'
+              : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
           Others

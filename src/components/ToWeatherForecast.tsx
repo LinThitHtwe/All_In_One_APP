@@ -1,13 +1,15 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useAppSelector} from '../redux/app/hook';
 type Props = {};
 
 const ToWeatherForecast = (props: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: '#92A8AA',
+        backgroundColor: isDarkTheme ? '#556B6D' : '#92A8AA',
         height: 70,
         borderRadius: 10,
         padding: 10,
@@ -17,7 +19,7 @@ const ToWeatherForecast = (props: Props) => {
       <Text
         style={{
           fontSize: 20,
-          color: '#F7F9F7',
+          color: isDarkTheme ? '#F4F6F4' : '#F7F9F7',
           opacity: 1,
           fontWeight: '600',
           letterSpacing: -0.5,
@@ -29,7 +31,7 @@ const ToWeatherForecast = (props: Props) => {
         style={{
           position: 'absolute',
           fontSize: 13,
-          color: '#090B09',
+          color: isDarkTheme ? '#F4F6F4' : '#090B09',
           opacity: 0.4,
           bottom: 10,
           right: 15,
@@ -39,7 +41,7 @@ const ToWeatherForecast = (props: Props) => {
         style={{
           position: 'absolute',
           fontSize: 50,
-          color: '#A9BCB9',
+          color: isDarkTheme ? '#435653' : '#A9BCB9',
           top: -7,
           right: -8,
           opacity: 1,

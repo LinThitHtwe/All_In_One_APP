@@ -3,15 +3,17 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import OnlineArticle from '../svgs/OnlineArticle';
 import {useNavigation} from '@react-navigation/native';
+import {useAppSelector} from '../redux/app/hook';
 type Props = {};
 
 const ReadBlogsToday = (props: Props) => {
   const navigation = useNavigation();
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('BlogHomeScreen')}
       style={{
-        backgroundColor: '#719071',
+        backgroundColor: isDarkTheme ? '#708F70' : '#719071',
         height: 150,
         borderRadius: 10,
         padding: 10,
@@ -22,7 +24,7 @@ const ReadBlogsToday = (props: Props) => {
       <Text
         style={{
           fontSize: 20,
-          color: '#F7F9F7',
+          color: isDarkTheme ? '#F4F6F4' : '#F7F9F7',
           fontWeight: '900',
         }}>
         Discover a World of Knowledge: Read Our Blogs Today
@@ -40,7 +42,7 @@ const ReadBlogsToday = (props: Props) => {
         style={{
           position: 'absolute',
           fontSize: 13,
-          color: '#F7F9F7',
+          color: isDarkTheme ? '#F4F6F4' : '#F7F9F7',
           opacity: 0.9,
           bottom: 10,
           right: 15,
