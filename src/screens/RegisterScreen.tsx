@@ -12,6 +12,7 @@ import {register} from '../api/apiFunctions';
 import {useRegister} from '../hooks/useRegister';
 import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'RegisterScreen'> {}
 type RegisterFormValues = {
@@ -23,6 +24,7 @@ type RegisterScreenSubmit = SubmitHandler<RegisterFormValues>;
 
 const RegisterScreen = ({navigation}: Props) => {
   const {control, handleSubmit} = useRegister();
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
 
   const onSubmit: RegisterScreenSubmit = async data => {
     try {
@@ -41,7 +43,7 @@ const RegisterScreen = ({navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F9F7',
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         justifyContent: 'center',
         padding: 13,
         position: 'relative',
@@ -67,7 +69,7 @@ const RegisterScreen = ({navigation}: Props) => {
           position: 'absolute',
           height: 350,
           width: 350,
-          backgroundColor: '#719071',
+          backgroundColor: isDarkTheme ? '#708F70' : '#719071',
           top: -260,
           left: -160,
           borderRadius: 130,
@@ -80,7 +82,7 @@ const RegisterScreen = ({navigation}: Props) => {
           position: 'absolute',
           height: 370,
           width: 370,
-          backgroundColor: '#719071',
+          backgroundColor: isDarkTheme ? '#708F70' : '#719071',
           bottom: -280,
           right: -20,
           borderRadius: 120,
@@ -97,7 +99,7 @@ const RegisterScreen = ({navigation}: Props) => {
         }}>
         <Text
           style={{
-            color: '#15212F',
+            color: isDarkTheme ? '#F4F6F4' : '#080A08',
             fontSize: 30,
             fontWeight: '700',
             textAlign: 'center',
@@ -169,9 +171,9 @@ const RegisterScreen = ({navigation}: Props) => {
               onPress={() => navigation.navigate('LoginScreen')}>
               <Text
                 style={{
-                  color: '#A9BCB9',
+                  color: isDarkTheme ? '#435653' : '#AABDBA',
                   borderBottomWidth: 1,
-                  borderColor: '#A9BCB9',
+                  borderColor: isDarkTheme ? '#435653' : '#AABDBA',
                 }}>
                 Already have an account? Login Here
               </Text>

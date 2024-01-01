@@ -17,10 +17,12 @@ import {storage} from '../../MMKV';
 import {useMiddleware} from '../hooks/useMIddleware';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import {RootStackScreenProps} from '../navigations/types';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'AddBlogFormScreen'> {}
 
 const AddBlogFormScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const {control, handleSubmit} = useBlog();
   const [imageData, setImageData] = useState(null);
   useMiddleware();
@@ -64,11 +66,16 @@ const AddBlogFormScreen = ({navigation}: Props) => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor: '#F7F9F7', alignItems: 'center'}}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
+        alignItems: 'center',
+      }}>
       <ScrollView style={{width: '100%'}}>
         <Text
           style={{
-            color: '#080A08',
+            color: isDarkTheme ? '#F4F6F4' : '#080A08',
             fontWeight: '700',
             fontSize: 30,
             marginTop: 12,
@@ -113,7 +120,7 @@ const AddBlogFormScreen = ({navigation}: Props) => {
                   position: 'absolute',
                   top: -14,
                   right: 6,
-                  backgroundColor: '#92A8AA',
+                  backgroundColor: isDarkTheme ? '#556B6D' : '#92A8AA',
                   paddingHorizontal: 4,
                   borderRadius: 40,
                   alignItems: 'center',
@@ -122,7 +129,7 @@ const AddBlogFormScreen = ({navigation}: Props) => {
                 }}>
                 <Icon
                   style={{
-                    color: '#15212F',
+                    color: isDarkTheme ? '#708F70' : '#15212F',
                     fontSize: 20,
                     fontWeight: '600',
                   }}
@@ -136,7 +143,9 @@ const AddBlogFormScreen = ({navigation}: Props) => {
             style={{
               marginTop: 30,
               paddingLeft: 10,
-              borderColor: 'rgba(113, 144, 113,0.7)',
+              borderColor: isDarkTheme
+                ? 'rgba(112, 143, 112,0.8)'
+                : 'rgba(113, 144, 113,0.7)',
               borderWidth: 1,
               width: '50%',
               flexDirection: 'row',
@@ -147,11 +156,15 @@ const AddBlogFormScreen = ({navigation}: Props) => {
             }}>
             <Icon
               style={{
-                color: '#719071',
+                color: isDarkTheme ? '#708F70' : '#719071',
                 fontSize: 24,
               }}
               name="upload"></Icon>
-            <Text style={{color: '#080A08'}}>
+            <Text
+              style={{
+                color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                fontWeight: '600',
+              }}>
               {imageData ? 'Change Image' : 'Upload Image'}
             </Text>
           </TouchableOpacity>
@@ -159,7 +172,7 @@ const AddBlogFormScreen = ({navigation}: Props) => {
           <TouchableOpacity
             onPress={handleSubmit(onSubmit)}
             style={{
-              backgroundColor: '#719071',
+              backgroundColor: isDarkTheme ? '#708F70' : '#719071',
               marginTop: 30,
               padding: 10,
               borderRadius: 20,
@@ -168,6 +181,11 @@ const AddBlogFormScreen = ({navigation}: Props) => {
               justifyContent: 'center',
               gap: 8,
               marginBottom: 50,
+              shadowColor: '#719071',
+              elevation: 3.5,
+              shadowOffset: {width: 10, height: 10},
+              shadowOpacity: 0.1,
+              shadowRadius: 40,
             }}>
             <Text
               style={{

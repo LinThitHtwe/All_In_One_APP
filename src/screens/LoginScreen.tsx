@@ -13,6 +13,7 @@ import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
 import {storage} from '../../MMKV';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'LoginScreen'> {}
 type RegisterFormValues = {
@@ -22,6 +23,7 @@ type RegisterFormValues = {
 type RegisterScreenSubmit = SubmitHandler<RegisterFormValues>;
 
 const LoginScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const {control, handleSubmit} = useLogin();
 
   const onSubmit: RegisterScreenSubmit = async data => {
@@ -31,6 +33,7 @@ const LoginScreen = ({navigation}: Props) => {
         password: data.password,
       });
       storage.set('loginuser', JSON.stringify(response.data));
+      navigation.navigate('HomeScreen');
       return response;
     } catch (error) {
       throw error;
@@ -42,7 +45,7 @@ const LoginScreen = ({navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F9F7',
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         justifyContent: 'center',
         padding: 13,
         position: 'relative',
@@ -68,7 +71,7 @@ const LoginScreen = ({navigation}: Props) => {
           position: 'absolute',
           height: 350,
           width: 350,
-          backgroundColor: '#719071',
+          backgroundColor: isDarkTheme ? '#708F70' : '#719071',
           top: -180,
           left: -160,
           borderRadius: 130,
@@ -81,7 +84,7 @@ const LoginScreen = ({navigation}: Props) => {
           position: 'absolute',
           height: 370,
           width: 370,
-          backgroundColor: '#719071',
+          backgroundColor: isDarkTheme ? '#708F70' : '#719071',
           bottom: -260,
           right: 10,
           borderRadius: 120,
@@ -99,7 +102,7 @@ const LoginScreen = ({navigation}: Props) => {
         }}>
         <Text
           style={{
-            color: '#080A08',
+            color: isDarkTheme ? '#F4F6F4' : '#080A08',
             fontSize: 30,
             fontWeight: '700',
             textAlign: 'center',
@@ -133,7 +136,7 @@ const LoginScreen = ({navigation}: Props) => {
             <TouchableOpacity
               onPress={handleSubmit(onSubmit)}
               style={{
-                backgroundColor: '#719071',
+                backgroundColor: isDarkTheme ? '#708F70' : '#719071',
                 padding: 13,
                 width: '90%',
                 borderRadius: 20,
@@ -154,9 +157,9 @@ const LoginScreen = ({navigation}: Props) => {
               onPress={() => navigation.navigate('RegisterScreen')}>
               <Text
                 style={{
-                  color: '#AABDBA',
+                  color: isDarkTheme ? '#435653' : '#AABDBA',
                   borderBottomWidth: 1,
-                  borderColor: '#AABDBA',
+                  borderColor: isDarkTheme ? '#435653' : '#AABDBA',
                 }}>
                 Don't have an account? Sign up here
               </Text>

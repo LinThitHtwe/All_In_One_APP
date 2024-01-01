@@ -1,6 +1,7 @@
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import React, {FC, useState} from 'react';
 import {Control, Controller} from 'react-hook-form';
+import {useAppSelector} from '../redux/app/hook';
 
 type Props = {
   label: string;
@@ -20,7 +21,7 @@ const CustomInput: FC<Props> = ({
   height,
 }) => {
   const [inputHeight, setInputHeight] = useState(height);
-
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   return (
     <Controller
       render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (
@@ -28,7 +29,7 @@ const CustomInput: FC<Props> = ({
           <Text
             style={{
               fontSize: 18,
-              color: '#15212F',
+              color: isDarkTheme ? '#F4F6F4' : '#090B09',
               marginTop: 25,
               marginBottom: 10,
               fontWeight: '400',
@@ -44,16 +45,26 @@ const CustomInput: FC<Props> = ({
             value={value}
             onChangeText={text => {
               onChange(text);
-              setInputHeight(Math.max(height, Math.min(200, text.length * 5))); // Adjust the height dynamically
+              setInputHeight(Math.max(height, Math.min(200, text.length * 4)));
             }}
             onBlur={onBlur}
             inputMode={inputType}
             multiline
             placeholder={error ? error.message : placeholder}
-            placeholderTextColor={error ? '#FF0000' : 'rgba(8, 10, 8, 0.3)'}
+            placeholderTextColor={
+              error
+                ? '#FF0000'
+                : isDarkTheme
+                ? 'rgba(244, 246, 244,0.4)'
+                : 'rgba(8, 10, 8, 0.3)'
+            }
             style={{
               borderBottomWidth: 1,
-              borderColor: error ? '#FF0000' : 'rgba(8, 10, 8, 0.5)',
+              borderColor: error
+                ? '#FF0000'
+                : isDarkTheme
+                ? 'rgba(244, 246, 244,0.4)'
+                : 'rgba(8, 10, 8, 0.3)',
               padding: 10,
               borderRadius: 15,
               color: '#15212F',

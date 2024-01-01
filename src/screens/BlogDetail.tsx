@@ -16,6 +16,7 @@ import {getBlogById} from '../api/apiFunctions';
 import {formatDistanceToNow} from 'date-fns';
 import BlogHomeHeader from '../components/BlogHomeHeader';
 import TimeOutSvg from '../svgs/TimeOutSvg';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'BlogDetail'> {}
 
@@ -27,13 +28,13 @@ const BlogDetail = ({route, navigation}: Props) => {
     isLoading,
     refetch,
   } = useFetchData([`blog${blogId}`], () => getBlogById(blogId));
-
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   return (
     <View
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F9F7',
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         justifyContent: 'center',
         padding: 10,
         position: 'relative',
@@ -52,7 +53,7 @@ const BlogDetail = ({route, navigation}: Props) => {
         onPress={() => navigation.goBack()}>
         <Icon
           style={{
-            color: '#15212F',
+            color: isDarkTheme ? '#F4F6F4' : '#080A08',
             fontSize: 18,
             fontWeight: '600',
             marginBottom: 8,
@@ -65,7 +66,7 @@ const BlogDetail = ({route, navigation}: Props) => {
             <Text
               style={{
                 textAlign: 'center',
-                color: '#15212F',
+                color: isDarkTheme ? '#F4F6F4' : '#080A08',
                 fontSize: 23,
                 fontWeight: '800',
                 width: '75%',
@@ -86,7 +87,7 @@ const BlogDetail = ({route, navigation}: Props) => {
             <View style={{padding: 6}}>
               <Text
                 style={{
-                  color: '#15212F',
+                  color: isDarkTheme ? '#F4F6F4' : '#080A08',
 
                   fontWeight: '700',
                   marginTop: 15,
@@ -98,7 +99,7 @@ const BlogDetail = ({route, navigation}: Props) => {
 
               <Text
                 style={{
-                  color: '#15212F',
+                  color: isDarkTheme ? '#F4F6F4' : '#080A08',
 
                   fontSize: 12,
                   paddingLeft: 6,
@@ -123,7 +124,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                     <Icon
                       style={{
                         fontSize: 24,
-                        color: '#090B09',
+                        color: isDarkTheme ? '#F4F6F4' : '#080A08',
                       }}
                       name="thumbs-o-up"></Icon>
                   </TouchableOpacity>
@@ -131,7 +132,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                     <Icon
                       style={{
                         fontSize: 24,
-                        color: '#090B09',
+                        color: isDarkTheme ? '#F4F6F4' : '#080A08',
                       }}
                       name="thumbs-o-down"></Icon>
                   </TouchableOpacity>
@@ -140,7 +141,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                   <Icon
                     style={{
                       fontSize: 24,
-                      color: '#090B09',
+                      color: isDarkTheme ? '#F4F6F4' : '#080A08',
                     }}
                     name="bookmark-o"></Icon>
                 </TouchableOpacity>
@@ -148,7 +149,7 @@ const BlogDetail = ({route, navigation}: Props) => {
 
               <Text
                 style={{
-                  color: '#15212F',
+                  color: isDarkTheme ? '#F4F6F4' : '#080A08',
 
                   fontWeight: '400',
                   fontSize: 16,
@@ -162,7 +163,7 @@ const BlogDetail = ({route, navigation}: Props) => {
 
               <Text
                 style={{
-                  color: '#15212F',
+                  color: isDarkTheme ? '#F4F6F4' : '#080A08',
 
                   marginTop: 20,
                   textAlign: 'right',
@@ -173,7 +174,7 @@ const BlogDetail = ({route, navigation}: Props) => {
               </Text>
               <Text
                 style={{
-                  color: '#15212F',
+                  color: isDarkTheme ? '#F4F6F4' : '#080A08',
 
                   marginTop: 6,
                   textAlign: 'right',
@@ -204,7 +205,7 @@ const BlogDetail = ({route, navigation}: Props) => {
           }}>
           <Text
             style={{
-              color: '#090B09',
+              color: isDarkTheme ? '#F4F6F4' : '#080A08',
               fontSize: 30,
               fontWeight: '700',
               marginBottom: 80,

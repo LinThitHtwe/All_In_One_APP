@@ -21,7 +21,9 @@ const ToggleDarkTheme = (props: Props) => {
         alignItems: 'center',
         gap: 10,
       }}>
-      <Text style={{color: '#080A08', fontSize: 20}}>Toggle Dark Theme</Text>
+      <Text style={{color: isDarkTheme ? '#F4F6F4' : '#080A08', fontSize: 20}}>
+        Toggle Dark Theme
+      </Text>
       <Switch
         style={{height: 40}}
         trackColor={{false: '#080A08', true: '#92A8AA'}}

@@ -3,15 +3,23 @@ import React from 'react';
 import LoginSignupGreetingScreenSVG from '../svgs/LoginSignupGreetingScreenSVG';
 import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'LoginSignupGreetingScreen'> {}
 
 const LoginSignupGreetingScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   return (
-    <View style={{alignItems: 'center', position: 'relative'}}>
+    <View
+      style={{
+        alignItems: 'center',
+        flex: 1,
+        backgroundColor: isDarkTheme ? '#070907' : '#F4F6F4',
+        position: 'relative',
+      }}>
       <Text
         style={{
-          color: '#708F70',
+          color: isDarkTheme ? '#708F70' : '#719071',
           textAlign: 'center',
           fontSize: 26,
           fontWeight: '800',
@@ -68,7 +76,7 @@ const LoginSignupGreetingScreen = ({navigation}: Props) => {
           onPress={() => navigation.navigate('RegisterScreen')}
           style={{
             borderWidth: 1,
-            borderColor: 'rgba(169, 188, 185,1)',
+            borderColor: isDarkTheme ? '##435653' : 'rgba(169, 188, 185,1)',
             width: '80%',
             padding: 14,
             borderRadius: 10,
