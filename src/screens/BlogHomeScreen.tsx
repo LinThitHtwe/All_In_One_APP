@@ -274,7 +274,10 @@ const BlogHomeScreen = ({navigation}: Props) => {
             renderItem={({item}) => renderItem(item)}
             keyExtractor={item => item._id}
             refreshControl={
-              <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+              <RefreshControl
+                refreshing={isRefetching}
+                onRefresh={() => refetch()}
+              />
             }
           />
         )}

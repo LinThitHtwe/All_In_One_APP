@@ -3,29 +3,53 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import {useBlog} from '../hooks/useBlog';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Image} from 'react-native';
-import {postBlog} from '../api/apiFunctions';
+import {getBlogById, postBlog, updateBlog} from '../api/apiFunctions';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {storage} from '../../MMKV';
 import {useMiddleware} from '../hooks/useMIddleware';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import {RootStackScreenProps} from '../navigations/types';
 import {useAppSelector} from '../redux/app/hook';
+import useFetchData from '../hooks/useFetchData';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface Props extends RootStackScreenProps<'AddBlogFormScreen'> {}
 
-const AddBlogFormScreen = ({navigation}: Props) => {
+const AddBlogFormScreen = ({route, navigation}: Props) => {
+  const {params} = route;
+  const {id} = params || {};
+  const {data: prevData} = useFetchData([`blog${id}`], () => getBlogById(id));
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
-  const {control, handleSubmit} = useBlog();
+  const [forceUpdateKey, setForceUpdateKey] = React.useState(0);
+  const forceUpdate = React.useCallback(() => {
+    setForceUpdateKey(prevKey => prevKey + 1);
+  }, []);
+  const {control, handleSubmit} = useBlog({
+    title: prevData ? prevData.title : '',
+    content: prevData ? prevData.content : '',
+  });
   const [imageData, setImageData] = useState(null);
   useMiddleware();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (prevData) {
+        setImageData(prevData.picture);
+        forceUpdate();
+      }
+
+      return () => {};
+    }, [prevData, forceUpdate]),
+  );
   const handleImagePicker = () => {
     ImagePicker.openPicker({
       width: 320,
@@ -39,10 +63,21 @@ const AddBlogFormScreen = ({navigation}: Props) => {
 
   const onSubmit = async data => {
     try {
+      if (prevData) {
+        const response = await updateBlog(prevData._id, {
+          ...data,
+          picture: imageData,
+        });
+        navigation.navigate('BlogHomeScreen');
+        ToastAndroid.show(`Successfull`, ToastAndroid.LONG);
+        return;
+      }
+
       const response = await postBlog({
         ...data,
         picture: imageData,
       });
+      console.log('responsee--', response);
       if (response.error) {
         Alert.alert(
           'Error',
@@ -59,6 +94,10 @@ const AddBlogFormScreen = ({navigation}: Props) => {
           ],
           {cancelable: false},
         );
+      }
+      if (response.data) {
+        navigation.navigate('BlogHomeScreen');
+        ToastAndroid.show(`Successfull`, ToastAndroid.LONG);
       }
     } catch (error) {
       console.error('Unexpected error:', error.message);
@@ -194,7 +233,7 @@ const AddBlogFormScreen = ({navigation}: Props) => {
                 fontSize: 20,
                 fontWeight: '700',
               }}>
-              Post Blog
+              {prevData ? 'Update Blog' : 'Post Blog'}
             </Text>
             <Icon
               style={{

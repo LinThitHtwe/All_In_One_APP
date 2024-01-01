@@ -137,14 +137,40 @@ const BlogDetail = ({route, navigation}: Props) => {
                       name="thumbs-o-down"></Icon>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
-                  <Icon
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    gap: 20,
+                  }}>
+                  <TouchableOpacity
                     style={{
-                      fontSize: 24,
-                      color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                      flexDirection: 'row',
+                      justifyContent: 'flex-start',
                     }}
-                    name="bookmark-o"></Icon>
-                </TouchableOpacity>
+                    onPress={() =>
+                      navigation.navigate('AddBlogFormScreen', {
+                        id: blogData?._id,
+                      })
+                    }>
+                    <Icon
+                      style={{
+                        color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                        fontSize: 22,
+                        fontWeight: '600',
+                        marginBottom: 8,
+                      }}
+                      name="edit"></Icon>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity>
+                    <Icon
+                      style={{
+                        fontSize: 24,
+                        color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                      }}
+                      name="bookmark-o"></Icon>
+                  </TouchableOpacity>
+                </View>
               </View>
 
               <Text

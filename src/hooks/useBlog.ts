@@ -13,10 +13,10 @@ const schema = z.object({
 
   picture: z.string().optional(),
 });
-export type ToDoFormField = z.infer<typeof schema>;
+export type BlogFormField = z.infer<typeof schema>;
 
-export const useBlog = (initialValues?: ToDoFormField) => {
-  const {control, handleSubmit} = useForm<ToDoFormField>({
+export const useBlog = (initialValues?: BlogFormField) => {
+  const {control, handleSubmit} = useForm<BlogFormField>({
     resolver: zodResolver(schema),
     defaultValues: {
       title: initialValues?.title || '',

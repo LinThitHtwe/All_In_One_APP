@@ -57,10 +57,17 @@ export const register = async (data: {
 export const postBlog = async (data: any) => {
   try {
     const response = await API.post('/blog/add', data);
-    console.log('responseeeeeeee', response);
     return {data: response.data};
   } catch (error) {
-    console.log('error--', error);
+    return {error: error.message};
+  }
+};
+
+export const updateBlog = async (blogId, data) => {
+  try {
+    const response = await API.put(`/blog/update/${blogId}`, data);
+    return {data: response.data};
+  } catch (error) {
     return {error: error.message};
   }
 };

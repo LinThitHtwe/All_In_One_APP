@@ -6,7 +6,7 @@ export type RootStackParamsList = {
   CurrencyConverter: undefined;
   AllToDosList: undefined;
   BlogHomeScreen: undefined;
-  AddBlogFormScreen: undefined;
+
   LoginScreen: undefined;
   RegisterScreen: undefined;
   ProfileScreen: undefined;
@@ -15,6 +15,11 @@ export type RootStackParamsList = {
   BlogDetail: {
     blogId: string;
   };
+  AddBlogFormScreen:
+    | undefined
+    | {
+        id: string;
+      };
   ToDoForm:
     | undefined
     | {
