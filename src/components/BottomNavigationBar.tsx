@@ -12,7 +12,6 @@ const BottomNavigationBar = ({currentPage}: Props) => {
   return (
     <View
       style={{
-        borderTopWidth: 1,
         borderColor: '#719071',
         backgroundColor: '#F7F9F7',
         height: 55,

@@ -15,10 +15,18 @@ import ReadBlogsToday from '../components/ReadBlogsToday';
 import BlogHomeHeader from '../components/BlogHomeHeader';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import ToDoListSvg from '../svgs/ToDoListSVG';
+import useFetchData from '../hooks/useFetchData';
+import {getLatestBlog} from '../api/apiFunctions';
+import {RefreshControl} from 'react-native';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
 const HomeScreen = ({navigation}: Props) => {
+  const {
+    data: latestBlog,
+    isRefetching,
+    refetch,
+  } = useFetchData(['latest-blog'], getLatestBlog);
   // const handleDeleteData = async () => {
   //   try {
   //     // Replace 'todos' with the key you used to store your data
@@ -33,7 +41,11 @@ const HomeScreen = ({navigation}: Props) => {
   return (
     <View style={{backgroundColor: '#F7F9F7', flex: 1, position: 'relative'}}>
       <BlogHomeHeader />
-      <ScrollView style={{width: '100%', marginTop: 60}}>
+      <ScrollView
+        style={{width: '100%', marginTop: 60}}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }>
         <View
           style={{
             padding: 10,
@@ -66,6 +78,10 @@ const HomeScreen = ({navigation}: Props) => {
               name="arrow-down"></Icon>
           </View>
           <TouchableOpacity
+            onPress={() =>
+              latestBlog &&
+              navigation.navigate('BlogDetail', {blogId: latestBlog._id})
+            }
             style={{
               backgroundColor: '#F7F9F7',
               borderTopStartRadius: 60,
@@ -84,45 +100,51 @@ const HomeScreen = ({navigation}: Props) => {
               overflow: 'hidden',
               position: 'relative',
             }}>
-            <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1602300991431-27a957a5bcf7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGdyZWVufGVufDB8fDB8fHww',
-              }}
-              style={{
-                height: '83%',
-                width: '100%',
-                borderTopLeftRadius: 60,
-                borderTopRightRadius: 60,
-                borderBottomLeftRadius: 20,
-                borderBottomRightRadius: 20,
-              }}
-            />
-            <View
-              style={{
-                backgroundColor: 'rgba(247, 249, 247,1)',
-                justifyContent: 'center',
-                padding: 8,
-                height: '17%',
-                bottom: 0,
-                zIndex: 10,
-                right: 0,
-                left: 0,
-                width: 350,
-              }}>
-              <Text
-                numberOfLines={2}
-                style={{
-                  fontSize: 22,
-                  color: '#080A08',
-                  fontWeight: '700',
-                  letterSpacing: 3,
-                  fontFamily: 'System',
-                  textAlign: 'center',
-                  lineHeight: 30,
-                }}>
-                The Importance of Sleep
-              </Text>
-            </View>
+            {latestBlog && (
+              <>
+                <Image
+                  source={{
+                    uri: latestBlog.picture
+                      ? `data:image/jpeg;base64,${latestBlog.picture}`
+                      : 'https://images.unsplash.com/photo-1602300991431-27a957a5bcf7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGdyZWVufGVufDB8fDB8fHww',
+                  }}
+                  style={{
+                    height: '83%',
+                    width: '100%',
+                    borderTopLeftRadius: 60,
+                    borderTopRightRadius: 60,
+                    borderBottomLeftRadius: 20,
+                    borderBottomRightRadius: 20,
+                  }}
+                />
+                <View
+                  style={{
+                    backgroundColor: 'rgba(247, 249, 247,1)',
+                    justifyContent: 'center',
+                    padding: 8,
+                    height: '17%',
+                    bottom: 0,
+                    zIndex: 10,
+                    right: 0,
+                    left: 0,
+                    width: 350,
+                  }}>
+                  <Text
+                    numberOfLines={2}
+                    style={{
+                      fontSize: 22,
+                      color: '#080A08',
+                      fontWeight: '700',
+                      letterSpacing: 3,
+                      fontFamily: 'System',
+                      textAlign: 'center',
+                      lineHeight: 30,
+                    }}>
+                    {latestBlog.title}
+                  </Text>
+                </View>
+              </>
+            )}
           </TouchableOpacity>
           <View
             style={{

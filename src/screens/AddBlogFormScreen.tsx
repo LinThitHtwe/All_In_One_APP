@@ -1,4 +1,5 @@
 import {
+  Alert,
   ScrollView,
   StyleSheet,
   Text,
@@ -15,10 +16,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {storage} from '../../MMKV';
 import {useMiddleware} from '../hooks/useMIddleware';
 import BottomNavigationBar from '../components/BottomNavigationBar';
+import {RootStackScreenProps} from '../navigations/types';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'AddBlogFormScreen'> {}
 
-const AddBlogFormScreen = (props: Props) => {
+const AddBlogFormScreen = ({navigation}: Props) => {
   const {control, handleSubmit} = useBlog();
   const [imageData, setImageData] = useState(null);
   useMiddleware();
@@ -39,11 +41,30 @@ const AddBlogFormScreen = (props: Props) => {
         ...data,
         picture: imageData,
       });
-      return response;
+      if (response.data) {
+        console.log('response---', response);
+      } else {
+        Alert.alert(
+          'Error',
+          'Something Went Wrong',
+          [
+            {
+              text: 'Back to Home',
+              onPress: () => navigation.navigate('HomeScreen'),
+            },
+            {
+              text: 'Try Logging in',
+              onPress: () => navigation.navigate('LoginSignupGreetingScreen'),
+            },
+          ],
+          {cancelable: false},
+        );
+      }
     } catch (error) {
-      throw error;
+      console.error('Unexpected error:', error.message);
     }
   };
+
   return (
     <View style={{flex: 1, backgroundColor: '#F7F9F7', alignItems: 'center'}}>
       <ScrollView style={{width: '100%'}}>

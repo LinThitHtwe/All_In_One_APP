@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
+  RefreshControl,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,6 +17,7 @@ import {formatDistanceToNow} from 'date-fns';
 import BlogHomeHeader from '../components/BlogHomeHeader';
 import TimeOutSvg from '../svgs/TimeOutSvg';
 import {useFocusEffect} from '@react-navigation/native';
+import BottomNavigationBar from '../components/BottomNavigationBar';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
@@ -24,6 +26,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
     data: blogData,
     isLoading,
     isError,
+    isRefetching,
     refetch,
   } = useFetchData(['blogs'], getAllBlogs);
 
@@ -199,7 +202,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
 
       <View
         style={{
-          height: 700,
+          height: 720,
           width: '100%',
           position: 'relative',
           marginTop: 72,
@@ -267,9 +270,13 @@ const BlogHomeScreen = ({navigation}: Props) => {
             data={blogData}
             renderItem={({item}) => renderItem(item)}
             keyExtractor={item => item._id}
+            refreshControl={
+              <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+            }
           />
         )}
       </View>
+      <BottomNavigationBar currentPage="BlogHomeScreen" />
     </View>
   );
 };

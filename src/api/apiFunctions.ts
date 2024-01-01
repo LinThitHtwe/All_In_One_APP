@@ -23,6 +23,15 @@ export const getBlogById = async (id: string) => {
     throw new Error(`Error fetching blog detail: ${error.message}`);
   }
 };
+
+export const getLatestBlog = async () => {
+  try {
+    const response = await API.get(`/blog/latest/`);
+    return response;
+  } catch (error) {
+    throw new Error(`Error fetching blog detail: ${error.message}`);
+  }
+};
 export const login = async (data: {email: string; password: string}) => {
   try {
     const response = await API.post('/auth/login', data);
@@ -48,8 +57,10 @@ export const register = async (data: {
 export const postBlog = async (data: any) => {
   try {
     const response = await API.post('/blog/add', data);
-    return response;
+    console.log('responseeeeeeee', response);
+    return {data: response.data};
   } catch (error) {
-    throw new Error(`Error fetching postBlog: ${error.message}`);
+    console.log('error--', error);
+    return {error: error.message};
   }
 };
