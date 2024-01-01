@@ -14,6 +14,7 @@ import {RootStackScreenProps} from '../navigations/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useFocusEffect} from '@react-navigation/native';
+import {useAppSelector} from '../redux/app/hook';
 
 interface Props extends RootStackScreenProps<'AllToDosList'> {}
 type RenderItemProps = {
@@ -35,6 +36,7 @@ type ToDoList = {
   selectedTime: string | null;
 };
 const AllToDosListScreen = ({navigation}: Props) => {
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const [todos, setTodos] = useState<ToDoList[] | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedItems, setSelectedItems] = useState<boolean[]>(
@@ -163,7 +165,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F9F7',
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         justifyContent: 'center',
         padding: 13,
         position: 'relative',
@@ -182,7 +184,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
         }}>
         <Icon
           style={{
-            color: '#080A08',
+            color: isDarkTheme ? '#F7F9F7' : '#080A08',
             fontSize: 18,
             fontWeight: '600',
           }}
@@ -190,7 +192,7 @@ const AllToDosListScreen = ({navigation}: Props) => {
       </TouchableOpacity>
       <Text
         style={{
-          color: '#080A08',
+          color: isDarkTheme ? '#F7F9F7' : '#080A08',
           fontSize: 25,
           fontWeight: '600',
           textAlign: 'center',
@@ -211,12 +213,16 @@ const AllToDosListScreen = ({navigation}: Props) => {
           style={{
             borderWidth: 1,
             borderRadius: 15,
-            borderColor: 'rgba(21, 33, 47,0.6)',
+            borderColor: isDarkTheme
+              ? 'rgba(244, 246, 244,0.4)'
+              : 'rgba(21, 33, 47,0.6)',
             width: '78%',
             padding: 10,
           }}
           placeholder="Search todos"
-          placeholderTextColor={'rgba(21, 33, 47,0.3)'}
+          placeholderTextColor={
+            isDarkTheme ? 'rgba(244, 246, 244,0.4)' : 'rgba(21, 33, 47,0.2)'
+          }
           onChangeText={text => setSearchQuery(text)}
         />
         <TouchableOpacity

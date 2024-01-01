@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useTodos} from '../hooks/useTodos';
 import {ToDoFormField} from '../hooks/useTodos';
 import CustomInput from '../components/CustomInput';
+import {useAppSelector} from '../redux/app/hook';
 interface Props extends RootStackScreenProps<'ToDoForm'> {}
 type ToDoFormParams = {
   description?: string;
@@ -29,7 +30,7 @@ type ToDoFormParams = {
 };
 const ToDoFromScreen = ({route, navigation}: Props) => {
   const {params} = route;
-
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const {
     description: oldDescription,
     id: oldId,
@@ -163,13 +164,13 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F9F7',
+        backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
         justifyContent: 'center',
       }}>
       <ScrollView
         style={{
           height: 730,
-          backgroundColor: '#F7F9F7',
+          backgroundColor: isDarkTheme ? '#070907' : '#F7F9F7',
           width: '100%',
           borderRadius: 10,
           padding: 10,
@@ -187,7 +188,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
           onPress={() => navigation.navigate('AllToDosList')}>
           <Icon
             style={{
-              color: '#080A08',
+              color: isDarkTheme ? '#F4F6F4' : '#080A08',
               fontSize: 22,
               fontWeight: '600',
             }}
@@ -196,7 +197,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
         <Text
           style={{
             marginTop: 25,
-            color: '#080A08',
+            color: isDarkTheme ? '#F4F6F4' : '#080A08',
             fontSize: 25,
             fontWeight: '600',
             textAlign: 'center',
@@ -240,7 +241,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             </Text>
             <Switch
               style={{height: 40}}
-              trackColor={{false: '#080A08', true: '#92A8AA'}}
+              trackColor={{false: '#435653', true: '#92A8AA'}}
               thumbColor={isReminderSwitchEnabled ? '#719071' : '#AABDBA'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitch}
@@ -252,7 +253,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
             <View style={{marginTop: 15, padding: 8}}>
               <Text
                 style={{
-                  color: '#080A08',
+                  color: isDarkTheme ? '#F7F9F7' : '#15212F',
                   fontSize: 17,
                   fontWeight: '500',
                 }}>
@@ -268,7 +269,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                 <View style={{width: '45%', height: 'auto'}}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#AABDBA',
+                      backgroundColor: isDarkTheme ? '#435653' : '#AABDBA',
                       position: 'relative',
                       padding: 6,
                       borderRadius: 10,
@@ -290,7 +291,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                       style={{
                         position: 'absolute',
                         fontSize: 40,
-                        color: '#92A8AA',
+                        color: isDarkTheme ? '#556B6D' : '#92A8AA',
                         opacity: 0.4,
                         bottom: 0,
                         zIndex: -10,
@@ -302,7 +303,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                   {selectedDate && (
                     <Text
                       style={{
-                        color: '#15212F',
+                        color: isDarkTheme ? '#F7F9F7' : '#15212F',
                         marginTop: 10,
                       }}>
                       Selected Date:{' '}
@@ -317,7 +318,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                 <View style={{width: '45%'}}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#AABDBA',
+                      backgroundColor: isDarkTheme ? '#435653' : '#AABDBA',
                       position: 'relative',
                       padding: 6,
                       borderRadius: 10,
@@ -340,8 +341,8 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                       style={{
                         position: 'absolute',
                         fontSize: 40,
-                        color: '#888',
-                        opacity: 0.2,
+                        color: isDarkTheme ? '#556B6D' : '#92A8AA',
+                        opacity: 0.6,
                         bottom: 0,
                         right: -10,
                         transform: [{rotate: '15deg'}],
@@ -351,7 +352,7 @@ const ToDoFromScreen = ({route, navigation}: Props) => {
                   {selectedTime && (
                     <Text
                       style={{
-                        color: '#15212F',
+                        color: isDarkTheme ? '#F7F9F7' : '#15212F',
                         marginTop: 10,
                       }}>
                       Selected Time:{' '}

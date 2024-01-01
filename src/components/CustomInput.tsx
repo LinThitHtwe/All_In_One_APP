@@ -67,7 +67,7 @@ const CustomInput: FC<Props> = ({
                 : 'rgba(8, 10, 8, 0.3)',
               padding: 10,
               borderRadius: 15,
-              color: '#15212F',
+              color: isDarkTheme ? '#F7F9F7' : '#070907',
               height: inputHeight,
               textAlignVertical: 'top',
               fontSize: 18,
