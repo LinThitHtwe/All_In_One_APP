@@ -37,7 +37,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'HomeScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
@@ -50,7 +50,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'HomeScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
@@ -68,7 +68,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'BlogHomeScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
@@ -80,7 +80,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'BlogHomeScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
@@ -97,7 +97,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'AddBlogFormScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontSize: 28,
           }}
@@ -109,7 +109,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'AddBlogFormScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>
@@ -127,7 +127,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'OtherToolsScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontSize: 26,
           }}
@@ -139,7 +139,7 @@ const BottomNavigationBar = ({currentPage}: Props) => {
                 ? '#708F70'
                 : 'rgba(244, 246, 244,0.3)'
               : currentPage === 'OtherToolsScreen'
-              ? '#92A8AA'
+              ? '#708F70'
               : 'rgba(8,10,8,0.3)',
             fontWeight: '900',
           }}>

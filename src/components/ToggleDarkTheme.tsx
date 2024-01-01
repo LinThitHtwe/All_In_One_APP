@@ -20,14 +20,23 @@ const ToggleDarkTheme = (props: Props) => {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
+        backgroundColor: '#719071',
+        padding: 10,
+        borderRadius: 15,
+        justifyContent: 'space-between',
       }}>
-      <Text style={{color: isDarkTheme ? '#F4F6F4' : '#080A08', fontSize: 20}}>
+      <Text
+        style={{
+          color: isDarkTheme ? '#070907' : '#F4F6F4',
+          fontWeight: '600',
+          fontSize: 20,
+        }}>
         Toggle Dark Theme
       </Text>
       <Switch
         style={{height: 40}}
-        trackColor={{false: '#080A08', true: '#92A8AA'}}
-        thumbColor={isDarkTheme ? '#719071' : '#AABDBA'}
+        trackColor={{false: '#080A08', true: '#AABDBA'}}
+        thumbColor={isDarkTheme ? '#F4F6F4' : '#F4F6F4'}
         ios_backgroundColor="#3e3e3e"
         onValueChange={handleToggleTheme}
         value={isDarkTheme}

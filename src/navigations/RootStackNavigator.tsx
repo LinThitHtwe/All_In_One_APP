@@ -15,6 +15,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import LoginSignupGreetingScreen from '../screens/LoginSignupGreetingScreen';
 import BottomTabNavigator from './BottomTabNavigator';
 import OtherToolsScreen from '../screens/OtherToolsScreen';
+import CurrentWeatherScreen from '../screens/CurrentWeatherScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamsList>();
 
@@ -28,6 +29,10 @@ const RootStackNavigator = () => {
       <Stack.Screen
         name={'CurrencyConverter'}
         component={CurrencyConverterScreen}
+      />
+      <Stack.Screen
+        name={'CurrentWeatherScreen'}
+        component={CurrentWeatherScreen}
       />
       <Stack.Screen name={'OtherToolsScreen'} component={OtherToolsScreen} />
       <Stack.Screen

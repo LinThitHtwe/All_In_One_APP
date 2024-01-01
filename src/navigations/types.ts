@@ -6,7 +6,7 @@ export type RootStackParamsList = {
   CurrencyConverter: undefined;
   AllToDosList: undefined;
   BlogHomeScreen: undefined;
-
+  CurrentWeatherScreen: undefined;
   LoginScreen: undefined;
   RegisterScreen: undefined;
   ProfileScreen: undefined;

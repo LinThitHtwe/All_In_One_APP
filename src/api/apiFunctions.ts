@@ -63,10 +63,21 @@ export const postBlog = async (data: any) => {
   }
 };
 
-export const updateBlog = async (blogId, data) => {
+export const updateBlog = async (blogId: string, data) => {
   try {
     const response = await API.put(`/blog/update/${blogId}`, data);
     return {data: response.data};
+  } catch (error) {
+    return {error: error.message};
+  }
+};
+
+export const getCurrentWeather = async (city: string) => {
+  try {
+    const response = await axios.get(
+      `http://api.weatherapi.com/v1/forecast.json?key=c07ae622495c4c009c940056232712&q=${city}`,
+    );
+    return {data: response};
   } catch (error) {
     return {error: error.message};
   }

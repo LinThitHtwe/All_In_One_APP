@@ -2,12 +2,15 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useAppSelector} from '../redux/app/hook';
+import {useNavigation} from '@react-navigation/native';
 type Props = {};
 
 const ToWeatherForecast = (props: Props) => {
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
+      onPress={() => navigation.navigate('CurrentWeatherScreen')}
       style={{
         backgroundColor: isDarkTheme ? '#556B6D' : '#92A8AA',
         height: 70,
