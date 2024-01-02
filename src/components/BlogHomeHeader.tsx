@@ -9,6 +9,7 @@ type Props = {};
 const BlogHomeHeader = (props: Props) => {
   const navigation = useNavigation();
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+  const user = useAppSelector(state => state.user.user);
 
   return (
     <View
@@ -32,17 +33,29 @@ const BlogHomeHeader = (props: Props) => {
           fontWeight: '600',
         }}
         name="book"></Icon>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
-        <Text
-          style={{
-            color: isDarkTheme ? '#708F70' : '#719071',
-            fontSize: 20,
-            fontWeight: '700',
-          }}>
-          Login
-        </Text>
-      </TouchableOpacity>
+      {user ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
+          <Text
+            style={{
+              color: isDarkTheme ? '#708F70' : '#719071',
+              fontSize: 20,
+              fontWeight: '700',
+            }}>
+            Login
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
+          <Icon
+            style={{
+              color: isDarkTheme ? '#708F70' : '#719071',
+              fontSize: 26,
+              fontWeight: '600',
+            }}
+            name="user"></Icon>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

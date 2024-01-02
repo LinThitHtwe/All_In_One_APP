@@ -11,18 +11,21 @@ import {
 import React, {useState} from 'react';
 import {useRegister} from '../hooks/useRegister';
 import CustomInput from '../components/CustomInput';
+import {useAppSelector} from '../redux/app/hook';
 
 type Props = {};
 
 const ProfileScreen = (props: Props) => {
   const [isEditEnable, setIsEditEnable] = useState(false);
   const {control, handleSubmit} = useRegister();
+  const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+  const user = useAppSelector(state => state.user.user);
   return (
     <KeyboardAvoidingView
       style={{
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#15212F',
+        backgroundColor: isDarkTheme ? '#070907' : '#F4F6F4',
         justifyContent: 'center',
         padding: 13,
       }}>
@@ -31,7 +34,6 @@ const ProfileScreen = (props: Props) => {
         style={{width: '100%', position: 'relative'}}>
         <TouchableOpacity
           style={{
-            backgroundColor: '#15212F',
             position: 'absolute',
             width: '18%',
             padding: 10,
@@ -40,12 +42,19 @@ const ProfileScreen = (props: Props) => {
             right: 10,
             zIndex: 10,
           }}>
-          <Text style={{textAlign: 'center'}}>Logout</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontWeight: '600',
+              color: isDarkTheme ? '#556B6D' : '#92A8AA',
+              fontSize: 14,
+            }}>
+            Logout
+          </Text>
         </TouchableOpacity>
         <View
           style={{
             height: 740,
-            backgroundColor: '#e9e9e9',
             width: '100%',
             borderRadius: 10,
             padding: 10,
@@ -53,8 +62,8 @@ const ProfileScreen = (props: Props) => {
           }}>
           <Text
             style={{
-              color: '#15212F',
-              fontFamily: 'monospace',
+              color: isDarkTheme ? '#F4F6F4' : '#070907',
+
               textAlign: 'center',
               fontSize: 25,
             }}>
@@ -85,22 +94,21 @@ const ProfileScreen = (props: Props) => {
               <>
                 <Text
                   style={{
-                    fontSize: 25,
-                    color: '#15212F',
+                    fontSize: 23,
+                    color: isDarkTheme ? '#F4F6F4' : '#070907',
                     marginTop: 25,
                     marginBottom: 10,
                     fontWeight: '400',
-                    fontFamily: 'monospace',
                   }}>
                   Username
                 </Text>
                 <Text
                   style={{
                     fontSize: 18,
-                    color: '#15212F',
+                    color: isDarkTheme ? '#F4F6F4' : '#070907',
                     marginBottom: 10,
                     fontWeight: '400',
-                    fontFamily: 'monospace',
+
                     marginLeft: 10,
                   }}>
                   JohnDoe
@@ -108,47 +116,88 @@ const ProfileScreen = (props: Props) => {
 
                 <Text
                   style={{
-                    fontSize: 25,
-                    color: '#15212F',
+                    fontSize: 23,
+                    color: isDarkTheme ? '#F4F6F4' : '#070907',
                     marginTop: 25,
                     marginBottom: 10,
                     fontWeight: '400',
-                    fontFamily: 'monospace',
                   }}>
                   Email
                 </Text>
                 <Text
                   style={{
                     fontSize: 18,
-                    color: '#15212F',
+                    color: isDarkTheme ? '#F4F6F4' : '#070907',
                     marginBottom: 10,
                     fontWeight: '400',
-                    fontFamily: 'monospace',
+
                     marginLeft: 10,
                   }}>
                   johndoe@johndoe.com
                 </Text>
               </>
             )}
-
-            {/* <Switch
-              style={{height: 40}}
-              trackColor={{false: '#15212F', true: '#3f6491'}}
-              thumbColor={isEditEnable ? '#2f8cfa' : '#c7c7c7'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={() => setIsEditEnable(!isEditEnable)}
-              value={isEditEnable}
-            /> */}
-            {!isEditEnable && (
+            {!isEditEnable ? (
               <View style={{marginTop: 30, alignItems: 'center'}}>
                 <TouchableOpacity
+                  onPress={() => setIsEditEnable(true)}
                   style={{
-                    backgroundColor: '#15212F',
+                    backgroundColor: isDarkTheme ? '#708F70' : '#719071',
                     width: '50%',
                     padding: 10,
                     borderRadius: 10,
                   }}>
-                  <Text>Edit Account</Text>
+                  <Text
+                    style={{
+                      color: isDarkTheme ? '#F4F6F4' : '#070907',
+                      fontSize: 18,
+                      fontWeight: '700',
+                      textAlign: 'center',
+                    }}>
+                    Edit Account
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View
+                style={{
+                  marginTop: 30,
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                }}>
+                <TouchableOpacity
+                  onPress={() => setIsEditEnable(false)}
+                  style={{
+                    backgroundColor: isDarkTheme ? '#435653' : '#A9BCB9',
+                    padding: 10,
+                    borderRadius: 10,
+                    width: '30%',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#F4F6F4',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                    }}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: isDarkTheme ? '#708F70' : '#719071',
+                    padding: 10,
+                    borderRadius: 10,
+                    width: '30%',
+                  }}>
+                  <Text
+                    style={{
+                      color: '#F4F6F4',
+                      fontWeight: '600',
+                      textAlign: 'center',
+                    }}>
+                    Update
+                  </Text>
                 </TouchableOpacity>
               </View>
             )}
