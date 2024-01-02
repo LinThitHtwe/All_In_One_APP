@@ -82,3 +82,12 @@ export const getCurrentWeather = async (city: string) => {
     return {error: error.message};
   }
 };
+
+export const postComment = async data => {
+  try {
+    const response = await API.post('/comment/add', data);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error adding comment: ${error.message}`);
+  }
+};

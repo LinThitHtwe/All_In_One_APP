@@ -146,7 +146,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                     flexDirection: 'row',
                     gap: 20,
                   }}>
-                  {blogData?.user?._id == loginUser.user._id && (
+                  {blogData?.user?._id == loginUser?.user?._id && (
                     <TouchableOpacity
                       style={{
                         flexDirection: 'row',
