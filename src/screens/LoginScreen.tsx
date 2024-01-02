@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import {useLogin} from '../hooks/useLogin';
 import {login, register} from '../api/apiFunctions';
@@ -13,7 +13,8 @@ import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
 import {storage} from '../../MMKV';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useAppSelector} from '../redux/app/hook';
+import {useAppDispatch, useAppSelector} from '../redux/app/hook';
+import {actions as userActions} from '../redux/features/user/userSlice';
 
 interface Props extends RootStackScreenProps<'LoginScreen'> {}
 type RegisterFormValues = {
@@ -24,6 +25,8 @@ type RegisterScreenSubmit = SubmitHandler<RegisterFormValues>;
 
 const LoginScreen = ({navigation}: Props) => {
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+  const [isLoginError, setIsLoginError] = useState(false);
+  const dispatch = useAppDispatch();
   const {control, handleSubmit} = useLogin();
 
   const onSubmit: RegisterScreenSubmit = async data => {
@@ -32,7 +35,14 @@ const LoginScreen = ({navigation}: Props) => {
         email: data.email,
         password: data.password,
       });
-      storage.set('loginuser', JSON.stringify(response.data));
+
+      if (response.error) {
+        setIsLoginError(true);
+        dispatch(userActions.clearUser());
+        return;
+      }
+      dispatch(userActions.setUser(response.data?.data));
+      setIsLoginError(false);
       navigation.navigate('HomeScreen');
       return response;
     } catch (error) {
@@ -132,6 +142,19 @@ const LoginScreen = ({navigation}: Props) => {
             label="Password"
             name="password"
           />
+
+          {isLoginError && (
+            <Text
+              style={{
+                color: '#ff0000',
+                textAlign: 'center',
+                marginTop: 20,
+                fontSize: 16,
+                letterSpacing: 3,
+              }}>
+              Login Failed
+            </Text>
+          )}
           <View style={{alignItems: 'center', marginTop: 40}}>
             <TouchableOpacity
               onPress={handleSubmit(onSubmit)}

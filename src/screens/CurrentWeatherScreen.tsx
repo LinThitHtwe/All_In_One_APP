@@ -1,23 +1,42 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {useAppSelector} from '../redux/app/hook';
 import useFetchData from '../hooks/useFetchData';
 import {getCurrentWeather} from '../api/apiFunctions';
 import {Image} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {RootStackScreenProps} from '../navigations/types';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'CurrentWeatherScreen'> {}
 
-const CurrentWeatherScreen = (props: Props) => {
+const CurrentWeatherScreen = ({navigation}: Props) => {
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const [selectedCity, setSelectedCity] = useState('Yangon');
-  const {data: weatherData} = useFetchData(
-    ['current-weather', selectedCity],
-    () => getCurrentWeather(selectedCity),
+  const {
+    data: weatherData,
+    isRefetching,
+    refetch,
+  } = useFetchData(['current-weather', selectedCity], () =>
+    getCurrentWeather(selectedCity),
   );
 
   return (
     <ScrollView
-      style={{flex: 1, backgroundColor: isDarkTheme ? '#070907' : '#F4F6F4'}}>
+      refreshControl={
+        <RefreshControl refreshing={isRefetching} onRefresh={() => refetch()} />
+      }
+      style={{
+        flex: 1,
+        backgroundColor: isDarkTheme ? '#070907' : '#F4F6F4',
+        position: 'relative',
+      }}>
       <Text
         style={{
           color: isDarkTheme ? '#F4F6F4' : '#070907',
@@ -28,6 +47,17 @@ const CurrentWeatherScreen = (props: Props) => {
         }}>
         Current Weather
       </Text>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{position: 'absolute', top: 20, left: 20}}>
+        <Icon
+          style={{
+            color: isDarkTheme ? '#F4F6F4' : '#080A08',
+            fontSize: 18,
+            fontWeight: '600',
+          }}
+          name="arrow-left"></Icon>
+      </TouchableOpacity>
       <View>
         <View
           style={{
@@ -172,7 +202,7 @@ const CurrentWeatherScreen = (props: Props) => {
             flexWrap: 'wrap',
             justifyContent: 'space-evenly',
           }}>
-          {weatherData.data &&
+          {weatherData?.data &&
             weatherData?.data.forecast.forecastday[0].hour.map(forecastData => (
               <View
                 style={{

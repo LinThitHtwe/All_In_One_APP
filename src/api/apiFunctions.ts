@@ -35,9 +35,9 @@ export const getLatestBlog = async () => {
 export const login = async (data: {email: string; password: string}) => {
   try {
     const response = await API.post('/auth/login', data);
-    return response;
+    return {data: response};
   } catch (error) {
-    throw new Error(`Error fetching login: ${error.message}`);
+    return {error: 'Login Failed. Try Again'};
   }
 };
 
@@ -48,9 +48,9 @@ export const register = async (data: {
 }) => {
   try {
     const response = await API.post('/auth/register', data);
-    return response;
+    return {data: response};
   } catch (error) {
-    throw new Error(`Error fetching register: ${error.message}`);
+    return {error: error};
   }
 };
 

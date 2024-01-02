@@ -1,11 +1,12 @@
 import {
   StyleSheet,
   Text,
+  ToastAndroid,
   Touchable,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import CustomInput from '../components/CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {register} from '../api/apiFunctions';
@@ -25,6 +26,7 @@ type RegisterScreenSubmit = SubmitHandler<RegisterFormValues>;
 const RegisterScreen = ({navigation}: Props) => {
   const {control, handleSubmit} = useRegister();
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+  const [isRegisterError, setIsRegisterError] = useState(false);
 
   const onSubmit: RegisterScreenSubmit = async data => {
     try {
@@ -33,6 +35,13 @@ const RegisterScreen = ({navigation}: Props) => {
         email: data.email,
         password: data.password,
       });
+      if (response.error) {
+        ToastAndroid.show(`Register Failed`, ToastAndroid.LONG);
+        setIsRegisterError(true);
+        return;
+      }
+      navigation.navigate('HomeScreen');
+      ToastAndroid.show(`Register Successful`, ToastAndroid.LONG);
       return response;
     } catch (error) {
       throw error;
@@ -129,6 +138,18 @@ const RegisterScreen = ({navigation}: Props) => {
             label="Email"
             name="email"
           />
+          {isRegisterError && (
+            <Text
+              style={{
+                color: '#ff0000',
+                textAlign: 'center',
+                marginTop: 20,
+                fontSize: 16,
+                letterSpacing: 3,
+              }}>
+              Email Already Exist
+            </Text>
+          )}
           <CustomInput
             control={control}
             height={40}
