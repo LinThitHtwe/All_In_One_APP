@@ -21,6 +21,7 @@ import {useAppSelector} from '../redux/app/hook';
 interface Props extends RootStackScreenProps<'BlogDetail'> {}
 
 const BlogDetail = ({route, navigation}: Props) => {
+  const loginUser = useAppSelector(state => state.user.user);
   const {blogId} = route.params;
   const {
     data: blogData,
@@ -80,7 +81,7 @@ const BlogDetail = ({route, navigation}: Props) => {
               source={{
                 uri: blogData?.picture
                   ? `data:image/jpeg;base64,${blogData?.picture}`
-                  : 'https://plus.unsplash.com/premium_photo-1681487807762-98fbe8a9db5e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                  : 'https://images.unsplash.com/photo-1602300991431-27a957a5bcf7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTF8fGdyZWVufGVufDB8fDB8fHww',
               }}
               style={{height: 260, width: '100%', borderRadius: 10}}
             />
@@ -107,9 +108,12 @@ const BlogDetail = ({route, navigation}: Props) => {
                   fontWeight: '800',
                 }}>
                 {blogData?.updatedAt
-                  ? `Ivan (${formatDistanceToNow(new Date(blogData.updatedAt), {
-                      addSuffix: true,
-                    })})`
+                  ? `${blogData?.user?.name} (${formatDistanceToNow(
+                      new Date(blogData.updatedAt),
+                      {
+                        addSuffix: true,
+                      },
+                    )})`
                   : 'Ivan (N/A)'}
               </Text>
               <View
@@ -142,25 +146,27 @@ const BlogDetail = ({route, navigation}: Props) => {
                     flexDirection: 'row',
                     gap: 20,
                   }}>
-                  <TouchableOpacity
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'flex-start',
-                    }}
-                    onPress={() =>
-                      navigation.navigate('AddBlogFormScreen', {
-                        id: blogData?._id,
-                      })
-                    }>
-                    <Icon
+                  {blogData?.user?._id == loginUser.user._id && (
+                    <TouchableOpacity
                       style={{
-                        color: isDarkTheme ? '#F4F6F4' : '#080A08',
-                        fontSize: 22,
-                        fontWeight: '600',
-                        marginBottom: 8,
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
                       }}
-                      name="edit"></Icon>
-                  </TouchableOpacity>
+                      onPress={() =>
+                        navigation.navigate('AddBlogFormScreen', {
+                          id: blogData?._id,
+                        })
+                      }>
+                      <Icon
+                        style={{
+                          color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                          fontSize: 22,
+                          fontWeight: '600',
+                          marginBottom: 8,
+                        }}
+                        name="edit"></Icon>
+                    </TouchableOpacity>
+                  )}
 
                   <TouchableOpacity>
                     <Icon
@@ -190,7 +196,6 @@ const BlogDetail = ({route, navigation}: Props) => {
               <Text
                 style={{
                   color: isDarkTheme ? '#F4F6F4' : '#080A08',
-
                   marginTop: 20,
                   textAlign: 'right',
                   fontWeight: '600',
@@ -207,7 +212,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                   fontWeight: '700',
                   fontSize: 12,
                 }}>
-                Ivan
+                {blogData?.user?.name}
               </Text>
             </View>
             <CommentSection />

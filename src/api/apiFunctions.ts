@@ -5,9 +5,9 @@ export const getCurrencies = () =>
   axios.get(
     `https://api.freecurrencyapi.com/v1/latest?apikey=9KUkGeviPGLrY5t7Bgu2zgRqexYQgOUMEow62lgG`,
   );
-export const getAllBlogs = async () => {
+export const getAllBlogs = async page => {
   try {
-    const response = await API.get('/blog/all');
+    const response = await API.get(`/blog/all?page=${page}`);
     return response;
   } catch (error) {
     console.error('Error fetching these blogs:', error);

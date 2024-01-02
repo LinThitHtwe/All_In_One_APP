@@ -34,7 +34,7 @@ const OtherToolsScreen = (props: Props) => {
         }}>
         <Text
           style={{
-            color: isDarkTheme ? '#070907' : '#F4F6F4',
+            color: isDarkTheme ? '#F4F6F4' : '#F4F6F4',
             fontWeight: '600',
             fontSize: 18,
           }}>

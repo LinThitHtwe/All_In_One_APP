@@ -13,7 +13,8 @@ import {register} from '../api/apiFunctions';
 import {useRegister} from '../hooks/useRegister';
 import {RootStackScreenProps} from '../navigations/types';
 import {SubmitHandler} from 'react-hook-form';
-import {useAppSelector} from '../redux/app/hook';
+import {useAppDispatch, useAppSelector} from '../redux/app/hook';
+import {actions as userAction} from '../redux/features/user/userSlice';
 
 interface Props extends RootStackScreenProps<'RegisterScreen'> {}
 type RegisterFormValues = {
@@ -27,7 +28,7 @@ const RegisterScreen = ({navigation}: Props) => {
   const {control, handleSubmit} = useRegister();
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const [isRegisterError, setIsRegisterError] = useState(false);
-
+  const dispatch = useAppDispatch();
   const onSubmit: RegisterScreenSubmit = async data => {
     try {
       const response = await register({
@@ -40,6 +41,7 @@ const RegisterScreen = ({navigation}: Props) => {
         setIsRegisterError(true);
         return;
       }
+      dispatch(userAction.setUser(response.data?.data));
       navigation.navigate('HomeScreen');
       ToastAndroid.show(`Register Successful`, ToastAndroid.LONG);
       return response;

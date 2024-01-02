@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
@@ -27,6 +28,8 @@ const HomeScreen = ({navigation}: Props) => {
   const {
     data: latestBlog,
     isRefetching,
+    isLoading,
+
     refetch,
   } = useFetchData(['latest-blog'], getLatestBlog);
   // const handleDeleteData = async () => {
@@ -109,7 +112,14 @@ const HomeScreen = ({navigation}: Props) => {
               overflow: 'hidden',
               position: 'relative',
             }}>
-            {latestBlog && (
+            {isLoading && (
+              <ActivityIndicator
+                color={'#719071'}
+                style={{marginTop: 200}}
+                size={65}
+              />
+            )}
+            {latestBlog && !isLoading && (
               <>
                 <Image
                   source={{

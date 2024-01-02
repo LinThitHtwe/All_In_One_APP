@@ -7,8 +7,6 @@ import {useAppSelector} from '../redux/app/hook';
 export const useMiddleware = () => {
   const navigation = useNavigation();
   const user = useAppSelector(state => state.user.user);
-  const test = storage.getString('loginuser');
-  console.log('login-user--', user);
   useFocusEffect(
     React.useCallback(() => {
       // const loginUser = storage.getString('loginuser');

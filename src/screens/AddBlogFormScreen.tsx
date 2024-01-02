@@ -18,17 +18,20 @@ import {storage} from '../../MMKV';
 import {useMiddleware} from '../hooks/useMIddleware';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import {RootStackScreenProps} from '../navigations/types';
-import {useAppSelector} from '../redux/app/hook';
+import {useAppDispatch, useAppSelector} from '../redux/app/hook';
 import useFetchData from '../hooks/useFetchData';
 import {useFocusEffect} from '@react-navigation/native';
+import {actions as userAction} from '../redux/features/user/userSlice';
 
 interface Props extends RootStackScreenProps<'AddBlogFormScreen'> {}
 
 const AddBlogFormScreen = ({route, navigation}: Props) => {
   const {params} = route;
+  const dispatch = useAppDispatch();
   const {id} = params || {};
   const {data: prevData} = useFetchData([`blog${id}`], () => getBlogById(id));
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
+  const user = useAppSelector(state => state.user.user);
   const [forceUpdateKey, setForceUpdateKey] = React.useState(0);
   const forceUpdate = React.useCallback(() => {
     setForceUpdateKey(prevKey => prevKey + 1);
@@ -39,7 +42,6 @@ const AddBlogFormScreen = ({route, navigation}: Props) => {
   });
   const [imageData, setImageData] = useState(null);
   useMiddleware();
-
   useFocusEffect(
     React.useCallback(() => {
       if (prevData) {
@@ -76,9 +78,11 @@ const AddBlogFormScreen = ({route, navigation}: Props) => {
       const response = await postBlog({
         ...data,
         picture: imageData,
+        user: user.user._id,
       });
-      console.log('responsee--', response);
+
       if (response.error) {
+        // dispatch(userAction.clearUser());
         Alert.alert(
           'Error',
           'Something Went Wrong',

@@ -1,16 +1,28 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import {useAppSelector} from '../redux/app/hook';
+import {useAppDispatch, useAppSelector} from '../redux/app/hook';
+import {actions as userActions} from '../redux/features/user/userSlice';
 
 type Props = {};
 
 const BlogHomeHeader = (props: Props) => {
   const navigation = useNavigation();
+  const dispatch = useAppDispatch();
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const user = useAppSelector(state => state.user.user);
-
+  const handleLogout = () => {
+    dispatch(userActions.clearUser());
+    navigation.navigate('HomeScreen');
+    ToastAndroid.show(`Logout Successful`, ToastAndroid.LONG);
+  };
   return (
     <View
       style={{
@@ -34,6 +46,17 @@ const BlogHomeHeader = (props: Props) => {
         }}
         name="book"></Icon>
       {user ? (
+        <TouchableOpacity onPress={handleLogout}>
+          <Text
+            style={{
+              color: isDarkTheme ? '#708F70' : '#719071',
+              fontSize: 20,
+              fontWeight: '700',
+            }}>
+            Logout
+          </Text>
+        </TouchableOpacity>
+      ) : (
         <TouchableOpacity
           onPress={() => navigation.navigate('LoginSignupGreetingScreen')}>
           <Text
@@ -44,16 +67,6 @@ const BlogHomeHeader = (props: Props) => {
             }}>
             Login
           </Text>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
-          <Icon
-            style={{
-              color: isDarkTheme ? '#708F70' : '#719071',
-              fontSize: 26,
-              fontWeight: '600',
-            }}
-            name="user"></Icon>
         </TouchableOpacity>
       )}
     </View>

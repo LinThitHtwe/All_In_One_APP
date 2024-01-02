@@ -10,10 +10,10 @@ const schema = z.object({
     .max(20, 'Password shouldnt be more than 20 character'),
 });
 
-export type ToDoFormField = z.infer<typeof schema>;
+export type LoginFormField = z.infer<typeof schema>;
 
-export const useLogin = (initialValues?: ToDoFormField) => {
-  const {control, handleSubmit} = useForm<ToDoFormField>({
+export const useLogin = (initialValues?: LoginFormField) => {
+  const {control, handleSubmit} = useForm<LoginFormField>({
     resolver: zodResolver(schema),
     defaultValues: {
       email: '',

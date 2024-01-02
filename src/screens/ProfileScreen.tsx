@@ -5,21 +5,31 @@ import {
   StyleSheet,
   Switch,
   Text,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useRegister} from '../hooks/useRegister';
 import CustomInput from '../components/CustomInput';
-import {useAppSelector} from '../redux/app/hook';
+import {useAppDispatch, useAppSelector} from '../redux/app/hook';
+import {actions as userActions} from '../redux/features/user/userSlice';
+import {RootStackScreenProps} from '../navigations/types';
 
-type Props = {};
+interface Props extends RootStackScreenProps<'ProfileScreen'> {}
 
-const ProfileScreen = (props: Props) => {
+const ProfileScreen = ({navigation}: Props) => {
+  const dispatch = useAppDispatch();
   const [isEditEnable, setIsEditEnable] = useState(false);
-  const {control, handleSubmit} = useRegister();
+  const {control, handleSubmit} = useRegister({});
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const user = useAppSelector(state => state.user.user);
+
+  const handleLogout = () => {
+    dispatch(userActions.clearUser());
+    navigation.navigate('BlogHomeScreen');
+    ToastAndroid.show(`Logout Successful`, ToastAndroid.LONG);
+  };
   return (
     <KeyboardAvoidingView
       style={{
@@ -33,12 +43,13 @@ const ProfileScreen = (props: Props) => {
         onPress={Keyboard.dismiss}
         style={{width: '100%', position: 'relative'}}>
         <TouchableOpacity
+          onPress={handleLogout}
           style={{
             position: 'absolute',
             width: '18%',
             padding: 10,
             borderRadius: 10,
-            top: 10,
+            top: 40,
             right: 10,
             zIndex: 10,
           }}>
@@ -149,7 +160,7 @@ const ProfileScreen = (props: Props) => {
                   }}>
                   <Text
                     style={{
-                      color: isDarkTheme ? '#F4F6F4' : '#070907',
+                      color: isDarkTheme ? '#F4F6F4' : '#F4F6F4',
                       fontSize: 18,
                       fontWeight: '700',
                       textAlign: 'center',
