@@ -20,7 +20,7 @@ const OtherToolsScreen = (props: Props) => {
       }}>
       <BlogHomeHeader />
       <ToggleDarkTheme />
-      <View
+      {/* <View
         style={{
           marginTop: 30,
           height: 60,
@@ -48,7 +48,7 @@ const OtherToolsScreen = (props: Props) => {
             fontWeight: '600',
           }}
           name="bookmark-o"></Icon>
-      </View>
+      </View> */}
       <BottomNavigationBar currentPage="OtherToolsScreen" />
     </View>
   );

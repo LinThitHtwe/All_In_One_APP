@@ -123,7 +123,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                   justifyContent: 'space-between',
                   paddingHorizontal: 5,
                 }}>
-                <View style={{flexDirection: 'row', gap: 10}}>
+                {/* <View style={{flexDirection: 'row', gap: 10}}>
                   <TouchableOpacity>
                     <Icon
                       style={{
@@ -140,7 +140,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                       }}
                       name="thumbs-o-down"></Icon>
                   </TouchableOpacity>
-                </View>
+                </View> */}
                 <View
                   style={{
                     flexDirection: 'row',
@@ -167,7 +167,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                         name="edit"></Icon>
                     </TouchableOpacity>
                   )}
-
+                  {/* 
                   <TouchableOpacity>
                     <Icon
                       style={{
@@ -175,7 +175,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                         color: isDarkTheme ? '#F4F6F4' : '#080A08',
                       }}
                       name="bookmark-o"></Icon>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </View>
 
@@ -215,7 +215,7 @@ const BlogDetail = ({route, navigation}: Props) => {
                 {blogData?.user?.name}
               </Text>
             </View>
-            <CommentSection />
+            <CommentSection blogId={blogData?._id} />
           </View>
         </ScrollView>
       )}

@@ -19,37 +19,18 @@ import TimeOutSvg from '../svgs/TimeOutSvg';
 import {useFocusEffect} from '@react-navigation/native';
 import BottomNavigationBar from '../components/BottomNavigationBar';
 import {useAppSelector} from '../redux/app/hook';
-import {
-  QueryFunctionContext,
-  useInfiniteQuery,
-  useQuery,
-} from '@tanstack/react-query';
 
 interface Props extends RootStackScreenProps<'BlogHomeScreen'> {}
 
 const BlogHomeScreen = ({navigation}: Props) => {
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
-
   const {
     data: blogData,
     isLoading,
     isError,
     isRefetching,
-    hasNextPage,
-    fetchNextPage,
     refetch,
-  } = useInfiniteQuery({
-    queryKey: ['blogs'],
-    queryFn: async ({pageParam = 0}) => {
-      console.log('page---', pageParam);
-      const response = await getAllBlogs(pageParam);
-      return response.data;
-    },
-    initialPageParam: 0,
-    getNextPageParam: lastPage => lastPage.nextPage,
-  });
-
-  // console.log('------------------data---', blogData?.pages[0]);
+  } = useFetchData(['blogs'], getAllBlogs);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -117,7 +98,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
               fontWeight: '800',
             }}>
             {data?.updatedAt
-              ? `${data?.user?.name} (${formatDistanceToNow(
+              ? `${data.user.name} (${formatDistanceToNow(
                   new Date(data.updatedAt),
                   {
                     addSuffix: true,
@@ -146,7 +127,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
               justifyContent: 'space-between',
               marginTop: 10,
             }}>
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 gap: 16,
@@ -172,34 +153,36 @@ const BlogHomeScreen = ({navigation}: Props) => {
                   }}
                   name="thumbs-o-down"></Icon>
               </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('BlogDetail', {blogId: data._id})
-              }
-              style={{
-                flexDirection: 'row',
-                gap: 10,
-                alignItems: 'center',
-                paddingVertical: 7,
-                paddingHorizontal: 10,
-                backgroundColor: isDarkTheme ? '#708F70' : '#719071',
-                borderRadius: 30,
-              }}>
-              <Text style={{color: '#F7F9F7', fontWeight: '800'}}>
-                ReadMore
-              </Text>
-              <Icon
+            </View> */}
+            <View style={{alignItems: 'flex-end', width: '100%'}}>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('BlogDetail', {blogId: data._id})
+                }
                 style={{
-                  color: isDarkTheme ? '#F4F6F4' : '#F7F9F7',
-                  fontSize: 14,
-                  fontWeight: '600',
-                }}
-                name="arrow-right"></Icon>
-            </TouchableOpacity>
+                  flexDirection: 'row',
+                  gap: 10,
+                  marginTop: 15,
+                  alignItems: 'center',
+                  paddingVertical: 7,
+                  paddingHorizontal: 10,
+                  backgroundColor: isDarkTheme ? '#708F70' : '#719071',
+                  borderRadius: 30,
+                }}>
+                <Text style={{color: '#F7F9F7', fontWeight: '800'}}>
+                  ReadMore
+                </Text>
+                <Icon
+                  style={{
+                    color: isDarkTheme ? '#F4F6F4' : '#F7F9F7',
+                    fontSize: 14,
+                    fontWeight: '600',
+                  }}
+                  name="arrow-right"></Icon>
+              </TouchableOpacity>
+            </View>
           </View>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{position: 'absolute', top: 3, right: 10, opacity: 0.8}}>
             <Icon
               style={{
@@ -208,7 +191,7 @@ const BlogHomeScreen = ({navigation}: Props) => {
                 fontWeight: '600',
               }}
               name="bookmark-o"></Icon>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     );
@@ -289,25 +272,18 @@ const BlogHomeScreen = ({navigation}: Props) => {
             </TouchableOpacity>
           </View>
         )}
-        {
-          <Text style={{color: '#070907'}}>
-            {' '}
-            {blogData && `${blogData?.pages[0].data.length}`}
-          </Text>
-        }
         {blogData && !isLoading && !isError && (
           <FlatList
             style={{marginBottom: 60}}
-            data={blogData?.pages[0].data}
-            onEndReached={() => hasNextPage && fetchNextPage()}
+            data={blogData.data}
             renderItem={({item}) => renderItem(item)}
             keyExtractor={item => item._id}
-            // refreshControl={
-            //   <RefreshControl
-            //     refreshing={isRefetching}
-            //     onRefresh={() => refetch()}
-            //   />
-            // }
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefetching}
+                onRefresh={() => refetch()}
+              />
+            }
           />
         )}
       </View>

@@ -82,6 +82,7 @@ const AddBlogFormScreen = ({route, navigation}: Props) => {
       });
 
       if (response.error) {
+        console.log('error--', response.error);
         // dispatch(userAction.clearUser());
         Alert.alert(
           'Error',

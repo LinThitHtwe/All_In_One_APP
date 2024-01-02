@@ -237,18 +237,54 @@ const HomeScreen = ({navigation}: Props) => {
               />
             </View>
           </TouchableOpacity>
-          {Array.from({length: 3}, (_, index) => (
-            <View
-              key={index}
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ToDoForm')}
+            style={{
+              height: 60,
+              marginVertical: 5,
+              width: '100%',
+              borderRadius: 10,
+              marginBottom: 70,
+              backgroundColor: isDarkTheme ? '#708F70' : '#708F70',
+              padding: 10,
+              justifyContent: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+            }}>
+            <Text
               style={{
-                height: 60,
-                marginVertical: 5,
-                width: '100%',
-                borderRadius: 10,
-                backgroundColor: '#719071',
+                color: '#F7F9F7',
+                letterSpacing: 2,
+                fontSize: 26,
+                fontWeight: '700',
+              }}>
+              Add Todos
+            </Text>
+
+            <Icon
+              style={{
+                color: '#F7F9F7',
+                fontSize: 18,
+                marginTop: 3,
+                marginLeft: 5,
+
+                position: 'absolute',
+                right: 20,
               }}
-            />
-          ))}
+              name="arrow-right"></Icon>
+
+            <View
+              style={{
+                position: 'absolute',
+                right: 35,
+                top: 5,
+
+                // backgroundColor: '#F7F9F7',
+
+                transform: [{rotate: '15deg'}],
+              }}></View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <BottomNavigationBar currentPage="HomeScreen" />

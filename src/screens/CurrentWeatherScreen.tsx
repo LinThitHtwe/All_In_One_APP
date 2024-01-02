@@ -15,6 +15,7 @@ import {Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RootStackScreenProps} from '../navigations/types';
 import TimeOutSvg from '../svgs/TimeOutSvg';
+import {Picker} from '@react-native-picker/picker';
 
 interface Props extends RootStackScreenProps<'CurrentWeatherScreen'> {}
 
@@ -51,6 +52,27 @@ const CurrentWeatherScreen = ({navigation}: Props) => {
         }}>
         Current Weather
       </Text>
+      <View style={{alignItems: 'flex-end', marginTop: 30}}>
+        <Picker
+          selectedValue={selectedCity}
+          onValueChange={itemValue => setSelectedCity(itemValue)}
+          style={{
+            backgroundColor: isDarkTheme ? '#435653' : '#A9BCB9',
+            color: '#F7F9F7',
+            fontWeight: '400',
+            width: '60%',
+          }}>
+          <Picker.Item label={'Yangon'} value={'Yangon'} />
+          <Picker.Item label={'London'} value={'London'} />
+          <Picker.Item label={'Tokyo'} value={'Tokyo'} />
+          <Picker.Item label={'Paris'} value={'Paris'} />
+          <Picker.Item label={'Delhi'} value={'Delhi'} />
+          <Picker.Item label={'Shanghai'} value={'Shanghai'} />
+          <Picker.Item label={'Mumbai'} value={'Mumbai'} />
+          <Picker.Item label={'Manila'} value={'Manila'} />
+          <Picker.Item label={'Bangkok'} value={'Bangkok'} />
+        </Picker>
+      </View>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{position: 'absolute', top: 20, left: 20}}>

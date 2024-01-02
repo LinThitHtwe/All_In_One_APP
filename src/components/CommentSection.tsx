@@ -11,15 +11,18 @@ import {useAppSelector} from '../redux/app/hook';
 import {Controller} from 'react-hook-form';
 import {useComment} from '../hooks/useComment';
 import {useNavigation} from '@react-navigation/native';
-import {postComment} from '../api/apiFunctions';
+import {getBlogById, getCommentByBlog, postComment} from '../api/apiFunctions';
+import useFetchData from '../hooks/useFetchData';
+import {formatDistanceToNow} from 'date-fns';
 
-type Props = {};
-
-const CommentSection = (props: Props) => {
+const CommentSection = ({blogId}) => {
   const navigation = useNavigation();
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const loginUser = useAppSelector(state => state.user.user);
   const {control, handleSubmit} = useComment();
+  const {data: comments, refetch} = useFetchData(['comment', blogId], () =>
+    getCommentByBlog(blogId),
+  );
 
   const onSubmit = async data => {
     if (!loginUser) {
@@ -40,14 +43,15 @@ const CommentSection = (props: Props) => {
       ]);
       return;
     }
+    console.log();
 
     postComment({
       ...data,
-      blog: '65943d69ef270d6e21cf261b',
+      blog: blogId,
       user: loginUser.user._id,
     })
       .then(response => {
-        console.log('Comment added successfully:', response);
+        refetch();
       })
       .catch(error => {
         console.error('Error adding comment:', error.message);
@@ -61,35 +65,42 @@ const CommentSection = (props: Props) => {
 
           marginVertical: 10,
         }}>
-        Comments (1)
+        Comments {comments?.comments?.length}
       </Text>
       <View>
-        <View
-          style={{
-            backgroundColor: isDarkTheme
-              ? 'rgba(244, 246, 244,0.2)'
-              : 'rgba(170, 189, 186,0.1)',
-            padding: 13,
-            borderRadius: 10,
-            marginVertical: 6,
-          }}>
-          <Text
-            style={{
-              color: isDarkTheme ? '#F4F6F4' : '#080A08',
-              fontSize: 15,
-              fontWeight: '400',
-            }}>
-            LinThit : Very Goooood
-          </Text>
-        </View>
-        <Text
-          style={{
-            color: isDarkTheme ? '#F4F6F4' : '#080A08',
-            fontSize: 10,
-            textAlign: 'right',
-          }}>
-          1 min ago
-        </Text>
+        {comments &&
+          comments.comments.map(comment => (
+            <React.Fragment key={comment._id}>
+              <View
+                style={{
+                  backgroundColor: isDarkTheme
+                    ? 'rgba(244, 246, 244,0.2)'
+                    : 'rgba(170, 189, 186,0.1)',
+                  padding: 13,
+                  borderRadius: 10,
+                  marginVertical: 6,
+                }}>
+                <Text
+                  style={{
+                    color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                    fontSize: 15,
+                    fontWeight: '400',
+                  }}>
+                  {`${comment.user.name} : ${comment.comment}`}
+                </Text>
+              </View>
+              <Text
+                style={{
+                  color: isDarkTheme ? '#F4F6F4' : '#080A08',
+                  fontSize: 10,
+                  textAlign: 'right',
+                }}>
+                {formatDistanceToNow(new Date(comment.updatedAt), {
+                  addSuffix: true,
+                })}
+              </Text>
+            </React.Fragment>
+          ))}
       </View>
       <Controller
         render={({field: {value, onChange, onBlur}, fieldState: {error}}) => (

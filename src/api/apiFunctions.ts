@@ -91,3 +91,12 @@ export const postComment = async data => {
     throw new Error(`Error adding comment: ${error.message}`);
   }
 };
+
+export const getCommentByBlog = async blogId => {
+  try {
+    const response = await API(`/comment/blog/${blogId}`);
+    return response;
+  } catch (error) {
+    throw new Error(`Error getting comment: ${error.message}`);
+  }
+};
