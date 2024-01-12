@@ -213,6 +213,9 @@ const AllToDosListScreen = ({navigation}: Props) => {
           style={{
             borderWidth: 1,
             borderRadius: 15,
+            color: isDarkTheme
+              ? 'rgba(244, 246, 244,0.4)'
+              : 'rgba(21, 33, 47,1)',
             borderColor: isDarkTheme
               ? 'rgba(244, 246, 244,0.4)'
               : 'rgba(21, 33, 47,0.6)',

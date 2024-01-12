@@ -30,6 +30,7 @@ type ToDoFormParams = {
 };
 const ToDoFromScreen = ({route, navigation}: Props) => {
   const {params} = route;
+  console.log(params);
   const isDarkTheme = useAppSelector(state => state.theme.isDarkTheme);
   const {
     description: oldDescription,

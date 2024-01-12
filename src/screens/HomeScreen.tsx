@@ -20,6 +20,7 @@ import useFetchData from '../hooks/useFetchData';
 import {getLatestBlog} from '../api/apiFunctions';
 import {RefreshControl} from 'react-native';
 import {useAppDispatch, useAppSelector} from '../redux/app/hook';
+import {useFocusEffect} from '@react-navigation/native';
 
 interface Props extends RootStackScreenProps<'HomeScreen'> {}
 
@@ -43,6 +44,12 @@ const HomeScreen = ({navigation}: Props) => {
   // };
 
   // handleDeleteData();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refetch();
+    }, []),
+  );
   return (
     <View
       style={{

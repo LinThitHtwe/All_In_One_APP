@@ -70,8 +70,30 @@ const AddBlogFormScreen = ({route, navigation}: Props) => {
           ...data,
           picture: imageData,
         });
-        navigation.navigate('BlogHomeScreen');
-        ToastAndroid.show(`Successfull`, ToastAndroid.LONG);
+
+        if (response.error) {
+          console.log('error--', response.error);
+          dispatch(userAction.clearUser());
+          Alert.alert(
+            'Error',
+            'Something Went Wrong',
+            [
+              {
+                text: 'Back to Home',
+                onPress: () => navigation.navigate('HomeScreen'),
+              },
+              {
+                text: 'Try Logging in',
+                onPress: () => navigation.navigate('LoginSignupGreetingScreen'),
+              },
+            ],
+            {cancelable: false},
+          );
+        }
+        if (response.data) {
+          navigation.navigate('BlogHomeScreen');
+          ToastAndroid.show(`Successfull`, ToastAndroid.LONG);
+        }
         return;
       }
 
@@ -82,8 +104,7 @@ const AddBlogFormScreen = ({route, navigation}: Props) => {
       });
 
       if (response.error) {
-        console.log('error--', response.error);
-        // dispatch(userAction.clearUser());
+        dispatch(userAction.clearUser());
         Alert.alert(
           'Error',
           'Something Went Wrong',

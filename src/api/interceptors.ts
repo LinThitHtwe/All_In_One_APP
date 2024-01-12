@@ -2,14 +2,13 @@ import axios from 'axios';
 import {storage} from '../../MMKV';
 
 const API = axios.create({
-  baseURL: 'http://192.168.10.228:5000/api/v1',
+  baseURL: 'http://10.1.40.204:5000/api/v1',
   withCredentials: true,
 });
 
-const loginUser = storage.getString('loginuser');
-
 API.interceptors.request.use(
   config => {
+    const loginUser = storage.getString('loginuser');
     if (loginUser) {
       try {
         const user = JSON.parse(loginUser);
