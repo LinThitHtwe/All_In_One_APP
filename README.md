@@ -1,6 +1,46 @@
 # All in One react-native-app
 
+This React Native app is a mix of todos, blogs, currency conversion, and weather updates. Manage tasks, read some blogs, and connect with others if you feel like it. It's got a currency converter and shows you the weather for different cities.
+
+If you enjoy this project, you can leave a ⭐️, it helps me a lot.
+
+## Project Screenshots
+
+### Home Page
+![](docs/home.jpg)
+
+### Blog Detail
 ![](docs/blogDetail.jpg)
+
+### Comment Section
+![](docs/comment.jpg)
+
+### Blog Feed (Dark Mode)
+![](docs/blogFeedDark.jpg)
+
+### Blog Form (Dark Mode)
+![](docs/blogFormDark.jpg)
+
+### Login SignUp Page
+![](docs/loginSignup.jpg)
+
+### Login Page
+![](docs/login.jpg)
+
+### Register Page
+![](docs/register.jpg)
+
+### Todo List
+![](docs/todoList.jpg)
+
+### Todo Form
+![](docs/todoForm.jpg)
+
+### Currency Converter
+![](docs/currency.jpg)
+
+### Weather Forecast
+![](docs/weather.jpg)
 
 
 <details>
